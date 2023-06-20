@@ -1,0 +1,35 @@
+.nav {
+  /* @apply; */
+}
+
+.nav_light {
+  /* @apply; */
+}
+
+.nav_dark {
+  @apply text-white bg-gray-700;
+}
+.button_collapse {
+  @apply rounded-lg inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600;
+}
+.sidebar {
+  @apply bg-orange-600;
+}
+.sidebar_side {
+  @apply fixed top-0 left-0 z-40 w-64 h-screen transition-transform px-3 py-4 overflow-y-auto shadow-md;
+}
+.sidebar_dark {
+  @apply bg-gray-700;
+}
+
+.link {
+  @apply flex items-center p-2 rounded-lg;
+}
+
+.link_dark {
+  @apply text-gray-900 bg-white;
+}
+
+.link_light {
+  @apply text-gray-900 bg-gray-50;
+}
