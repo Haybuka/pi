@@ -1,5 +1,5 @@
-.nav {
-  /* @apply; */
+.sidebar_nav {
+  @apply p-4 h-screen overflow-y-scroll overflow-x-hidden transition-all;
 }
 
 .nav_light {

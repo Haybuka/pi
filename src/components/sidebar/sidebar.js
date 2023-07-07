@@ -17,7 +17,7 @@ const Sidebar = () => {
     <header className={isDark ? cls(styles.nav_dark, styles.nav) : cls(styles.nav_light, styles.nav)}>
       <Sidenav isSidebarOpen={isSidebarOpen} />
 
-      <nav className={isSidebarOpen ? "p-4 sm:ml-64 h-screen overflow-y-scroll overflow-x-hidden" : "p-4  h-screen overflow-y-scroll overflow-x-hidden transition-all"}>
+      <nav className={isSidebarOpen ? cls(styles.sidebar_nav, "sm:ml-64") : cls(styles.sidebar_nav)}>
         <article className='bg-gray-50 p-3 mb-3 flex justify-between items-center text-gray-900 rounded-lg'>
           <aside className='flex items-center'>
             <button onClick={() => setIsSidebarOpen(prev => !prev)} type="button"
