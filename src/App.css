@@ -1,0 +1,27 @@
+.floated-label {
+  /* background-color: red; */
+  position: relative;
+}
+
+.floated-label p {
+  @apply absolute top-1/2 pl-4 -translate-y-1/2 transition-all text-gray-400;
+}
+
+.floated-label input::placeholder {
+  @apply opacity-0;
+}
+
+.floated-label input:focus + p {
+  @apply -top-1/3 translate-y-1/3;
+}
+
+.floated-label input:not(:placeholder-shown) ~ p {
+  @apply -top-1/3 translate-y-1/3;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
