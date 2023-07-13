@@ -56,7 +56,7 @@ const UpdateProfileForm = () => {
         </label>
         <button
           type="submit"
-          className="w-full bg-gray-700 text-white py-3 rounded-2xl capitalize"
+          className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
         >
           Update
         </button>

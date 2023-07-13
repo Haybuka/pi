@@ -1,0 +1,18 @@
+.card {
+  @apply flex flex-col justify-between bg-gray-100 text-black h-[280px] w-[280px] py-2 px-3 pb-4 shadow-md m-1 rounded-md cursor-pointer;
+}
+
+.card_img {
+  @apply h-[180px] w-full flex justify-center items-center;
+}
+
+.product_modal {
+  @apply fixed top-0 right-0 py-4 px-3 bg-white text-black w-[400px] h-screen shadow-md;
+}
+
+.modal_open {
+  @apply transition-all translate-x-0;
+}
+.modal_close {
+  @apply translate-x-full;
+}

@@ -5,14 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeContextProvider } from './context/themecontext';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { AuthContextProvider } from './context/authContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient()
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeContextProvider>
-        <App />
-      </ThemeContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <ThemeContextProvider>
+            <App />
+          </ThemeContextProvider>
+        </AuthContextProvider>
+
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

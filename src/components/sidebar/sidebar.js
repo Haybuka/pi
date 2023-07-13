@@ -5,7 +5,8 @@ import cls from 'classnames'
 import styles from './sidebar.module.css'
 import Sidenav from './sidenav';
 import { Outlet, useHref } from 'react-router-dom';
-import ProfileIcon from '../profileIcon/profileIcon';
+import ProfileIcon from './barIcon/profileIcon';
+import ExitIcon from './barIcon/exitIcon';
 
 const Sidebar = () => {
   const { isDark, handleModeSet } = useContext(ThemeContext)
@@ -30,8 +31,6 @@ const Sidebar = () => {
 
           </aside>
           <aside className='flex items-center'>
-
-            <ProfileIcon />
             <DarkModeSwitch
               checked={isDark}
               onChange={handleModeSet}
@@ -39,9 +38,13 @@ const Sidebar = () => {
               moonColor='gray'
               sunColor='#d35400'
             />
+            <ProfileIcon />
+
+            <ExitIcon />
+
           </aside>
         </article>
-        <section className="p-4 border-2 rounded-lg bg-white h-full">
+        <section className="p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll">
           <Outlet />
         </section>
       </nav>

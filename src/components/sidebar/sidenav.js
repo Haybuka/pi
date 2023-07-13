@@ -22,6 +22,12 @@ const Sidenav = ({ isSidebarOpen }) => {
       name: 'Products',
       url: 'products',
       icon: <ProductsIcon />
+    }
+    ,
+    {
+      name: 'Category',
+      url: 'category',
+      icon: <ProductsIcon />
     },
     {
       name: 'Reports',
@@ -42,7 +48,7 @@ const Sidenav = ({ isSidebarOpen }) => {
   return (
     <div className={isSidebarOpen ? cls('') : cls('-translate-x-full')}>
       <aside id="default-sidebar" className={cls(styles.sidebar)} aria-label="Sidebar">
-        <div className={cls(styles.sidebar_side, 'bg-gray-700')}>
+        <div className={cls(styles.sidebar_side, 'bg-blue-700')}>
           <nav className='flex flex-col justify-between h-full'>
 
             <ul className="space-y-2 font-medium">
