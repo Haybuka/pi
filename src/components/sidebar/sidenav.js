@@ -7,6 +7,8 @@ import { ReactComponent as HomeIcon } from '../../images/icons/home.svg'
 import { ReactComponent as ProductsIcon } from '../../images/icons/products.svg'
 import { ReactComponent as ReportsIcon } from '../../images/icons/reports.svg'
 import { ReactComponent as ProfileIcon } from '../../images/icons/profile.svg';
+import LogoutIcon from './barIcon/exitIcon';
+
 import cls from 'classnames'
 import styles from './sidebar.module.css'
 
@@ -48,7 +50,7 @@ const Sidenav = ({ isSidebarOpen }) => {
   return (
     <div className={isSidebarOpen ? cls('') : cls('-translate-x-full')}>
       <aside id="default-sidebar" className={cls(styles.sidebar)} aria-label="Sidebar">
-        <div className={cls(styles.sidebar_side, 'bg-blue-700')}>
+        <div className={cls(styles.sidebar_side, 'bg-[#002D62]')}>
           <nav className='flex flex-col justify-between h-full'>
 
             <ul className="space-y-2 font-medium">
@@ -59,7 +61,7 @@ const Sidenav = ({ isSidebarOpen }) => {
                   <li key={id} className='my-6'>
                     <NavLink to={navItems.url}
                       className={({ isActive, }) =>
-                        isActive ? cls("bg-white text-black", styles.link) : cls(styles.link, 'text-white')
+                        isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
                       }
                     >
                       {navItems.icon}
@@ -73,14 +75,11 @@ const Sidenav = ({ isSidebarOpen }) => {
             </ul>
             <ul>
               <li className='my-6'>
-                <NavLink to='/'
-                  className={({ isActive, }) =>
-                    isActive ? cls("bg-white text-black", styles.link) : cls(styles.link, 'text-white')
-                  }
+                <p
+                  className={cls(styles.link, 'cursor-pointer ')}
                 >
-                  <SettingsIcon />
-                  <span className="ml-3">Nav element</span>
-                </NavLink>
+                  <LogoutIcon visible />
+                </p>
 
               </li>
             </ul>

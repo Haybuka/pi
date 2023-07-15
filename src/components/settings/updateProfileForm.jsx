@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react';
 import React from 'react';
+import Button from '../button/button';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -54,12 +55,13 @@ const UpdateProfileForm = () => {
             Gender
           </p>
         </label>
-        <button
+        <Button text={'update'} type="submit" />
+        {/* <button
           type="submit"
           className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
         >
           Update
-        </button>
+        </button> */}
       </form>
     </Tab.Panel>
   );

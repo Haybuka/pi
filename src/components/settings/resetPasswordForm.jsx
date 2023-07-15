@@ -1,6 +1,7 @@
 import { Tab } from '@headlessui/react';
 import React, { useState } from 'react';
 import PasswordResetModal from './modal/modal';
+import Button from '../button/button';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -30,13 +31,18 @@ const ResetPasswordForm = () => {
               email
             </p>
           </label>
-          <button
+          {/* <button
             type="submit"
-            onClick={() => setModalIsOpen(true)}
+            onClick={}
             className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
           >
             reset
-          </button>
+          </button> */}
+          <Button
+            type="submit"
+            text={'reset'}
+            handleClick={() => setModalIsOpen(true)}
+          />
         </form>
       </Tab.Panel>
       {modalIsOpen && <PasswordResetModal handleModal={handleModalClose} />}

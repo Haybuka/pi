@@ -70,7 +70,7 @@ const Login = () => {
   return (
     <main className="w-screen h-screen grid grid-cols-12">
       <section className="hidden md:block h-full col-span-5 w-full p-3">
-        <aside className="h-full bg-blue-700 rounded-lg"></aside>
+        <aside className="h-full bg-[#002D62] rounded-lg"></aside>
       </section>
       <section className=" bg-white col-span-12 md:col-span-7 flex justify-center items-center flex-col">
         <>
@@ -80,36 +80,39 @@ const Login = () => {
               className="w-full px-6 md:w-[500px] my-4"
               onSubmit={handleSubmit}
             >
-              <Inputs
-                type="text"
-                name="username"
-                displayName="username"
-                value={values.username}
-                handleInputChange={setFieldValue}
-                handleBlur={handleBlur}
-                error={errors?.username}
-              />
-              <Inputs
-                type="password"
-                name="password"
-                displayName="password"
-                value={values.password}
-                handleInputChange={setFieldValue}
-                handleBlur={handleBlur}
-                error={errors?.password}
-              />
-
+              <div className="my-6">
+                <Inputs
+                  type="text"
+                  name="username"
+                  displayName="username"
+                  value={values.username}
+                  handleInputChange={setFieldValue}
+                  handleBlur={handleBlur}
+                  error={errors?.username}
+                />
+              </div>
+              <div className="my-6">
+                <Inputs
+                  type="password"
+                  name="password"
+                  displayName="password"
+                  value={values.password}
+                  handleInputChange={setFieldValue}
+                  handleBlur={handleBlur}
+                  error={errors?.password}
+                />
+              </div>
               <Button isSubmitting={isSubmitting} text={'login'} />
 
               <p className="my-4">
                 Dont have an account ?
-                <Link to="/register" className="text-blue-700">
+                <Link to="/register" className="text-[#002D62]">
                   {' '}
                   sign up
                 </Link>
               </p>
               <p className="my-4 text-center">
-                <span className="text-blue-700">forgot password?</span>
+                <span className="text-[#002D62">forgot password?</span>
               </p>
             </form>
           </FormikProvider>

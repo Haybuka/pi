@@ -7,14 +7,16 @@ const FieldSelection = ({ options }) => {
   // const [name, setName] = useState('');
   const handleInputType = (value) => {
     switch (value) {
-      case 1:
+      case 0:
         return 'date';
-      case 2:
+      case 1:
         return 'datetime-local';
-      case 3:
+      case 2:
         return 'text';
-      case 4:
+      case 3:
         return 'number';
+      case 4:
+        return 'drop-down';
       default:
         return 'date';
     }

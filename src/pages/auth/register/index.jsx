@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
 import { ReactComponent as EyeSlash } from './eyeSlash.svg';
 import { Link } from 'react-router-dom';
+import Button from '../../../components/button/button';
 // #1a56db
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -71,20 +72,13 @@ const Register = () => {
                 password
               </p>
             </label>
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
-            >
-              sign up
-            </button>
-            <p className="my-3 capitalize shadow-md py-3 rounded-2xl text-center">
-              login
-            </p>
+            <Button text={`sign up`} classProp={`my-2`} />
+            <Button text={`login`} classProp={`my-2`} />
           </form>
         </>
       </section>
       <section className="hidden md:block h-full col-span-5 w-full p-3">
-        <aside className="bg-blue-700 h-full rounded-lg"></aside>
+        <aside className="bg-[#002D62] h-full rounded-lg"></aside>
       </section>
     </main>
   );

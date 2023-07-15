@@ -1,0 +1,14 @@
+.modal_sub {
+  @apply fixed uppercase w-2/4 py-4 px-6 bg-white shadow-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 rounded-xl;
+}
+
+.modal::after {
+  content: '';
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  cursor: pointer;
+}

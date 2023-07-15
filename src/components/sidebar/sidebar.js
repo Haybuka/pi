@@ -7,12 +7,26 @@ import Sidenav from './sidenav';
 import { Outlet, useHref } from 'react-router-dom';
 import ProfileIcon from './barIcon/profileIcon';
 import ExitIcon from './barIcon/exitIcon';
+import RightIcon from './barIcon/rightIcon';
 
 const Sidebar = () => {
   const { isDark, handleModeSet } = useContext(ThemeContext)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const route = useHref()
+
+  const breadcrumbs = () => {
+    const crumbs = route?.split('/').slice(1)
+    return (
+      <ul className='flex items-center'>
+        {crumbs.map((crumb, id) => (!id >= 1 ?
+          <li key={id} >{crumb}</li> :
+          <li key={id}>  <RightIcon text={crumb} /></li>
+
+        ))}
+      </ul>
+    )
+  }
   return (
 
     <header className={isDark ? cls(styles.nav_dark, styles.nav) : cls(styles.nav_light, styles.nav)}>
@@ -27,17 +41,17 @@ const Sidebar = () => {
                 <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
               </svg>
             </button>
-            <h3 className='capitalize text-lg'>{route === "/" ? "Home " : route.slice(1)}</h3>
+            <h3 className='uppercase text-sm'>{route === "/" ? "Home " : breadcrumbs()}</h3>
 
           </aside>
           <aside className='flex items-center'>
-            <DarkModeSwitch
+            {/* <DarkModeSwitch
               checked={isDark}
               onChange={handleModeSet}
               size={25}
               moonColor='gray'
               sunColor='#d35400'
-            />
+            /> */}
             <ProfileIcon />
 
             <ExitIcon />

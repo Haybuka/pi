@@ -3,7 +3,7 @@ import { ReactComponent as Icon } from '../../../images/icons/exit.svg';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/authContext';
 
-const ExitIcon = ({ onClick }) => {
+const ExitIcon = ({ onClick, visible }) => {
   const navigate = useNavigate();
   const { handleProfileSet } = useContext(AuthContext);
 
@@ -13,8 +13,12 @@ const ExitIcon = ({ onClick }) => {
     navigate('login');
   };
   return (
-    <div onClick={handleLogOut} className="mr-3 cursor-pointer">
+    <div
+      onClick={handleLogOut}
+      className="mr-3 cursor-pointer flex items-center"
+    >
       <Icon />
+      {visible && <span className="ml-3">Logout</span>}
     </div>
   );
 };
