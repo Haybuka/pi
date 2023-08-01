@@ -9,11 +9,11 @@ import {
 } from '../../api/products';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Index = ({ isEdit = false, id, category = {} }) => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [name] = useState('');
   const [details] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
@@ -40,6 +40,26 @@ const Index = ({ isEdit = false, id, category = {} }) => {
     productDetails: category?.productDetails,
     productOptions: category?.productOptions,
   };
+
+  const onError = (error) => {
+    const detail = error?.response.data?.result.details;
+    toast.error(detail);
+  };
+  const onSuccess = (response) => {
+    const message = response?.data?.result?.message;
+
+    toast.success(message);
+
+    resetForm();
+    navigate('/');
+  };
+  const options = {
+    onError,
+    onSuccess,
+  };
+
+  const { mutate: createCategory } = useCreateCategoryRequest(options);
+  const { mutate: updateCategory } = useUpdateCategoryRequest(options);
 
   const formik = useFormik({
     initialValues: !isEdit ? initialValues : editValues,
@@ -90,27 +110,6 @@ const Index = ({ isEdit = false, id, category = {} }) => {
     resetForm,
     getFieldProps,
   } = formik;
-
-  const onError = (error) => {
-    const detail = error?.response.data?.result.details;
-    toast.error(detail);
-    console.log(error);
-  };
-  const onSuccess = (response) => {
-    const message = response?.data?.result?.message;
-
-    toast.success(message);
-    console.log(response);
-    resetForm();
-    navigate('/');
-  };
-  const options = {
-    onError,
-    onSuccess,
-  };
-
-  const { mutate: createCategory } = useCreateCategoryRequest(options);
-  const { mutate: updateCategory } = useUpdateCategoryRequest(options);
 
   return (
     <section className="text-black text-lg w-[800px] mx-auto">
@@ -335,6 +334,13 @@ const Index = ({ isEdit = false, id, category = {} }) => {
         pauseOnHover
         theme="light"
       />
+
+      <p
+        onClick={() => navigate('/categories')}
+        className="text-red-600 bg-red-300 text-center fixed top-1/2 left-20 text-sm uppercase w-[100px] py-3 rounded-2xl cursor-pointer"
+      >
+        Cancel
+      </p>
     </section>
   );
 };

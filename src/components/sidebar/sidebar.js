@@ -1,17 +1,26 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { ThemeContext } from '../../context/themecontext';
 import cls from 'classnames'
 import styles from './sidebar.module.css'
 import Sidenav from './sidenav';
-import { Outlet, useHref } from 'react-router-dom';
+import { Outlet, useHref, useNavigate } from 'react-router-dom';
 import ProfileIcon from './barIcon/profileIcon';
 import ExitIcon from './barIcon/exitIcon';
 import RightIcon from './barIcon/rightIcon';
+import useAuth from '../../hooks/useAuth';
 
 const Sidebar = () => {
   const { isDark, handleModeSet } = useContext(ThemeContext)
+  const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const userProfile = JSON.parse(localStorage.getItem("__profile__"))
+  const { userProfile } = useAuth()
+
+  useEffect(() => {
+    userProfile === null && navigate("/login")
+
+  }, [])
 
   const route = useHref()
 

@@ -12,12 +12,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import ProductDeleteModal from './deleteModal';
 import './table.css';
+import Button from '../button/button';
+import Modal from '../modal/modal';
 
-const AllTableHooks = ({ data }) => {
+const AllTableHooks = ({ data, userType }) => {
+  const userProfile = JSON.parse(localStorage.getItem('__profile__'));
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
+  const [deleteProduct, setDeleteProduct] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const handleModalClose = () => {
     setModalIsOpen((prev) => false);
+    setDeleteModalOpen(false);
   };
   const navigate = useNavigate();
   const columns = useMemo(() => COLUMNS, []);
@@ -25,11 +32,10 @@ const AllTableHooks = ({ data }) => {
   localStorage.removeItem('__editID__');
 
   const handleRowDelete = (row) => {
-    const {
-      values: { id },
-    } = row;
-    setDeleteId(id);
+    const { values } = row;
+    setDeleteProduct(values);
     setModalIsOpen(true);
+    setDeleteModalOpen(true);
   };
 
   const handleRowEdit = (row) => {
@@ -89,24 +95,30 @@ const AllTableHooks = ({ data }) => {
           Cell: ({ row }) => {
             return (
               <div className="flex justify-between items-center">
-                <p
-                  className="cursor-pointer px-2 text-green-700"
-                  onClick={() => handleRowEdit(row)}
-                >
-                  Edit
-                </p>
-                <p
-                  className="cursor-pointer px-2 text-yellow-700"
-                  onClick={() => handleRowPreview(row)}
-                >
-                  Preview
-                </p>
-                <p
-                  className="cursor-pointer px-2 text-red-800"
-                  onClick={() => handleRowDelete(row)}
-                >
-                  Delete
-                </p>
+                {userType === 'admin' && (
+                  <>
+                    <p
+                      className="cursor-pointer px-2 text-green-700 w-full"
+                      onClick={() => handleRowEdit(row)}
+                    >
+                      Edit
+                    </p>
+                    <p
+                      className="cursor-pointer px-2 text-red-800 w-full"
+                      onClick={() => handleRowDelete(row)}
+                    >
+                      Delete
+                    </p>
+                  </>
+                )}
+                {userType === 'merchant' && (
+                  <p
+                    className="cursor-pointer px-2 text-yellow-700 w-full"
+                    onClick={() => handleRowPreview(row)}
+                  >
+                    Preview
+                  </p>
+                )}
               </div>
             );
           },
@@ -126,6 +138,15 @@ const AllTableHooks = ({ data }) => {
 
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         </aside>
+        {userType === 'admin' && (
+          <aside className="flex justify-end">
+            <Button
+              text={'create category'}
+              classProp={'w-[160px] '}
+              handleClick={() => navigate('/category')}
+            />
+          </aside>
+        )}
         <aside className="min-h-[500px]">
           <table {...getTableProps()} className="uppercase text-sm text-center">
             <thead>
@@ -209,28 +230,20 @@ const AllTableHooks = ({ data }) => {
               {'>>'}
             </p>
           </aside>
-
-          {/* <select
-          value={pageSize}
-          style={{ margin: '0 15px', padding: '0 10px' }}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-        >
-          {[10, 25, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select> */}
-
-          {/* <p>
-          <button onClick={() => getSelectedRows(selectedFlatRows)}>
-            Submit row
-          </button>
-        </p> */}
         </section>
       </section>
+
       {modalIsOpen && (
-        <ProductDeleteModal handleModal={handleModalClose} id={deleteId} />
+        <Modal handleModal={handleModalClose}>
+          <section>
+            {deleteModalOpen && (
+              <ProductDeleteModal
+                handleModal={handleModalClose}
+                product={deleteProduct}
+              />
+            )}
+          </section>
+        </Modal>
       )}
     </>
   );

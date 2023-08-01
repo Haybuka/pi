@@ -56,12 +56,6 @@ const UpdateProfileForm = () => {
           </p>
         </label>
         <Button text={'update'} type="submit" />
-        {/* <button
-          type="submit"
-          className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
-        >
-          Update
-        </button> */}
       </form>
     </Tab.Panel>
   );

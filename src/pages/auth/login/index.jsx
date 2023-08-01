@@ -1,26 +1,33 @@
 import React, { useState, useContext } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
 import { ReactComponent as EyeSlash } from './eyeSlash.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik, FormikProvider } from 'formik';
 import * as yup from 'yup';
 import Inputs from '../../../components/input';
-import { useLoginRequest } from '../../../api/login';
+import {
+  useAdminLoginRequest,
+  useMerchantLoginRequest,
+} from '../../../api/login';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '../../../components/button/button';
 import { AuthContext } from '../../../context/authContext';
+import AuthSlider from '../AuthSlider';
 
 const Login = () => {
   const [username] = useState('');
   const [password] = useState('');
   const { handleProfileSet } = useContext(AuthContext);
-  const onError = (error) => {
-    toast(error?.response.data.result.message.split('_').join(' '));
-  };
+  const location = useLocation();
 
+  const from = location.state?.from?.pathname || '/';
+  const [accountType, setAccountType] = useState('admin');
   const navigate = useNavigate('');
+  const onError = (error) => {
+    toast(error?.response?.data.result.message.split('_').join(' '));
+  };
 
   const onSuccess = (response) => {
     const data = response?.data;
@@ -30,17 +37,26 @@ const Login = () => {
     localStorage.setItem('__token__', content.token);
     localStorage.setItem('__profile__', JSON.stringify(profile));
     handleProfileSet(profile);
-    navigate('/');
+    // navigate('/');
+    navigate(from, { replace: true });
+    window.location.reload();
   };
 
   const options = {
     onError,
     onSuccess,
   };
-  const { mutate: loginRequest } = useLoginRequest(options);
+  const { mutate: loginAdminRequest, isLoading: adminLoading } =
+    useAdminLoginRequest(options);
+  const { mutate: loginMerchantRequest, isLoading: merchantLoading } =
+    useMerchantLoginRequest(options);
 
-  const handleFormSubmit = (values) => {
-    loginRequest(values);
+  const handleAdminFormSubmit = (values) => {
+    loginAdminRequest(values);
+  };
+
+  const handleMerchantFormSubmit = (values) => {
+    loginMerchantRequest(values);
   };
 
   const formik = useFormik({
@@ -49,35 +65,45 @@ const Login = () => {
       password,
     },
     validationSchema: yup.object().shape({
-      username: yup.string().required('field cannot be blank.'),
-      password: yup.string().required(' is required.'),
+      username: yup.string().required('Above field cannot be blank.'),
+      password: yup.string().required('Above field is required.'),
     }),
     onSubmit: (values) => {
-      handleFormSubmit(values);
-      setSubmitting(false);
+      accountType === 'admin'
+        ? handleAdminFormSubmit(values)
+        : handleMerchantFormSubmit(values);
     },
   });
 
-  const {
-    handleBlur,
-    errors,
-    values,
-    handleSubmit,
-    setFieldValue,
-    isSubmitting,
-    setSubmitting,
-  } = formik;
+  const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
   return (
-    <main className="w-screen h-screen grid grid-cols-12">
-      <section className="hidden md:block h-full col-span-5 w-full p-3">
-        <aside className="h-full bg-[#002D62] rounded-lg"></aside>
+    <main className="w-screen h-screen grid grid-cols-12 place-item-center">
+      <section className="hidden h-full col-span-5 p-3">
+        <aside className="h-full rounded-lg">
+          <AuthSlider />
+        </aside>
       </section>
-      <section className=" bg-white col-span-12 md:col-span-7 flex justify-center items-center flex-col">
+      <section className=" bg-white col-span-12  flex justify-center items-center flex-col">
+        {accountType !== 'merchant' ? (
+          <aside
+            className="uppercase text-sm my-4 absolute top-10 right-6 text-[#002D62] cursor-pointer"
+            onClick={() => setAccountType('merchant')}
+          >
+            login as merchant
+          </aside>
+        ) : (
+          <aside
+            className="uppercase text-sm my-4 absolute top-10 right-6 text-[#002D62] cursor-pointer"
+            onClick={() => setAccountType('admin')}
+          >
+            login as admin
+          </aside>
+        )}
         <>
           <LoginLogo />
           <FormikProvider value={formik}>
             <form
-              className="w-full px-6 md:w-[500px] my-4"
+              className="w-full px-6 md:w-[600px] my-4"
               onSubmit={handleSubmit}
             >
               <div className="my-6">
@@ -102,33 +128,26 @@ const Login = () => {
                   error={errors?.password}
                 />
               </div>
-              <Button isSubmitting={isSubmitting} text={'login'} />
+              <Button
+                isSubmitting={adminLoading || merchantLoading}
+                text={'login'}
+              />
 
-              <p className="my-4">
+              <p className="w-full  text-black py-3 rounded-2xl uppercase text-sm cursor-pointer">
                 Dont have an account ?
                 <Link to="/register" className="text-[#002D62]">
                   {' '}
                   sign up
                 </Link>
               </p>
-              <p className="my-4 text-center">
-                <span className="text-[#002D62">forgot password?</span>
+              <p className="my-4 text-center uppercase text-sm">
+                <span className="text-[#002D62] underline">
+                  forgot password?
+                </span>
               </p>
             </form>
           </FormikProvider>
         </>
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
       </section>
     </main>
   );

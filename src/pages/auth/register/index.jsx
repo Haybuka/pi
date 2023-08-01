@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
 import { ReactComponent as EyeSlash } from './eyeSlash.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/button';
+import AuthSlider from '../AuthSlider';
 // #1a56db
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   return (
     <main className="w-screen h-screen grid grid-cols-12">
-      <section className=" bg-white col-span-12 md:col-span-7 flex justify-center items-center flex-col">
+      <section className=" bg-white col-span-12 md:col-span-12 flex justify-center items-center flex-col">
         <>
           <LoginLogo />
           <form className="w-full px-6 md:w-[700px] my-4">
@@ -73,12 +75,21 @@ const Register = () => {
               </p>
             </label>
             <Button text={`sign up`} classProp={`my-2`} />
-            <Button text={`login`} classProp={`my-2`} />
+
+            <p
+              onClick={() => navigate('/')}
+              className="w-full  text-black text-center py-3 rounded-2xl uppercase text-sm cursor-pointer"
+            >
+              Already have an account ?{' '}
+              <span className="text-[#002D62] cursor-pointer">login</span>
+            </p>
           </form>
         </>
       </section>
-      <section className="hidden md:block h-full col-span-5 w-full p-3">
-        <aside className="bg-[#002D62] h-full rounded-lg"></aside>
+      <section className="hidden  h-full col-span-6 w-full p-3">
+        <aside className=" h-full rounded-lg">
+          <AuthSlider />
+        </aside>
       </section>
     </main>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-const Inputs = ({ type, name, value, handleInputChange, handleBlur, error, displayName, maxLength, isEdit = false, rest }) => {
+const Inputs = ({ type, name, value, handleInputChange, handleBlur, error, displayName, maxLength, rest }) => {
+
   const handleInput = (event) => {
     //Function to cut and check maxlength of a phone number
     const phoneLength = 11;
@@ -10,8 +11,8 @@ const Inputs = ({ type, name, value, handleInputChange, handleBlur, error, displ
         handleInputChange(name, event.target.value);
         break;
       case 'number':
-        let checkedNum = `${event.target.value}`.slice(0, phoneLength);
-        handleInputChange(name, checkedNum);
+        // let checkedNum = `${event.target.value}`.slice(0, phoneLength);
+        handleInputChange(name, Number(event.target.value));
 
         break;
       default:
@@ -32,7 +33,8 @@ const Inputs = ({ type, name, value, handleInputChange, handleBlur, error, displ
           className="w-full py-3 px-4 outline-none focus:outline-none shadow-lg rounded-2xl"
           placeholder="John Doe"
           value={value}
-          onChange={handleInput}
+          // onChange={handleInput}
+          onChange={(e) => type !== "number" ? handleInputChange(name, e.target.value) : handleInputChange(name, Number(e.target.value))}
           onBlur={handleBlur}
           maxLength={maxLength}
           {...rest}

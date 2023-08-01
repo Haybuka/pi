@@ -8,20 +8,23 @@ const Button = ({
   isSubmitting,
   handleClick,
 }) => {
-  console.log({ isSubmitting });
-  return isSubmitting ? (
-    <div className={styles.loader}></div>
-  ) : (
-    <button
-      type={type}
-      onClick={handleClick}
-      className={cls(
-        'w-full bg-[#002D62] text-white py-3 rounded-2xl uppercase text-sm cursor-pointer',
-        classProp
+  return (
+    <>
+      {isSubmitting ? (
+        <div className={styles.loader}></div>
+      ) : (
+        <button
+          type={type}
+          onClick={handleClick}
+          className={cls(
+            'w-full bg-[#002D62] text-white py-3 rounded-2xl uppercase text-sm cursor-pointer',
+            classProp
+          )}
+        >
+          {text}
+        </button>
       )}
-    >
-      {text}
-    </button>
+    </>
   );
 };
 

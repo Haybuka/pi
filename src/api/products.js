@@ -1,10 +1,28 @@
 import { useMutation, useQuery } from "react-query"
 import axios from './index'
+//merchant
+
+const createMerchantProductRequest = (data) => {
+  return axios.post('v1/product', { data })
+}
+
+const updateMerchantProductRequest = (data) => {
+  return axios.put('v1/product', { data })
+}
+
+export const useCreateMerchantProductRequest = (options) => {
+  return useMutation(createMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+}
+
+export const useUpdateMerchantProductRequest = (options) => {
+  return useMutation(updateMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+}
+//admin
 const fetchProductCategories = (data) => {
   return axios.get('v1/product/category/-')
 }
 
-const createProductRequest = (data) => {
+const createAdminProductRequest = (data) => {
   return axios.post('v1/product/category', { data })
 }
 
@@ -22,6 +40,8 @@ const fetchProductCategory = ({ queryKey }) => {
   return axios.get(`v1/product/category/${id}`)
 }
 
+
+//admin
 export const useGetProductCategories = (options = {}) => {
   return useQuery("products-category", fetchProductCategories,
     {
@@ -44,7 +64,7 @@ export const useGetProductCategory = (options = {}) => {
 
 
 export const useCreateCategoryRequest = (options) => {
-  return useMutation(createProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  return useMutation(createAdminProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
 }
 
 export const useUpdateCategoryRequest = (options) => {

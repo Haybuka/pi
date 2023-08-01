@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
     setProfile(user)
   }
   const values = { profile, handleProfileSet }
-  // console.log({ profile })
+
   return (
     <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
   )

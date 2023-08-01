@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { ThemeContext } from '../../context/themecontext';
 import { ReactComponent as Logo } from '../../images/icons/logo.svg'
@@ -13,29 +13,72 @@ import cls from 'classnames'
 import styles from './sidebar.module.css'
 
 const Sidenav = ({ isSidebarOpen }) => {
-  const { isDark } = useContext(ThemeContext)
-  const navigations = [
-    {
-      name: 'Dashboard',
-      url: '/',
-      icon: <HomeIcon />
-    },
-    {
-      name: 'Products',
-      url: 'products',
-      icon: <ProductsIcon />
+  const { isDark } = useContext(ThemeContext);
+  const userProfile = JSON.parse(localStorage.getItem("__profile__"))
+  // verify user
+  const userType = (userProfile) => {
+    switch (userProfile?.type) {
+      //0 is admin
+      //1 is merchant
+      case 0:
+        return "admin";
+      case 1:
+        return "merchant";
+      default:
+        return "none available";
     }
-    ,
-    {
-      name: 'Category',
-      url: 'category',
-      icon: <ProductsIcon />
-    },
-    {
-      name: 'Reports',
-      url: 'reports',
-      icon: <ReportsIcon />
-    },
+  };
+
+  const merchantNavigations =
+    [
+      {
+        name: 'Dashboard',
+        url: '/',
+        icon: <HomeIcon />
+      },
+      // {
+      //   name: 'Product',
+      //   url: 'products',
+      //   icon: <ProductsIcon />
+      // },
+      {
+        name: 'My products',
+        url: 'products',
+        icon: <ProductsIcon />
+      },
+      {
+        name: 'Reports',
+        url: 'reports',
+        icon: <ReportsIcon />
+      }
+    ]
+  const adminNavigations =
+    [
+      {
+        name: 'Dashboard',
+        url: '/',
+        icon: <HomeIcon />
+      },
+      {
+        name: 'Categories',
+        url: 'categories',
+        icon: <ProductsIcon />
+      }
+      ,
+      // {
+      //   name: 'Category',
+      //   url: 'category',
+      //   icon: <ProductsIcon />
+      // },
+      {
+        name: 'Reports',
+        url: 'reports',
+        icon: <ReportsIcon />
+      },
+
+    ]
+  const footerNavigation = [
+
     {
       name: 'profile',
       url: '/profile',
@@ -47,6 +90,7 @@ const Sidenav = ({ isSidebarOpen }) => {
       icon: <SettingsIcon />
     }
   ]
+
   return (
     <div className={isSidebarOpen ? cls('') : cls('-translate-x-full')}>
       <aside id="default-sidebar" className={cls(styles.sidebar)} aria-label="Sidebar">
@@ -55,9 +99,8 @@ const Sidenav = ({ isSidebarOpen }) => {
 
             <ul className="space-y-2 font-medium">
               <Logo />
-
-              {
-                navigations.map((navItems, id) => (
+              {userType(userProfile) === "merchant" ? (
+                merchantNavigations.map((navItems, id) => (
                   <li key={id} className='my-6'>
                     <NavLink to={navItems.url}
                       className={({ isActive, }) =>
@@ -69,11 +112,37 @@ const Sidenav = ({ isSidebarOpen }) => {
                     </NavLink>
 
                   </li>))
-              }
+              ) : (
+                adminNavigations.map((navItems, id) => (
+                  <li key={id} className='my-6'>
+                    <NavLink to={navItems.url}
+                      className={({ isActive, }) =>
+                        isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
+                      }
+                    >
+                      {navItems.icon}
+                      <span className="ml-3">{navItems.name}</span>
+                    </NavLink>
+
+                  </li>))
+              )}
 
 
             </ul>
             <ul>
+              {footerNavigation.map((navItems, id) => (
+                <li key={id} className='my-6'>
+                  <NavLink to={navItems.url}
+                    className={({ isActive, }) =>
+                      isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
+                    }
+                  >
+                    {navItems.icon}
+                    <span className="ml-3">{navItems.name}</span>
+                  </NavLink>
+
+                </li>))
+              }
               <li className='my-6'>
                 <p
                   className={cls(styles.link, 'cursor-pointer ')}

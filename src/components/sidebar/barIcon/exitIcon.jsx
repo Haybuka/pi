@@ -13,13 +13,13 @@ const ExitIcon = ({ onClick, visible }) => {
     navigate('login');
   };
   return (
-    <div
+    <span
       onClick={handleLogOut}
       className="mr-3 cursor-pointer flex items-center"
     >
       <Icon />
       {visible && <span className="ml-3">Logout</span>}
-    </div>
+    </span>
   );
 };
 
