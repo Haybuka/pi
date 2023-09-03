@@ -6,15 +6,31 @@ const createMerchantProductRequest = (data) => {
   return axios.post('v1/product', { data })
 }
 
+
+// export const _uploadImage = async (formData) => {
+//   return await axios.post('org/create-task', formData, {
+//     headers: { 'Content-Type': 'multipart/form-data' }
+//   });
+// };
+
+// export const useImageUpload = () => {
+//   const imageUploadMutation = useMutation(_uploadImage);
+//   return {
+//     imageUploadMutation
+//   };
+// };
+
+
 const createMerchantProductImage = (data) => {
 
 
-  const formData = new FormData();
-  formData.append("id", data?.id)
-  for (let index = 0; index < data?.files.length; index++) {
-    formData.append("images", data?.files[index])
-  }
-  return axios.post('v1/product/image', formData, {
+  // const formData = new FormData();
+  // formData.append("id", data?.id)
+  // for (let index = 0; index < data?.files.length; index++) {
+  //   formData.append("images", data?.files[index])
+  // }
+  console.log({ data })
+  return axios.post('v1/product/image', data, {
     headers: {
       "Content-Type": "multipart/form-data",
     }

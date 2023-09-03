@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 import {
   useGetProductCategories,
   useGetProductCategory,
 } from '../../../api/products';
 import ComboBox from '../../combobox/combobox';
-// import products from './produts';
 import Button from '../../button/button';
 import useMerchantProduct from '../../../hooks/useMerchantProduct';
 import { useEffect } from 'react';
@@ -14,6 +13,7 @@ import CreateMerchantProduct from '../../products/createMerchantProduct';
 import ProductCard from './Card/card';
 import ImageUpload from './ImageUpload/imageUpload';
 import DeleteProduct from './deleteProduct/delete';
+import Upload from '../../imageUpload/upload';
 
 const Index = () => {
   const [page, setPage] = useState(0);
@@ -34,7 +34,6 @@ const Index = () => {
   const [deleteProduct, setDeleteProduct] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(isPreviousData);
   const onError = (error) => {
     // const detail = error?.response.data?.result.details;
     console.log({ error });
@@ -116,6 +115,7 @@ const Index = () => {
     setIsImageUpload(true);
     setIsEditing(false);
     setIsDeleteAlert(false);
+    setShowCategorySelect(false);
   };
 
   const handleProductCreate = () => {
@@ -169,20 +169,19 @@ const Index = () => {
             {!merchantProduct?.length === 0 ? (
               <p
                 onClick={() => setPage((page) => page + 1)}
-                // disabled={merchantProduct?.length === 0}
                 className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer border-gray-700"
               >
                 Next
               </p>
             ) : (
-              <p className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer border-gray-700">
+              <p className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-not-allowed border-gray-700">
                 Next
               </p>
             )}
           </div>
           <Button
             text={'Add product'}
-            classProp={'w-[130px]'}
+            classProp={'w-[150px]'}
             handleClick={handleProductCreate}
           />
         </aside>
@@ -222,11 +221,11 @@ const Index = () => {
           handleModal={handleModalClose}
           classAdd={
             showMerchantProduct || isEditing
-              ? 'w-3/4 h-3/4 overflow-y-scroll relative'
+              ? 'w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'
               : ''
           }
         >
-          <section>
+          <section className="w-full">
             {showCategorySelect && (
               <aside className="my-2">
                 <p className="uppercase text-sm">Select product category</p>
@@ -265,7 +264,7 @@ const Index = () => {
                 isEdit={true}
               />
             )}
-            {isImageUpload && <ImageUpload id={imageId} />}
+            {isImageUpload && <Upload id={imageId} />}
             {isDeleteAlert && (
               <DeleteProduct
                 product={deleteProduct}

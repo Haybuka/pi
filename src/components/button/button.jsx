@@ -17,7 +17,7 @@ const Button = ({
           type={type}
           onClick={handleClick}
           className={cls(
-            'w-full bg-[#002D62] text-white py-3 rounded-2xl uppercase text-sm cursor-pointer',
+            'w-full bg-[#002D62] text-white py-3 rounded-xl uppercase text-sm cursor-pointer',
             classProp
           )}
         >

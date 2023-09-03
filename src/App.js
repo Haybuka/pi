@@ -1,16 +1,15 @@
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Route, Routes, } from 'react-router-dom';
+import { Suspense, lazy, } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools'
 
 import './App.css'
-import useAuth from './hooks/useAuth';
 import RequireAuth from './AuthGuard/requireAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LogOut from './components/logout';
 
 const LoadingScreen = () => (<p>loading</p>)
 const Loadable = (Component) => (props) => {
-  // const { pathname } = useLocation();
 
 
   return (
@@ -22,9 +21,7 @@ const Loadable = (Component) => (props) => {
 
 function App() {
 
-  const location = useLocation();
 
-  // const { userProfile } = useAuth()
 
   // AUTHENTICATION
   const Register = Loadable(lazy(() => import('./pages/auth/register')));
@@ -35,7 +32,6 @@ function App() {
   const Home = Loadable(lazy(() => import('./pages/dashboard')))
   const Settings = Loadable(lazy(() => import('./pages/settings')))
   const Profile = Loadable(lazy(() => import('./pages/profile')))
-  // const Products = Loadable(lazy(() => import('./pages/products')))
   const Category = Loadable(lazy(() => import('./pages/category')))
   const Categories = Loadable(lazy(() => import('./pages/categories')))
   const EditCategory = Loadable(lazy(() => import('./pages/editCategory')))
@@ -45,6 +41,8 @@ function App() {
   const MerchantProducts = Loadable(lazy(() => import('./pages/merchantProducts')))
 
 
+
+
   return (
     <div className="App">
 
@@ -52,18 +50,11 @@ function App() {
         <Route path='/' element={<Sidebar />}>
 
           <Route index element={<Home />} />
-          {/* <Route element={<RequireAuth accountType={"admin"} />}>
-          </Route> */}
-          {/* <Route element={<RequireAuth accountType={"merchant"} />}>
-            <Route index element={<p className='text-black bg-red-400'> Merchant</p>} />
-          </Route> */}
 
 
           <Route element={<RequireAuth accountType={"merchant"} />}>
 
             <Route path="products" element={<MerchantProducts />} />
-            {/* <Route path="products" element={<Products />} />
-            <Route path="products/:preview" element={<Products />} /> */}
           </Route>
           <Route element={<RequireAuth accountType={"admin"} />}>
 
@@ -96,6 +87,7 @@ function App() {
         pauseOnHover
         theme="light"
       />
+      <LogOut />
     </div>
   );
 }

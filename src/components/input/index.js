@@ -30,7 +30,7 @@ const Inputs = ({ type, name, value, handleInputChange, handleBlur, error, displ
         <input
           type={type}
           name={name}
-          className="w-full py-3 px-4 outline-none focus:outline-none shadow-lg rounded-2xl"
+          className="w-full py-3 px-4 outline-none focus:outline-none shadow-lg rounded-lg"
           placeholder="John Doe"
           value={value}
           // onChange={handleInput}

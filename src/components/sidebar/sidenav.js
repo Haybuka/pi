@@ -11,6 +11,7 @@ import LogoutIcon from './barIcon/exitIcon';
 
 import cls from 'classnames'
 import styles from './sidebar.module.css'
+import Modal from '../modal/modal';
 
 const Sidenav = ({ isSidebarOpen }) => {
   const { isDark } = useContext(ThemeContext);
@@ -36,11 +37,6 @@ const Sidenav = ({ isSidebarOpen }) => {
         url: '/',
         icon: <HomeIcon />
       },
-      // {
-      //   name: 'Product',
-      //   url: 'products',
-      //   icon: <ProductsIcon />
-      // },
       {
         name: 'My products',
         url: 'products',
@@ -65,11 +61,6 @@ const Sidenav = ({ isSidebarOpen }) => {
         icon: <ProductsIcon />
       }
       ,
-      // {
-      //   name: 'Category',
-      //   url: 'category',
-      //   icon: <ProductsIcon />
-      // },
       {
         name: 'Reports',
         url: 'reports',

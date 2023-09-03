@@ -1,5 +1,5 @@
 .modal_sub {
-  @apply fixed uppercase py-4 px-6 bg-white shadow-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-xl;
+  @apply fixed uppercase py-4 px-6 bg-white shadow-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rounded-lg;
 }
 
 .modal::after {

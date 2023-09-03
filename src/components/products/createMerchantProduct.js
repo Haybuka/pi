@@ -140,7 +140,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
   // console.log(file)
   return (
-    <section className="text-black my-10 ">
+    <section className="text-black my-6">
       <aside className="border justify-between items-center mb-2 bg-white p-4 rounded-lg">
         <article className="flex w-full justify-between items-center">
           <section className='flex items-center'>
@@ -152,17 +152,6 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
               <p className="uppercase text-sm my-2"> {category?.details}</p>
             </div>
           </section>
-          {/* <div className="my-3">
-            <p className="uppercase text-sm relative text-white bg-[#002d62] rounded-xl py-2 px-6 my-2">
-              Add Images
-              <input type='file' onChange={handleFileChange} className='absolute top-0 left-0 w-full h-full opacity-0 px-6' />
-            </p>
-            {file && (
-              <p className="uppercase text-sm relative text-white bg-[#002d62] rounded-xl py-2 px-6 my-4 cursor-pointer" onClick={handleImageUpload}>
-                Upload
-              </p>
-            )}
-          </div> */}
         </article>
       </aside>
       <FormikProvider value={formik}>

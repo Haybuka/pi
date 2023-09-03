@@ -39,6 +39,7 @@ export default function ComboBox({ items, handleProductCategory }) {
               onChange={handleInputChange}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <CheckIcon />
             </Combobox.Button>
           </div>
           <Transition

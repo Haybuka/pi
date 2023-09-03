@@ -49,7 +49,7 @@ const FieldSelection = ({ options }) => {
             <input
               type={`${handleInputType(options.fieldType)}`}
               {...getFieldProps(`${options.optionName}`)}
-              className="w-full rounded-lg px-2.5 text-sm text-gray-900 bg-white dark:bg-gray-700 border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#f47f30] peer"
+              className="w-full rounded-md px-2.5 text-sm text-gray-900 bg-white dark:bg-gray-700 border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#f47f30] peer"
             />
           </div>
         ) : (

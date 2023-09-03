@@ -4,17 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/authContext';
 
 const ExitIcon = ({ onClick, visible }) => {
-  const navigate = useNavigate();
-  const { handleProfileSet } = useContext(AuthContext);
+  const { handleSetLogOut } = useContext(AuthContext);
 
-  const handleLogOut = () => {
-    localStorage.clear();
-    handleProfileSet({});
-    navigate('login');
-  };
+  // const handleLogOut = () => {
+  //   localStorage.clear();
+  //   handleProfileSet({});
+  //   navigate('login');
+  // };
   return (
     <span
-      onClick={handleLogOut}
+      onClick={handleSetLogOut}
       className="mr-3 cursor-pointer flex items-center"
     >
       <Icon />
