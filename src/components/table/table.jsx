@@ -139,10 +139,9 @@ const AllTableHooks = ({ data, userType }) => {
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         </aside>
         {userType === 'admin' && (
-          <aside className="flex justify-end">
+          <aside className="flex justify-end w-[160px]">
             <Button
               text={'create category'}
-              classProp={'w-[160px] '}
               handleClick={() => navigate('/category')}
             />
           </aside>

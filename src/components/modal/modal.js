@@ -31,7 +31,7 @@ const Modal = ({ handleModal, id = '', children, classAdd }) => {
             />
           </svg>
         </div>
-        <section className="px-10">
+        <section >
           {children}
         </section>
       </article>

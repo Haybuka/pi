@@ -10,7 +10,7 @@ import {
   useMerchantLoginRequest,
 } from '../../../api/login';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '../../../components/button/button';
 import { AuthContext } from '../../../context/authContext';

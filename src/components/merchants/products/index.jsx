@@ -179,11 +179,9 @@ const Index = () => {
               </p>
             )}
           </div>
-          <Button
-            text={'Add product'}
-            classProp={'w-[150px]'}
-            handleClick={handleProductCreate}
-          />
+          <div className="w-[150px]">
+            <Button text={'Add product'} handleClick={handleProductCreate} />
+          </div>
         </aside>
       </section>
       {merchantFetching ? (

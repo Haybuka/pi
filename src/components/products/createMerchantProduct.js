@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
 
 const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
-  console.log(category)
+
   const onImageError = (error) => {
     toast(error?.response?.data.result.message.split('_').join(' '));
   };
@@ -118,14 +118,9 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
       if (!isEdit) {
         const data = { ...values };
         createProduct(data);
-        console.log("creating a product")
-        // setSubmitting((prev) => false);
       } else {
         const data = { id, ...values };
         updateProduct(data);
-        console.log("updating a product")
-
-        // setSubmitting((prev) => false);
       }
     },
   });
@@ -329,7 +324,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                                     onChange={(event) => {
                                       setFieldValue(
                                         `productOptions.${[id]}.fieldAction`,
-                                        Number(event.target.value)
+                                        Number(event.target.value ? event.target.value : "2")
                                       );
                                     }}
                                   >

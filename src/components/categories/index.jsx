@@ -3,12 +3,14 @@ import AllTableHooks from '../table/table';
 import { useGetProductCategories } from '../../api/products';
 
 const Index = () => {
-  const { data: categories, isLoading } = useGetProductCategories({
+  const { data: categories, isFetched } = useGetProductCategories({
     refetchOnMount: true,
   });
+
+  console.log(isFetched);
   return (
     <div>
-      <AllTableHooks data={categories} userType="admin" />
+      {isFetched && <AllTableHooks data={categories} userType="admin" />}
     </div>
   );
 };
