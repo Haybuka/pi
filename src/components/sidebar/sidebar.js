@@ -54,17 +54,8 @@ const Sidebar = () => {
 
           </aside>
           <aside className='flex items-center'>
-            {/* <DarkModeSwitch
-              checked={isDark}
-              onChange={handleModeSet}
-              size={25}
-              moonColor='gray'
-              sunColor='#d35400'
-            /> */}
             <ProfileIcon />
-
             <ExitIcon />
-
           </aside>
         </article>
         <section className="p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll">

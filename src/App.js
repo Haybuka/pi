@@ -7,6 +7,7 @@ import RequireAuth from './AuthGuard/requireAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LogOut from './components/logout';
+import NotFound from './pages/notFound';
 
 const LoadingScreen = () => (<p>loading</p>)
 const Loadable = (Component) => (props) => {
@@ -72,6 +73,7 @@ function App() {
         <Route path='login/merchant' element={<Login />} />
         <Route path='register' element={<Register />} />
         {/* <Route path='*' element={<Navigate to="/" state={{ from: location }} replace />} /> */}
+        <Route path='*' element={<NotFound />} />
 
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />
