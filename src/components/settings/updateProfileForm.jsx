@@ -1,12 +1,19 @@
 import { Tab } from '@headlessui/react';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../button/button';
+import { AuthContext } from '../../context/authContext';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const UpdateProfileForm = () => {
+  const { profile: userProfile } = useContext(AuthContext);
+
+  const user = JSON.parse(localStorage.getItem('__profile__'));
+  const [profile] = useState(userProfile.email ? userProfile : user);
+
+  console.log({ profile });
   return (
     <Tab.Panel className={classNames('rounded-xl  px-6 py-4')}>
       <form>
@@ -19,6 +26,7 @@ const UpdateProfileForm = () => {
               type="text"
               className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
               placeholder="John Doe"
+              value={profile?.fullname}
             />
             <p className="uppercase text-sm bg-white text-center translate-x-2 px-2">
               fullname
@@ -29,6 +37,7 @@ const UpdateProfileForm = () => {
               type="text"
               className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
               placeholder="John Doe"
+              value={profile?.email}
             />
             <p className="uppercase text-sm bg-white text-center translate-x-2 px-2">
               email
@@ -40,6 +49,7 @@ const UpdateProfileForm = () => {
             type="text"
             className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
             placeholder="John Doe"
+            value={profile?.organization?.phone}
           />
           <p className="uppercase text-sm bg-white text-center translate-x-2 px-2">
             phone

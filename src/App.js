@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LogOut from './components/logout';
 import NotFound from './pages/notFound';
 
-const LoadingScreen = () => (<p>loading</p>)
+const LoadingScreen = () => (<section className='w-full h-full flex justify-center items-center'><p>loading</p></section>)
 const Loadable = (Component) => (props) => {
 
 

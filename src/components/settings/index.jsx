@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tab } from '@headlessui/react';
 import SettingsTab from './tab';
 import UpdateProfileForm from './updateProfileForm';
