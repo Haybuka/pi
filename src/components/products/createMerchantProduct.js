@@ -11,6 +11,7 @@ import { useCreateMerchantProductImageRequest } from '../../api/merchants/produc
 
 const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
+
   const onImageError = (error) => {
     toast(error?.response?.data.result.message.split('_').join(' '));
   };
@@ -68,7 +69,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
   }
 
   let initialValues = {
-    baseAmount: category.baseAmount ? category?.baseAmount : '',
+    baseAmount: category?.baseAmount ? category?.baseAmount : '',
     ...category
   };
 
@@ -91,21 +92,52 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
     onSuccess,
   };
 
-  const { mutate: createProduct } = useCreateMerchantProductRequest(options)
-  const { mutate: updateProduct } = useUpdateMerchantProductRequest(options)
+  const { mutate: createProduct } = useCreateMerchantProductRequest(options);
+  const { mutate: updateProduct } = useUpdateMerchantProductRequest(options);
+
+  let validationShape = {
+    baseAmount: yup.number("Value must be a number").min(1).required("base amount rewuired"),
+
+    productDetails: yup
+      .array()
+      .of(
+        yup.object().shape({
+          description: yup.string().required('field is required.'),
+        })
+      ),
+    productOptions: yup
+      .array()
+      .of(
+        yup.object().shape({
+          optionName: yup.string().required('field is required.'),
+          options: yup.lazy((value) => {
+
+            switch (typeof value) {
+              case 'string':
+                return yup.string().required('Required field').typeError('Required field')
+              case 'number':
+                return yup.string().required('Required field').typeError('Required field')
+
+              default:
+                return yup.array()
+                  .of(
+                    yup.object().shape({
+                      option: yup.string().required('field is required.'),
+                      price: yup.string().required('field is required.')
+                    })
+                  )
+            }
+          }),
+
+        })
+      ),
+  }
+
+
+
   const formik = useFormik({
     initialValues,
-    validationSchema: yup.object().shape({
-      baseAmount: yup.string().required('Base amount is required.'),
-
-      productDetails: yup
-        .array()
-        .of(
-          yup.object().shape({
-            description: yup.string().required('field is required.'),
-          })
-        ),
-    }),
+    validationSchema: yup.object().shape(validationShape),
     onSubmit: (value) => {
       const values = { category: category.id, ...value };
       delete values.catImage
@@ -116,24 +148,37 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 
       if (!isEdit) {
-        const data = { ...values };
+        // console.log(values)
+        let newValues = values.productOptions.map((options, id) => {
+          if (options.fieldAction === null) {
+            options.fieldAction = 2
+            console.log("action is null")
+          }
+          return options
+        })
+
+        // console.log(newValues, "new values")
+        const data = { ...values, productOptions: newValues };
+        console.log(data)
         createProduct(data);
       } else {
-        const data = { id, ...values };
+        const data = { id: id, ...values };
+        console.log({ data })
         updateProduct(data);
       }
     },
   });
+
   const {
     handleBlur,
     handleSubmit,
     setFieldValue,
     resetForm,
     getFieldProps,
+    errors
   } = formik;
 
 
-  // console.log(file)
   return (
     <section className="text-black my-6">
       <aside className="border justify-between items-center mb-2 bg-white p-4 rounded-lg">
@@ -159,7 +204,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
             <aside>
               <div className="my-6">
                 <Inputs
-                  type="number"
+                  type="text"
                   name={`baseAmount`}
                   {...getFieldProps(
                     `baseAmount`
@@ -224,7 +269,6 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                             const { productOptions } = values;
 
                             let options = productOptions[id]?.options === null ? [{ option: "", price: '' }] : productOptions[id]?.options
-                            // console.log(options)
 
                             return (
 
@@ -234,7 +278,6 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                                 </h4>
 
                                 {options?.map((name, index) => {
-
                                   return (
 
                                     <section key={index} className="relative ">
@@ -252,6 +295,16 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                                             handleBlur={handleBlur}
                                             handleInputChange={setFieldValue}
                                           />
+                                          <ErrorMessage
+                                            name={`productOptions.${[id]}.options.${[index]}.option`}
+                                            render={(msg) => {
+                                              return (
+                                                <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+                                                  {`${productOptions[id].optionTitle} ${msg}`}
+                                                </div>
+                                              )
+                                            }}
+                                          />
                                         </div>
                                         <div className="my-2 col-span-5 w-full">
                                           <Inputs
@@ -265,7 +318,19 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                                             handleBlur={handleBlur}
                                             handleInputChange={setFieldValue}
                                           />
+                                          <ErrorMessage
+                                            name={`productOptions.${[id]}.options.${[index]}.price`}
+                                            render={(msg) => {
+                                              return (
 
+
+                                                <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+                                                  {` cost of ${productOptions[id].optionTitle} ${msg}`}
+                                                </div>
+
+                                              )
+                                            }}
+                                          />
                                         </div>
                                         <div className="button-group w-1/2 mx-auto flex justify-center col-span-2">
                                           {index > 0 && (
@@ -284,35 +349,17 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                                           </p>
                                         </div>
                                       </aside>
-                                      <ErrorMessage
-                                        name={`productOptions.${[id]}.options.${[index]}.option`}
+                                      <aside className='flex justify-evenly items-center'>
 
-                                        render={(msg) =>
 
-                                        (
-                                          <div className="text-[12px] uppercase text-red-400 block mt-2 ">
-                                            {`${productOptions[id].optionTitle} ${msg}`}
-                                          </div>
-                                        )}
-                                      />
-                                      <ErrorMessage
-                                        name={`productOptions.${[id]}.options.${[index]}.price`}
+                                      </aside>
 
-                                        render={(msg) =>
-
-                                        (
-                                          <div className="text-[12px] uppercase text-red-400 block mt-2 ">
-                                            {` cost of ${productOptions[id].optionTitle} ${msg}`}
-                                          </div>
-                                        )}
-                                      />
                                     </section>
 
                                   );
                                 })}
                                 <div className="my-4">
                                   <p className="uppercase bg-white text-sm translate-x-2 my-4">How does this affect base amount ?</p>
-
 
                                   <select
                                     defaultValue={2}
@@ -349,28 +396,46 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                         </FieldArray>
                       )
                       :
-                      (<div className="my-6">
-                        <Inputs
-                          type={handleInputType(details?.fieldType)}
-                          name={`productOptions.${[id]}.options`}
-                          {...getFieldProps(
-                            `productOptions.${[id]}.options`
-                          )}
-                          displayName={`${details.optionTitle}`}
-                          handleBlur={handleBlur}
-                          handleInputChange={setFieldValue}
-                        />
-                        <ErrorMessage
-                          name={`productOptions.${[id]}.options`}
+                      (
+                        <div className="my-6">
+                          <Inputs
 
-                          render={(msg) => (
-                            <div className="text-[12px] uppercase text-red-400 block mt-2 ">
-                              {details.optionTitle} {msg}
-                            </div>
-                          )}
-                        />
-                      </div>)
+                            type={handleInputType(details?.fieldType)}
+                            name={`productOptions.${[id]}.options`}
+                            {...getFieldProps(
+                              `productOptions.${[id]}.options`
+                            )}
+                            displayName={`${details.optionTitle}`}
+                            handleBlur={handleBlur}
+                            handleInputChange={setFieldValue}
+                          />
+                          <ErrorMessage
+                            // name={`productOptions.${[id]}.optionName`}
+                            name={`productOptions.${[id]}.options`}
+
+                            render={(msg) => {
+                              console.log({ msg })
+                              return (
+                                (
+                                  <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+                                    {details.optionTitle} {msg}
+                                  </div>
+                                )
+                              )
+                            }}
+                          />
+                        </div>)
+
                     }
+                    {/* <ErrorMessage
+                      name={`productOptions.${[id]}.options`}
+
+                      render={(msg) => (
+                        <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+                          {details.optionTitle} {msg}
+                        </div>
+                      )}
+                    /> */}
                   </section>
                 ))
               }

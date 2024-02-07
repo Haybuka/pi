@@ -17,7 +17,7 @@ import Upload from '../../imageUpload/upload';
 
 const Index = () => {
   const [page, setPage] = useState(0);
-  const { data: categories, isLoading } = useGetProductCategories();
+  const { data: categories = [], isLoading } = useGetProductCategories();
   const {
     data: merchantProduct,
     isFetched: merchantFetching,
@@ -30,7 +30,7 @@ const Index = () => {
   const [isDeleteAlert, setIsDeleteAlert] = useState(false);
   const [imageId, setImageId] = useState();
   const [editValues, setEditValues] = useState();
-  const [searchID, setSearchID] = useState(isLoading ? '' : categories[0]?.id);
+  const [searchID, setSearchID] = useState(categories[0]?.id);
   const [deleteProduct, setDeleteProduct] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -92,6 +92,7 @@ const Index = () => {
   };
 
   const handleProductEdit = (product) => {
+    console.log(product, 'merchant');
     const categories = {
       productDetails: product?.productDetails && [...product?.productDetails],
       productOptions: product?.productOptions && [...product?.productOptions],
@@ -186,7 +187,7 @@ const Index = () => {
       </section>
       {merchantFetching ? (
         <section className="flex gap-4 my-10 flex-wrap">
-          {filteredProducts.length > 0 ? (
+          {filteredProducts?.length > 0 ? (
             filteredProducts?.map((product) => (
               <ProductCard
                 options={{

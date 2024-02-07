@@ -46,6 +46,9 @@ export const useGetProductCategories = (options = {}) => {
   return useQuery("products-category", fetchProductCategories,
     {
       select: (data) => data?.data.content.categories,
+      onError: (error) => {
+        console.log(error, "error")
+      },
       ...options
     })
 }
