@@ -220,7 +220,7 @@ const Index = () => {
           handleModal={handleModalClose}
           classAdd={
             showMerchantProduct || isEditing
-              ? 'w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'
+              ? 'w-full md:w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'
               : ''
           }
         >

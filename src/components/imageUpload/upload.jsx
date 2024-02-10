@@ -79,7 +79,7 @@ function Upload({ id }) {
   ));
 
   return (
-    <div className="py-20">
+    <div className="py-20 w-full">
       <h1 className="text-center text-lg font-bold uppercase mb-4">
         Image Upload
       </h1>

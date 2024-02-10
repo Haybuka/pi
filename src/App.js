@@ -9,7 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import LogOut from './components/logout';
 import NotFound from './pages/notFound';
 
-const LoadingScreen = () => (<section className='w-full h-full flex justify-center items-center'><p>loading</p></section>)
+
+import { ReactComponent as LoginLogo } from './pages/auth/register/loginLogo.svg';
+
+const LoadingScreen = () => (<section className='w-screen h-screen flex justify-center items-center'><LoginLogo /></section>)
 const Loadable = (Component) => (props) => {
 
 

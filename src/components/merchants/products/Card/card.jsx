@@ -5,7 +5,7 @@ const ProductCard = ({ product, options }) => {
   const { handleProductEdit, handleImageUpload, handleProductDelete } = options;
 
   return (
-    <aside className="w-[300px] 2xl:w-[330px] shadow rounded-md overflow-hidden">
+    <aside className="w-full sm:w-auto lg:w-[300px] 2xl:w-[330px] shadow rounded-md overflow-hidden">
       <div
         className="h-[180px] bg-gray-300 relative cursor-pointer"
         onClick={() => handleImageUpload(product?.id)}
