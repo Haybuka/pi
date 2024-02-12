@@ -11,11 +11,11 @@ const ProductCard = ({ product, options }) => {
         onClick={() => handleImageUpload(product?.id)}
       >
         <SvgIcon />
-        <img
+        {/* <img
           src={HeadPhone}
           alt="product"
           className="w-full h-full object-cover"
-        />
+        /> */}
       </div>
       <div className="p-2">
         <h3 className="uppercase text-sm flex justify-between items-center my-3">
