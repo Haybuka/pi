@@ -9,6 +9,7 @@ import ProfileIcon from './barIcon/profileIcon';
 import ExitIcon from './barIcon/exitIcon';
 import RightIcon from './barIcon/rightIcon';
 import useAuth from '../../hooks/useAuth';
+import MyPopover from './profilePopOver';
 
 const Sidebar = () => {
   const { isDark, handleModeSet } = useContext(ThemeContext)
@@ -54,6 +55,7 @@ const Sidebar = () => {
 
           </aside>
           <aside className='flex items-center'>
+            <MyPopover />
             <ProfileIcon />
             <ExitIcon />
           </aside>
