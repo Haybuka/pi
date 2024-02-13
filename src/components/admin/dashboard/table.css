@@ -1,0 +1,21 @@
+table {
+  @apply rounded-md overflow-hidden w-full py-3 px-6 text-black my-3;
+}
+
+table td,
+table th {
+  @apply border p-2;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th,
+tfoot td {
+  @apply py-2 bg-gray-200;
+}

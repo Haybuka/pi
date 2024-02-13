@@ -58,11 +58,11 @@ export const COLUMNS = [
     Cell: ({ value }) => {
       switch (value) {
         case 1:
-          return <span className="bg-green-200 text-green-500 inline-block px-4 py-1 rounded-full">Order successful</span>
+          return <span className="bg-green-100 text-green-400 inline-block px-4 py-1 rounded-full">Order successful</span>
         case -1:
-          return <span className="bg-red-200 text-red-500 inline-block px-4 py-1 rounded-full">Order Cancelled</span>
+          return <span className="bg-red-100 text-red-400 inline-block px-4 py-1 rounded-full">Order Cancelled</span>
         default:
-          return <span className="bg-yellow-200 text-yellow-500 inline-block px-4 py-1 rounded-full">Order Pending</span>;
+          return <span className="bg-yellow-100 text-yellow-400 inline-block px-4 py-1 rounded-full">Order Pending</span>;
       }
     },
   },

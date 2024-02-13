@@ -3,8 +3,9 @@ import cls from 'classnames';
 import CountUp from 'react-countup';
 import { LineChart } from '../../merchants/dashboard/lineChart';
 import DoughnutChart from './doughnut';
-import AllTableHooks from '../../table/table';
+
 import { COLUMNS } from './columns';
+import AdminTable from './adminTable';
 
 const AdminDashboard = () => {
   const formatNumber = (number) =>
@@ -169,7 +170,7 @@ const AdminDashboard = () => {
         </aside>
       </article>
       <article className="mt-16">
-        <AllTableHooks
+        <AdminTable
           label={'transactions'}
           data={transactions}
           COLUMNS={COLUMNS}
