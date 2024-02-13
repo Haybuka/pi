@@ -45,7 +45,7 @@ function MyPopover() {
           </p>
           <p
             onClick={handleSetLogOut}
-            className="flex items-center py-3 my-2 capitalize px-4 gap-x-2 border-0 border-t cursor-pointer"
+            className="flex items-center py-3 my-2 capitalize px-4 gap-x-2 border-0 border-t cursor-pointer text-red-400"
           >
             <ProfileIcon />
             <span>Logout</span>
