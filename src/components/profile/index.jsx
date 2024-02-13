@@ -14,7 +14,6 @@ const Index = () => {
     navigate('/settings');
   };
 
-  console.log(profile);
   return (
     <main className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
       <div className="flex justify-center">

@@ -1,33 +1,54 @@
 import { Popover } from '@headlessui/react';
-import ProfileIcon from './barIcon/profileIcon';
-
+import { ReactComponent as ProfileIcon } from '../../images/icons/profile.svg';
 import { ReactComponent as SettingsIcon } from '../../images/icons/settings.svg';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 function MyPopover() {
+  const navigate = useNavigate();
+  const { profile: userProfile, handleSetLogOut } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem('__profile__'));
+  const [profile] = useState(userProfile.email ? userProfile : user);
+
   return (
     <Popover className="relative">
-      <Popover.Button>Solutions</Popover.Button>
+      <Popover.Button>
+        <div className="bg-gray-400 rounded-full p-2 text-white">
+          <ProfileIcon />
+        </div>
+      </Popover.Button>
 
       <Popover.Panel className="absolute z-10 w-[250px] right-0 rounded-md overflow-hidden mt-2 shadow-md">
         <section className="bg-white">
           <aside className=" bg-[#002D62] text-white  py-3 px-2 flex items-center gap-x-2">
             <p className="h-10 w-10 rounded-full bg-white"></p>
             <div>
-              <p>John Deo</p>
-              <p>johndeo@gmail.com</p>
+              <p className="capitalize">{profile?.fullname}</p>
+              <p>{profile?.email}</p>
             </div>
           </aside>
-          <p className="flex items-center py-3 my-2 capitalize mx-4 gap-x-2">
+          <p
+            onClick={() => navigate('/profile')}
+            className="flex items-center py-3 my-2 capitalize mx-4 gap-x-2 cursor-pointer"
+          >
+            <ProfileIcon />
+
+            <span>My profile</span>
+          </p>
+          <p
+            onClick={() => navigate('/settings')}
+            className="flex items-center py-3 my-2 capitalize mx-4 gap-x-2 cursor-pointer"
+          >
             <SettingsIcon />
-            My profile
+            <span>Settings</span>
           </p>
-          <p className="flex items-center py-3 my-2 capitalize">
+          <p
+            onClick={handleSetLogOut}
+            className="flex items-center py-3 my-2 capitalize px-4 gap-x-2 border-0 border-t cursor-pointer"
+          >
             <ProfileIcon />
-            Settings
-          </p>
-          <p className="flex items-center py-3 my-2 capitalize border-0 border-t">
-            <ProfileIcon />
-            Logout
+            <span>Logout</span>
           </p>
         </section>
       </Popover.Panel>

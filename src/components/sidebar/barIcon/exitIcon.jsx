@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { ReactComponent as Icon } from '../../../images/icons/exit.svg';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/authContext';
 
 const ExitIcon = ({ onClick, visible }) => {

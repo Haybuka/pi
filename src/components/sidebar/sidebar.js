@@ -56,8 +56,6 @@ const Sidebar = () => {
           </aside>
           <aside className='flex items-center'>
             <MyPopover />
-            <ProfileIcon />
-            <ExitIcon />
           </aside>
         </article>
         <section className="p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll">
