@@ -160,7 +160,7 @@ const AdminDashboard = () => {
           <p className="border-t py-2 hidden">View report</p>
         </aside>
       </article>
-      <article className="grid grid-cols-12 my-10">
+      <article className=" grid-cols-12 my-10 hidden">
         <aside className="col-span-12 p-3 w-full rounded-md  capitalize">
           <LineChart />
         </aside>
@@ -168,7 +168,7 @@ const AdminDashboard = () => {
           <DoughnutChart />
         </aside>
       </article>
-      <article className="my-6">
+      <article className="mt-16">
         <AllTableHooks
           label={'transactions'}
           data={transactions}
