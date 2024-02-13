@@ -6,7 +6,7 @@ import {
   useFilters,
   useRowSelect,
 } from 'react-table';
-import { COLUMNS } from './columns';
+// import { COLUMNS } from './columns';
 import GlobalFilter from './GlobalFilter';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ import './table.css';
 import Button from '../button/button';
 import Modal from '../modal/modal';
 
-const AllTableHooks = ({ data, userType }) => {
+const AllTableHooks = ({ data, userType, COLUMNS, label }) => {
   const userProfile = JSON.parse(localStorage.getItem('__profile__'));
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -85,44 +85,44 @@ const AllTableHooks = ({ data, userType }) => {
     useRowSelect,
     (hooks) => {
       hooks?.visibleColumns.push((columns) => [
-        {
-          Cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
-        },
+        // {
+        //   Cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
+        // },
         ...columns,
-        {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => <div>Actions</div>,
-          Cell: ({ row }) => {
-            return (
-              <div className="flex justify-between items-center">
-                {userType === 'admin' && (
-                  <>
-                    <p
-                      className="cursor-pointer px-2 text-green-700 w-full"
-                      onClick={() => handleRowEdit(row)}
-                    >
-                      Edit
-                    </p>
-                    <p
-                      className="cursor-pointer px-2 text-red-800 w-full"
-                      onClick={() => handleRowDelete(row)}
-                    >
-                      Delete
-                    </p>
-                  </>
-                )}
-                {userType === 'merchant' && (
-                  <p
-                    className="cursor-pointer px-2 text-yellow-700 w-full"
-                    onClick={() => handleRowPreview(row)}
-                  >
-                    Preview
-                  </p>
-                )}
-              </div>
-            );
-          },
-        },
+        // {
+        //   id: 'selection',
+        //   Header: ({ getToggleAllRowsSelectedProps }) => <div>Actions</div>,
+        //   Cell: ({ row }) => {
+        //     return (
+        //       <div className="flex justify-between items-center">
+        //         {userType === 'admin' && (
+        //           <>
+        //             <p
+        //               className="cursor-pointer px-2 text-green-700 w-full"
+        //               onClick={() => handleRowEdit(row)}
+        //             >
+        //               Edit
+        //             </p>
+        //             <p
+        //               className="cursor-pointer px-2 text-red-800 w-full"
+        //               onClick={() => handleRowDelete(row)}
+        //             >
+        //               Delete
+        //             </p>
+        //           </>
+        //         )}
+        //         {userType === 'merchant' && (
+        //           <p
+        //             className="cursor-pointer px-2 text-yellow-700 w-full"
+        //             onClick={() => handleRowPreview(row)}
+        //           >
+        //             Preview
+        //           </p>
+        //         )}
+        //       </div>
+        //     );
+        //   },
+        // },
       ]);
     }
   );
@@ -134,9 +134,13 @@ const AllTableHooks = ({ data, userType }) => {
     <>
       <section>
         <aside className="flex justify-between text-black my-6">
-          <h3 className="text-sm uppercase">All Categories</h3>
+          <h3 className="text-sm capitalize">{label}</h3>
 
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          <GlobalFilter
+            label={label}
+            filter={globalFilter}
+            setFilter={setGlobalFilter}
+          />
         </aside>
         {userType === 'admin' && (
           <aside className="flex justify-end w-[160px]">
@@ -147,7 +151,10 @@ const AllTableHooks = ({ data, userType }) => {
           </aside>
         )}
         <aside className="min-h-[500px]">
-          <table {...getTableProps()} className="uppercase text-sm text-center">
+          <table
+            {...getTableProps()}
+            className="capitalize text-sm text-center"
+          >
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup?.getHeaderGroupProps()}>
@@ -176,7 +183,7 @@ const AllTableHooks = ({ data, userType }) => {
             </tbody>
           </table>
         </aside>
-        <section className="text-center text-black text-sm uppercase">
+        <section className="text-center text-black text-sm capitalize">
           <p>
             page {pageIndex + 1} of {pageOptions.length}
           </p>
@@ -199,7 +206,7 @@ const AllTableHooks = ({ data, userType }) => {
               </p>
             )}
           </p>
-          <aside className="border flex mx-auto justify-between overflow-hidden text-sm my-2 uppercase rounded-full w-[400px] ">
+          <aside className="border flex mx-auto justify-between overflow-hidden text-sm my-2 capitalize rounded-full w-[400px] ">
             <p
               className="bg-gray-100 py-2 px-3 cursor-pointer"
               disabled={!canPreviousPage}

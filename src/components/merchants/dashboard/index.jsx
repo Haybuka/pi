@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
 import products from '../products/produts';
 import CountUp from 'react-countup';
 import { ReactComponent as ProductIcon } from './productIcon.svg';
 import cls from 'classnames';
 import { LineChart } from './lineChart';
-import Button from '../../button/button';
+
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 const MerchantDashboard = () => {
   const merchantDetails = [
@@ -38,7 +37,7 @@ const MerchantDashboard = () => {
   const formatNumber = (number) =>
     new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'NGN',
     }).format(number);
   return (
     <section className="text-black">
