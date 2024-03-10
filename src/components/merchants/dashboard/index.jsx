@@ -72,7 +72,7 @@ const MerchantDashboard = () => {
           <LineChart />
         </section>
 
-        <section className="col-span-12 grid grid-cols-12 rounded-md bg-white shadow-md p-4">
+        <section className="col-span-12 grid grid-cols-12 rounded-md bg-white shadow-md p-4 hidden">
           <aside className="col-span-9">
             <section>
               <aside className="flex justify-between items-center">
