@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { fromUnixTime, getMonth } from 'date-fns';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,7 +51,20 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sept',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 const labelChart = 'Revenue';
 export const data = {
@@ -87,7 +101,7 @@ export const data = {
         Math.floor(Math.random() * 1000),
         Math.floor(Math.random() * 1000),
         Math.floor(Math.random() * 1000),
-        Math.floor(Math.random() * 1000),
+        Math.floor(Math.random() * 2000),
       ],
       borderColor: '#002D62',
       backgroundColor: 'white',
@@ -99,6 +113,12 @@ export const data = {
   ],
 };
 
-export function LineChart() {
+export function LineChart({ orders = [] }) {
+  const orderDataChart = orders?.map((order) => ({
+    amount: order?.totalAmount,
+    date: fromUnixTime(order?.transDate),
+    month: labels[getMonth(fromUnixTime(order?.transDate))],
+  }));
+
   return <Line options={options} data={data} />;
 }

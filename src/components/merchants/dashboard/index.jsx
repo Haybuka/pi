@@ -11,6 +11,7 @@ import { ReactComponent as MoneyIcon } from './moneyIcon.svg';
 import { ReactComponent as CategoryIcon } from './categoryIcon.svg';
 import { ReactComponent as SalesIcon } from './salesIcon.svg';
 import cls from 'classnames';
+import formatNumber from '../../../util/formatNumber';
 
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 const MerchantDashboard = () => {
@@ -72,11 +73,6 @@ const MerchantDashboard = () => {
     },
   ];
 
-  const formatNumber = (number) =>
-    new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'NGN',
-    }).format(number);
   return (
     <section className="text-black">
       <article className="grid grid-cols-12 gap-2 my-3">
@@ -135,14 +131,14 @@ const MerchantDashboard = () => {
           </aside>
         </aside>
         <section className="col-span-12 grid grid-cols-12 my-4 rounded-md bg-white shadow-md p-4 ">
-          <LineChart />
+          <LineChart orders={getOrders?.content} />
         </section>
 
         <section className="col-span-12 grid grid-cols-12 rounded-md bg-white shadow-md p-4 ">
           <aside className="col-span-9">
             <section>
               <aside className="flex justify-between items-center">
-                <h3 className="font-semibold">Sales history</h3>
+                <h3 className="font-semibold">Order history</h3>
                 {/* <Button classProp={'w-[100px]'} text={'view product'} /> */}
               </aside>
             </section>
