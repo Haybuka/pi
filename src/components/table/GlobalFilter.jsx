@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-const GlobalFilter = ({ filter, setFilter }) => {
+const GlobalFilter = ({
+  filter,
+  setFilter,
+  placeholder = 'Search categories',
+}) => {
   //for debounce
   const [value, setValue] = useState(filter);
   const onChange = useAsyncDebounce((value) => {
@@ -23,7 +27,7 @@ const GlobalFilter = ({ filter, setFilter }) => {
         }}
       />
       <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-        Search categories
+        {placeholder}
       </p>
     </label>
   );

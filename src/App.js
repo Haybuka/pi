@@ -43,6 +43,7 @@ function App() {
 
   //MERCHANTS
   const MerchantProducts = Loadable(lazy(() => import('./pages/merchantProducts')))
+  const Orders = Loadable(lazy(() => import('./pages/orders')))
 
 
 
@@ -59,6 +60,7 @@ function App() {
           <Route element={<RequireAuth accountType={"merchant"} />}>
 
             <Route path="products" element={<MerchantProducts />} />
+            <Route path="orders" element={<Orders />} />
           </Route>
           <Route element={<RequireAuth accountType={"admin"} />}>
 

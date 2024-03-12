@@ -43,6 +43,11 @@ const Sidenav = ({ isSidebarOpen }) => {
         icon: <ProductsIcon />
       },
       {
+        name: 'My Orders',
+        url: 'orders',
+        icon: <ProductsIcon />
+      },
+      {
         name: 'Reports',
         url: 'reports',
         icon: <ReportsIcon />
