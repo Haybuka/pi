@@ -1,15 +1,10 @@
 // import format from "date-fns/format";
+
+import { format, fromUnixTime } from "date-fns";
+
 // import ColumnFilter from './ColumnFilter';
 export const COLUMNS = [
-  // {
-  //   Header: '',
-  //   Footer: '',
-  //   accessor: 'catImage',
-  //   Cell: ({ value }) => {
-  //     return <p className="bg-gray-200 w-6 h-6 mx-auto rounded-full"></p>;
-  //   },
-  //   // Filter : ColumnFilter
-  // },
+
   // {
   //   //Table hooks up to the id to figure out what to render
   //   Header: 'Id',
@@ -21,35 +16,18 @@ export const COLUMNS = [
   //   disableFilters: true,
   // },
   {
-    Header: 'Id',
-    Footer: 'id',
-    accessor: 'id',
-  },
-  {
     Header: 'Product Name',
     Footer: 'name',
-    accessor: 'productName',
+    accessor: 'product',
+    Cell: ({ value }) => {
+      return value?.name;
+    },
   },
 
   {
-    Header: 'Product Category',
-    Footer: 'Product Category',
-    accessor: 'productCategory',
-    // controls what is rendered on ui
-    // this is how changes are made on the table value
-    // Cell : ({value}) => {return format(new Date(value),'dd/MM/yyyy')},
-    // Cell: ({ value }) => {
-    //   return `${value}.`;
-    // },
-
-    // Filter : ColumnFilter
-  },
-
-  {
-    Header: 'Trans. Id',
+    Header: 'Transaction Id',
     Footer: 'Trans. Id',
-    accessor: 'transactionId',
-    // Filter : ColumnFilter
+    accessor: 'transID'
   },
   {
     Header: 'Status',
@@ -58,18 +36,18 @@ export const COLUMNS = [
     Cell: ({ value }) => {
       switch (value) {
         case 1:
-          return <span className="bg-green-100 text-green-400 inline-block px-4 py-1 rounded-full">Order successful</span>
+          return <span className="text-green-600 bg-green-200 inline-block px-5 py-1 rounded-full">Order successful</span>
         case -1:
-          return <span className="bg-red-100 text-red-400 inline-block px-4 py-1 rounded-full">Order Cancelled</span>
+          return <span className="bg-red-100 text-red-400 inline-block px-5 py-1 rounded-full">Order Cancelled</span>
         default:
-          return <span className="bg-yellow-100 text-yellow-400 inline-block px-4 py-1 rounded-full">Order Pending</span>;
+          return <span className="text-gray-700 bg-gray-200 inline-block px-5 py-1 rounded-full">Order Pending</span>;
       }
     },
   },
   {
     Header: 'Amount',
     Footer: 'Amount',
-    accessor: 'amount',
+    accessor: 'totalAmount',
     Cell: ({ value }) => {
       const formatNumber = (number) =>
         new Intl.NumberFormat('en-IN', {
@@ -77,6 +55,17 @@ export const COLUMNS = [
           currency: 'NGN',
         }).format(number);
       return formatNumber(value);
+    }
+  },
+  {
+    Header: 'Date',
+    Footer: 'Amount',
+    accessor: 'transDate',
+    Cell: ({ value }) => {
+      return format(
+        fromUnixTime(value),
+        'MM/dd/yyyy'
+      )
     }
   },
 ];

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import GlobalFilter from '../../table/GlobalFilter';
 import './table.css';
 
-const OrderTable = ({ data, userType, COLUMNS, label }) => {
+const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
   const navigate = useNavigate();
   const columns = useMemo(() => COLUMNS, []);
 
@@ -41,14 +41,17 @@ const OrderTable = ({ data, userType, COLUMNS, label }) => {
     useRowSelect,
     (hooks) => {
       hooks?.visibleColumns.push((columns) => [
+        {
+          Cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
+        },
         ...columns,
         {
-          id: 'selection',
-          Header: ({ getToggleAllRowsSelectedProps }) => <div>Actions</div>,
+          id: 'actions',
+          Header: ({ getToggleAllRowsSelectedProps }) => <div>Action</div>,
           Cell: ({ row }) => {
             return (
-              <div className="flex justify-between items-center">
-                Actions
+              <div className="text-center" onClick={() => handleModal(row?.original)}>
+                <p>View</p>
               </div>
             );
           },
@@ -78,7 +81,7 @@ const OrderTable = ({ data, userType, COLUMNS, label }) => {
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup?.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
+                  {headerGroup.headers?.map((column) => (
                     <th {...column?.getHeaderProps()} className="font-normal">
                       {' '}
                       {column?.render('Header')}
@@ -94,7 +97,7 @@ const OrderTable = ({ data, userType, COLUMNS, label }) => {
                   <tr {...row?.getRowProps()}>
                     {row?.cells?.map((cell) => {
                       return (
-                        <td {...cell?.getCellProps()}>{cell.render('Cell')}</td>
+                        <td {...cell?.getCellProps()}>{cell?.render('Cell')}</td>
                       );
                     })}
                   </tr>

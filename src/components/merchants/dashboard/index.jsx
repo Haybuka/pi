@@ -86,7 +86,7 @@ const MerchantDashboard = () => {
         );
       case 1:
         return (
-          <p className="text-green-700 bg-green-200 rounded-xl px-3">
+          <p className="text-green-600 bg-green-200 rounded-xl px-3">
             Successful
           </p>
         );

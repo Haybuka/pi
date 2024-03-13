@@ -92,7 +92,6 @@ const Index = () => {
   };
 
   const handleProductEdit = (product) => {
-    console.log(product, 'merchant');
     const categories = {
       productDetails: product?.productDetails && [...product?.productDetails],
       productOptions: product?.productOptions && [...product?.productOptions],
