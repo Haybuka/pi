@@ -1,11 +1,16 @@
-import React from 'react'
-import GlobalFilter from '../../table/GlobalFilter'
+
+import OrderTable from './orderTable'
+import { COLUMNS } from './columns';
 
 const MerchantOrders = () => {
   return (
     <aside>
-      <GlobalFilter filter={""} setFilter={() => { }} placeholder='Search orders' />
 
+      <OrderTable
+        label={'transactions'}
+        data={[]}
+        COLUMNS={COLUMNS}
+      />
     </aside>
 
   )

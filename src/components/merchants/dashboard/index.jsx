@@ -12,6 +12,7 @@ import { ReactComponent as CategoryIcon } from './categoryIcon.svg';
 import { ReactComponent as SalesIcon } from './salesIcon.svg';
 import cls from 'classnames';
 import formatNumber from '../../../util/formatNumber';
+import { format, fromUnixTime } from 'date-fns';
 
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 const MerchantDashboard = () => {
@@ -72,6 +73,39 @@ const MerchantDashboard = () => {
       icon: <ProductIcon />,
     },
   ];
+
+  const statusPill = (status) => {
+    switch (status) {
+      case -1:
+        return (
+          <p className="text-red-700 bg-red-200 rounded-xl px-3">Cancelled</p>
+        );
+      case 0:
+        return (
+          <p className="text-gray-700 bg-gray-200 rounded-xl px-3">Pending</p>
+        );
+      case 1:
+        return (
+          <p className="text-green-700 bg-green-200 rounded-xl px-3">
+            Successful
+          </p>
+        );
+      case 2:
+        return (
+          <p className="text-yellow-700 bg-yellow-200 rounded-xl px-3">
+            Awaiting
+          </p>
+        );
+      case 3:
+        return <p>Accepted</p>;
+      case 4:
+        return <p>Delivered</p>;
+      case 5:
+        return <p>Completed</p>;
+      default:
+        return <p>Pending</p>;
+    }
+  };
 
   return (
     <section className="text-black">
@@ -135,11 +169,42 @@ const MerchantDashboard = () => {
         </section>
 
         <section className="col-span-12 grid grid-cols-12 rounded-md bg-white shadow-md p-4 ">
-          <aside className="col-span-9">
+          <aside className="col-span-12">
             <section>
-              <aside className="flex justify-between items-center">
-                <h3 className="font-semibold">Order history</h3>
+              <aside className="p-3">
+                <h3 className="font-semibold my-3">Order History</h3>
                 {/* <Button classProp={'w-[100px]'} text={'view product'} /> */}
+                <table className="text-center">
+                  <thead>
+                    <th>S/N</th>
+                    <th>Product Name</th>
+                    <th>Total Amount</th>
+                    <th>Product Id</th>
+                    <th>Status</th>
+                    <th>Transaction ID</th>
+                    <th>Transaction Date</th>
+                  </thead>
+                  <tbody>
+                    {getOrders?.content.map((orders, id) => (
+                      <tr>
+                        <td>{id + 1}</td>
+                        <td>{orders?.product?.name}</td>
+                        <td>{formatNumber(orders?.totalAmount)}</td>
+                        <td>{orders?.productID}</td>
+                        <td className="text-center">
+                          {statusPill(orders?.status)}
+                        </td>
+                        <td>{orders?.transID}</td>
+                        <td>
+                          {format(
+                            fromUnixTime(orders?.transDate),
+                            'MM/dd/yyyy'
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </aside>
             </section>
           </aside>
