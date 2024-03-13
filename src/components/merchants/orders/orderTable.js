@@ -50,7 +50,7 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
           Header: ({ getToggleAllRowsSelectedProps }) => <div>Action</div>,
           Cell: ({ row }) => {
             return (
-              <div className="text-center" onClick={() => handleModal(row?.original)}>
+              <div className="text-center cursor-pointer" onClick={() => handleModal(row?.original)}>
                 <p>View</p>
               </div>
             );

@@ -7,6 +7,7 @@ import { ReactComponent as HomeIcon } from '../../images/icons/home.svg'
 import { ReactComponent as ProductsIcon } from '../../images/icons/products.svg'
 import { ReactComponent as ReportsIcon } from '../../images/icons/reports.svg'
 import { ReactComponent as ProfileIcon } from '../../images/icons/profile.svg';
+import { ReactComponent as OrderIcon } from '../../images/icons/reports.svg';
 import LogoutIcon from './barIcon/exitIcon';
 
 import cls from 'classnames'
@@ -45,13 +46,13 @@ const Sidenav = ({ isSidebarOpen }) => {
       {
         name: 'My Orders',
         url: 'orders',
-        icon: <ProductsIcon />
+        icon: <OrderIcon />
       },
-      {
-        name: 'Reports',
-        url: 'reports',
-        icon: <ReportsIcon />
-      }
+      // {
+      //   name: 'Reports',
+      //   url: 'reports',
+      //   icon: <ReportsIcon />
+      // }
     ]
   const adminNavigations =
     [
@@ -66,11 +67,11 @@ const Sidenav = ({ isSidebarOpen }) => {
         icon: <ProductsIcon />
       }
       ,
-      {
-        name: 'Reports',
-        url: 'reports',
-        icon: <ReportsIcon />
-      },
+      // {
+      //   name: 'Reports',
+      //   url: 'reports',
+      //   icon: <ReportsIcon />
+      // },
 
     ]
   const footerNavigation = [

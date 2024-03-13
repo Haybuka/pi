@@ -40,7 +40,7 @@ const MerchantOrders = () => {
           classAdd={'w-full md:w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'}
         >
           <section className="w-full">
-            <p>Editing order</p>
+            <p>Creating order</p>
           </section>
         </Modal>
       )}
