@@ -18,9 +18,9 @@ export const COLUMNS = [
   {
     Header: 'Product Name',
     Footer: 'name',
-    accessor: 'product',
+    accessor: 'productName',
     Cell: ({ value }) => {
-      return value?.name;
+      return value;
     },
   },
 

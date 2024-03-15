@@ -12,6 +12,14 @@ const MerchantOrders = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
+  const orderData = getOrders?.content?.map((order) => {
+    return {
+      ...order,
+      productName: order?.product?.name
+    }
+  })
+
+
   const handleModalDisplay = (data) => {
     setModalData(data);
     setModalIsOpen(true)
@@ -27,7 +35,7 @@ const MerchantOrders = () => {
         isFetched && (
           <OrderTable
             label={'transactions'}
-            data={getOrders?.content}
+            data={orderData}
             COLUMNS={COLUMNS}
             handleModal={handleModalDisplay}
           />
