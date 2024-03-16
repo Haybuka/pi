@@ -119,7 +119,7 @@ const Index = ({ isEdit = false, id, category = {} }) => {
         <h3 className="text-sm uppercase">create new category</h3>
       )}
       <FormikProvider value={formik}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="py-3">
           <div className="my-6">
             <Inputs
               type="text"
@@ -320,6 +320,12 @@ const Index = ({ isEdit = false, id, category = {} }) => {
             text={isEdit ? 'Edit Category' : 'Create category'}
             isSubmitting={isSubmitting}
           />
+          <p
+            onClick={() => navigate('/categories')}
+            className="text-red-700 bg-red-300 text-center  text-sm uppercase my-2 mb-6 py-3 rounded-2xl cursor-pointer"
+          >
+            Cancel
+          </p>
         </form>
       </FormikProvider>
       <ToastContainer
@@ -334,13 +340,6 @@ const Index = ({ isEdit = false, id, category = {} }) => {
         pauseOnHover
         theme="light"
       />
-
-      <p
-        onClick={() => navigate('/categories')}
-        className="text-red-600 bg-red-300 text-center fixed top-1/2 left-20 text-sm uppercase w-[100px] py-3 rounded-2xl cursor-pointer"
-      >
-        Cancel
-      </p>
     </section>
   );
 };
