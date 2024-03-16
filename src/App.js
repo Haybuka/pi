@@ -11,6 +11,7 @@ import NotFound from './pages/notFound';
 
 
 import { ReactComponent as LoginLogo } from './pages/auth/register/loginLogo.svg';
+import useAuth from './hooks/useAuth';
 
 const LoadingScreen = () => (<section className='w-screen h-screen flex justify-center items-center'><LoginLogo /></section>)
 const Loadable = (Component) => (props) => {
@@ -46,7 +47,7 @@ function App() {
   const Orders = Loadable(lazy(() => import('./pages/orders')))
 
 
-
+  const { userProfile } = useAuth()
 
   return (
     <div className="App">
@@ -74,9 +75,15 @@ function App() {
           <Route path="profile" element={<Profile />} />
 
         </Route>
-        <Route path='login' element={<Login />} />
-        <Route path='login/merchant' element={<Login />} />
-        <Route path='register' element={<Register />} />
+        {
+          !userProfile && (
+            <>
+              <Route path='login' element={<Login />} />
+              <Route path='login/merchant' element={<Login />} />
+              <Route path='register' element={<Register />} />
+            </>
+          )
+        }
         {/* <Route path='*' element={<Navigate to="/" state={{ from: location }} replace />} /> */}
         <Route path='*' element={<NotFound />} />
 

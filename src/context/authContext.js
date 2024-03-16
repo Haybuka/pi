@@ -16,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
     handleProfileSet({});
     navigate('login');
     setIsLogout(false)
+    window.location.reload()
   };
 
   const handleSetLogOut = () => {

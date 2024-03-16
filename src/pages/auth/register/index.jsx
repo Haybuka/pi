@@ -4,6 +4,7 @@ import { ReactComponent as EyeSlash } from './eyeSlash.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/button';
 import AuthSlider from '../AuthSlider';
+import Section from './Section';
 // #1a56db
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -11,69 +12,133 @@ const Register = () => {
   const navigate = useNavigate();
   return (
     <main className="w-screen h-screen grid grid-cols-12">
-      <section className=" bg-white col-span-12 md:col-span-12 flex justify-center items-center flex-col">
+      <section className=" bg-white col-span-12 md:col-span-12 flex justify-center items-center flex-col my-3">
         <>
           <LoginLogo />
           <form className="w-full px-6 md:w-[700px] my-4">
-            <div className="grid grid-cols-12 gap-3 my-6">
-              <label className="block relative floated-label col-span-6">
+            <Section title={'Personal Details'}>
+              <div className="grid grid-cols-12 gap-3 my-6">
+                <label className="block relative floated-label col-span-6">
+                  <input
+                    // value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    fullname
+                  </p>
+                </label>
+                <label className="block relative floated-label w-full col-span-6">
+                  <input
+                    value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    username
+                  </p>
+                </label>
+              </div>
+              <div className="grid grid-cols-12 gap-3 my-6">
+                <label className="block relative floated-label col-span-6">
+                  <input
+                    value={password}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    password
+                  </p>
+                </label>
+                <label className="block relative floated-label w-full col-span-6">
+                  <input
+                    value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    phone
+                  </p>
+                </label>
+              </div>
+              <label className="block relative floated-label my-6 w-full">
                 <input
-                  // value={username}
+                  // value={password}
                   type="text"
                   className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
                   placeholder="John Doe"
                 />
                 <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                  fullname
+                  address
                 </p>
               </label>
-              <label className="block relative floated-label w-full col-span-6">
+              <div className="grid grid-cols-12 gap-3 my-6">
+                <label className="block relative floated-label col-span-6">
+                  <input
+                    // value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    state - dropdown
+                  </p>
+                </label>
+                <label className="block relative floated-label w-full col-span-6">
+                  <input
+                    value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    phone
+                  </p>
+                </label>
+              </div>
+            </Section>
+            <Section title={'Bank Details'}>
+              <div className="grid grid-cols-12 gap-3 my-6">
+                <label className="block relative floated-label col-span-6">
+                  <input
+                    // value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    bank - dropdown
+                  </p>
+                </label>
+                <label className="block relative floated-label w-full col-span-6">
+                  <input
+                    value={username}
+                    type="text"
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+                    placeholder="John Doe"
+                  />
+                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
+                    Account Number
+                  </p>
+                </label>
+              </div>
+              <label className="block relative floated-label my-6 w-full">
                 <input
-                  value={username}
+                  // value={password}
                   type="text"
                   className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
                   placeholder="John Doe"
                 />
                 <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                  username
+                  account name
                 </p>
               </label>
-            </div>
-            <div className="grid grid-cols-12 gap-3 my-6">
-              <label className="block relative floated-label col-span-6">
-                <input
-                  // value={username}
-                  type="text"
-                  className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-                  placeholder="John Doe"
-                />
-                <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                  email
-                </p>
-              </label>
-              <label className="block relative floated-label w-full col-span-6">
-                <input
-                  value={username}
-                  type="text"
-                  className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-                  placeholder="John Doe"
-                />
-                <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                  gender
-                </p>
-              </label>
-            </div>
-            <label className="block relative floated-label my-6 w-full">
-              <input
-                value={password}
-                type="text"
-                className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-                placeholder="John Doe"
-              />
-              <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                password
-              </p>
-            </label>
+            </Section>
+
             <Button text={`sign up`} classProp={`my-2`} />
 
             <p
