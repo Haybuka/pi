@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { ReactComponent as CheckIcon } from './CheckIcon.svg'
+import { ReactComponent as UpDownIcon } from './upDown.svg'
 
 
 
@@ -38,8 +39,8 @@ export default function ComboBox({ items, handleProductCategory }) {
               displayValue={(person) => person?.name}
               onChange={handleInputChange}
             />
-            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <CheckIcon />
+            <Combobox.Button className="absolute bg-transparent  w-2/4 inset-y-0 right-0 flex items-center justify-end pr-2">
+              <UpDownIcon />
             </Combobox.Button>
           </div>
           <Transition
