@@ -173,38 +173,48 @@ const MerchantDashboard = () => {
             <section>
               <aside className="p-3">
                 <h3 className="font-semibold my-3">Order History</h3>
-                {/* <Button classProp={'w-[100px]'} text={'view product'} /> */}
-                <table className="text-center">
-                  <thead>
-                    <th>S/N</th>
-                    <th>Product Name</th>
-                    <th>Total Amount</th>
-                    <th>Product Id</th>
-                    <th>Status</th>
-                    <th>Transaction ID</th>
-                    <th>Transaction Date</th>
-                  </thead>
-                  <tbody>
-                    {getOrders?.content.map((orders, id) => (
-                      <tr>
-                        <td>{id + 1}</td>
-                        <td>{orders?.product?.name}</td>
-                        <td>{formatNumber(orders?.totalAmount)}</td>
-                        <td>{orders?.productID}</td>
-                        <td className="text-center">
-                          {statusPill(orders?.status)}
-                        </td>
-                        <td>{orders?.transID}</td>
-                        <td>
-                          {format(
-                            fromUnixTime(orders?.transDate),
-                            'MM/dd/yyyy'
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="h-[400px] overflow-y-scroll">
+                  <table className="text-center ">
+                    <thead>
+                      <th>S/N</th>
+                      <th>Product Name</th>
+                      <th>Total Amount</th>
+                      <th>Product Id</th>
+                      <th>Status</th>
+                      <th>Transaction ID</th>
+                      <th>Transaction Date</th>
+                    </thead>
+                    <tbody>
+                      {getOrders?.content.map((orders, id) => (
+                        <tr>
+                          <td>{id + 1}</td>
+                          <td>{orders?.product?.name}</td>
+                          <td>{formatNumber(orders?.totalAmount)}</td>
+                          <td>{orders?.productID}</td>
+                          <td className="text-center">
+                            {statusPill(orders?.status)}
+                          </td>
+                          <td>{orders?.transID}</td>
+                          <td>
+                            {format(
+                              fromUnixTime(orders?.transDate),
+                              'MM/dd/yyyy'
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <th>S/N</th>
+                      <th>Product Name</th>
+                      <th>Total Amount</th>
+                      <th>Product Id</th>
+                      <th>Status</th>
+                      <th>Transaction ID</th>
+                      <th>Transaction Date</th>
+                    </tfoot>
+                  </table>
+                </div>
               </aside>
             </section>
           </aside>
