@@ -3,6 +3,7 @@ import { COLUMNS } from './columns';
 import { useGetOrders } from '../../../api/merchants/orders';
 import OrderTable from './orderTable';
 import Modal from '../../modal/modal';
+import OrderDisplay from './orderDisplay';
 
 
 const MerchantOrders = () => {
@@ -46,10 +47,10 @@ const MerchantOrders = () => {
         <Modal
           handleModal={handleModalClose}
           classAdd={'w-full md:w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'}
+          title="Order details"
         >
-          <section className="w-full">
-            <p>Creating order</p>
-          </section>
+          <OrderDisplay data={modalData} />
+
         </Modal>
       )}
     </aside>

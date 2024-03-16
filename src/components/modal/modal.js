@@ -2,7 +2,7 @@ import React, { Children, useState } from 'react';
 import styles from './modal.module.css';
 import { toast } from 'react-toastify';
 import cls from "classnames"
-const Modal = ({ handleModal, id = '', children, classAdd }) => {
+const Modal = ({ handleModal, id = '', children, classAdd, title }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleModal();
@@ -31,6 +31,7 @@ const Modal = ({ handleModal, id = '', children, classAdd }) => {
             />
           </svg>
         </div>
+        <h3 className='font-semibold my-3'>{title}</h3>
         <section >
           {children}
         </section>

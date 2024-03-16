@@ -1,6 +1,7 @@
 // import format from "date-fns/format";
 
 import { format, fromUnixTime } from "date-fns";
+import formatNumber from "../../../util/formatNumber";
 
 // import ColumnFilter from './ColumnFilter';
 export const COLUMNS = [
@@ -49,11 +50,7 @@ export const COLUMNS = [
     Footer: 'Amount',
     accessor: 'totalAmount',
     Cell: ({ value }) => {
-      const formatNumber = (number) =>
-        new Intl.NumberFormat('en-IN', {
-          style: 'currency',
-          currency: 'NGN',
-        }).format(number);
+
       return formatNumber(value);
     }
   },
