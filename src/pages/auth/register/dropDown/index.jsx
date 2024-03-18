@@ -3,18 +3,22 @@ import { Listbox, Transition } from '@headlessui/react';
 import { ReactComponent as CheckIcon } from './CheckIcon.svg';
 import { ReactComponent as UpDownIcon } from './upDown.svg';
 
-export default function PiDropdown({ title, data }) {
+export default function PiDropdown({ name, title, data = [], form }) {
   const [selected, setSelected] = useState(data[0]);
 
+  const handleSelected = (value) => {
+    setSelected(value);
+    form(name, value);
+  };
   return (
     <div className="w-full h-full relative ">
       <h3 className="uppercase bg-white text-sm transparent translate-x-2 px-2 text-gray-400">
         {title}
       </h3>
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={handleSelected}>
         <div className="relative">
           <Listbox.Button className="py-2 relative w-full cursor-default rounded-lg bg-white pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-            <span className="block truncate">{selected.name}</span>
+            <span className="block truncate">{selected?.name}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <UpDownIcon
                 className="h-5 w-5 text-gray-400"
@@ -29,7 +33,7 @@ export default function PiDropdown({ title, data }) {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {data.map((item, itemIdx) => (
+              {data?.map((item, itemIdx) => (
                 <Listbox.Option
                   key={itemIdx}
                   className={({ active }) =>
