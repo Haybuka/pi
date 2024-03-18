@@ -1,14 +1,7 @@
 import { Field } from 'formik';
 import PiDropdown from '../../pages/auth/register/dropDown';
 
-const PiSelect = ({
-  name,
-  data,
-  title,
-  placeholder = 'John Doe',
-  type = 'text',
-  displayName,
-}) => {
+const PiSelect = ({ name, data, title }) => {
   return (
     <Field name={name}>
       {({
@@ -17,8 +10,7 @@ const PiSelect = ({
         meta,
       }) => {
         return (
-          <label className="block relative floated-label col-span-6">
-            <p>{name}</p>
+          <label className="block relative floated-label col-span-12 my-3 sm:my-0 sm:col-span-6">
             <PiDropdown
               title={title}
               data={data}

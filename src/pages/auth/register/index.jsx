@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
-import { ReactComponent as EyeSlash } from './eyeSlash.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/button';
 import AuthSlider from '../AuthSlider';
 import Section from './Section';
-import PiDropdown from './dropDown';
 import GridWrapper from './Grid';
 import { useGetBank } from '../../../api/bank';
 import { toast } from 'react-toastify';
@@ -14,11 +12,10 @@ import { useFormik, FormikProvider, Field } from 'formik';
 import 'react-toastify/dist/ReactToastify.css';
 import PiField from '../../../components/piField';
 import PiSelect from '../../../components/piField/piSelect';
+import { useEffect } from 'react';
 
 // #1a56db
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const onError = (error) => {
@@ -30,11 +27,9 @@ const Register = () => {
       if (response.success.status !== 1) {
         throw new Error();
       }
-      // console.log(response, 'response here');
-      // const data = response?.data;
-      // const content = data.content;
-      // const profile = content.profile;
-    } catch (error) {}
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   const options = {
@@ -44,10 +39,19 @@ const Register = () => {
 
   const { data: bankData, isFetched: bankFetched } = useGetBank(options);
 
-  const [banks, setBanks] = useState(
-    bankData?.content?.data?.map((bank) => ({ ...bank, name: bank?.bankName }))
-  );
+  const [banks, setBanks] = useState([]);
+
+  useEffect(() => {
+    setBanks(
+      bankData?.content?.data?.map((bank) => ({
+        ...bank,
+        name: bank?.bankName,
+      }))
+    );
+  }, [bankFetched, bankData?.content?.data]);
+
   const gender = [{ name: 'Male' }, { name: 'Female' }, { name: 'Others' }];
+
   const state = [
     { name: 'Lagos', id: 1 },
     { name: 'Kwarra', id: 2 },
@@ -60,13 +64,11 @@ const Register = () => {
       address: '',
       phone: '',
       email: '',
-
       stateObj: {
         id: '',
         name: '',
       },
       bank: '',
-      gender: '',
       accountNumber: '',
       accountName: '',
       accountdetails: {
@@ -84,7 +86,7 @@ const Register = () => {
     },
   });
 
-  const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
+  const { handleSubmit } = formik;
 
   return (
     <main className="w-screen h-screen grid grid-cols-12">
@@ -96,17 +98,25 @@ const Register = () => {
             onSubmit={handleSubmit}
           >
             <Section title={'Personal Details'}>
+              <p className="my-4"></p>
+
+              <PiField name={'name'} displayName={'Company name'} type="text" />
               <GridWrapper>
-                <PiField name={'name'} displayName={'name'} type="text" />
                 <PiField
-                  name={'username'}
+                  name={'accountdetails.fullname'}
+                  displayName={'fullname'}
+                  type="text"
+                />
+
+                <PiField
+                  name={'accountdetails.username'}
                   displayName={'username'}
                   type="text"
                 />
               </GridWrapper>
               <GridWrapper>
                 <PiField
-                  name={'password'}
+                  name={'accountdetails.password'}
                   displayName={'password'}
                   type="password"
                 />
@@ -119,11 +129,6 @@ const Register = () => {
               <PiField name={'email'} displayName={'email'} type="email" />
               <p className="my-4"></p>
               <PiField name={'address'} displayName={'address'} type="text" />
-              {/* <Field name="color" as="select">
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-              </Field> */}
               <GridWrapper>
                 <PiSelect name={'stateObj'} data={state} title="state" />
                 <PiSelect name={'gender'} data={gender} title="gender" />
@@ -131,33 +136,25 @@ const Register = () => {
             </Section>
             <Section title={'Bank Details'}>
               <GridWrapper>
-                {bankFetched && (
+                {bankFetched ? (
+                  <PiSelect name={'bank'} data={banks} title="bank" />
+                ) : (
                   <label className="block relative floated-label col-span-6">
-                    <PiDropdown title="Bank" data={banks} />
+                    <p>Fetching Banks</p>
                   </label>
                 )}
-                <label className="block relative floated-label w-full col-span-6">
-                  <input
-                    value={username}
-                    type="text"
-                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-                    placeholder="John Doe"
-                  />
-                  <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                    Account Number
-                  </p>
-                </label>
-              </GridWrapper>
-              <label className="block relative floated-label my-6 w-full">
-                <input
+
+                <PiField
+                  name={'accountNumber'}
+                  displayName={'account number'}
                   type="text"
-                  className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-                  placeholder="John Doe"
                 />
-                <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-                  account name
-                </p>
-              </label>
+              </GridWrapper>
+              <PiField
+                name={'accountName'}
+                displayName={'account name'}
+                type="text"
+              />
             </Section>
 
             <Button text={`sign up`} classProp={`my-2`} />

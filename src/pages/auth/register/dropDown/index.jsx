@@ -8,7 +8,14 @@ export default function PiDropdown({ name, title, data = [], form }) {
 
   const handleSelected = (value) => {
     setSelected(value);
-    form(name, value);
+    switch (title) {
+      case 'bank':
+        form(name, value?.bankName);
+        return;
+      default:
+        form(name, value);
+        return;
+    }
   };
   return (
     <div className="w-full h-full relative ">
