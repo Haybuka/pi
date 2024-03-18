@@ -32,8 +32,10 @@ const Register = () => {
   };
 
   const onSuccess = (response) => {
-    toast.success(response?.result?.message);
-    navigate('/');
+    toast.success('Account created ');
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
   };
 
   const options = {
@@ -47,7 +49,7 @@ const Register = () => {
   const { position, error } = useGeolocation();
 
   const [banks, setBanks] = useState([]);
-  console.log(position, error);
+
   useEffect(() => {
     setBanks(
       bankData?.content?.data?.map((bank) => ({
