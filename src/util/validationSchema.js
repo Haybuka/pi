@@ -25,7 +25,7 @@ export const RegisterValidationSchema = {
     .typeError('A number is required'),
 
   accountdetails: yup.object().shape({
-    username: yup.string().required(' be blank.'),
+    username: yup.string().min(6, "must be at least 6 characters long").required(' be blank.'),
     password: yup.string().required(' is required.'),
     fullname: yup.string().required(' is required.'),
   }),

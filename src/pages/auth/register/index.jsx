@@ -15,22 +15,34 @@ import PiField from '../../../components/piField';
 import PiSelect from '../../../components/piField/piSelect';
 import { useEffect } from 'react';
 import { RegisterValidationSchema } from '../../../util/validationSchema';
+import { useMerchantRegisterRequest } from '../../../api/merchants/register';
 
 // #1a56db
 const Register = () => {
   const navigate = useNavigate();
 
   const onError = (error) => {
-    toast(error?.response?.data.result.message.split('_').join(' '));
+    toast.error(
+      `${error?.response?.data.result.message.split('_').join(' ')} ${
+        error?.response?.data.result.details
+      }`
+    );
+    console.log({ error }, 'on error');
   };
 
   const onSuccess = (response) => {
     try {
-      if (response.success.status !== 1) {
-        throw new Error();
+      if (response.statusCode !== 200) {
+        throw new Error(response?.error);
       }
+
+      toast.success(response?.result?.message);
+      navigate('/');
     } catch (error) {
-      console.log({ error });
+      console.log({ error }, 'try catch');
+      // toast.error(
+      //  console.
+      // );
     }
   };
 
@@ -39,7 +51,9 @@ const Register = () => {
     onSuccess,
   };
 
-  const { data: bankData, isFetched: bankFetched } = useGetBank(options);
+  const { data: bankData, isFetched: bankFetched } = useGetBank();
+  const { mutate: createMerchantRequest, isLoading: merchantLoading } =
+    useMerchantRegisterRequest(options);
 
   const [banks, setBanks] = useState([]);
 
@@ -90,7 +104,7 @@ const Register = () => {
         settlementCharge: 0,
         allowWithdrawal: 1,
       };
-      console.log({ data });
+      createMerchantRequest(data);
     },
   });
 
@@ -130,7 +144,7 @@ const Register = () => {
                 />
                 <PiField
                   name={'phone'}
-                  displayName={'Phone Number'}
+                  displayName={'Phone Number  +234'}
                   type="text"
                 />
               </GridWrapper>
@@ -168,7 +182,11 @@ const Register = () => {
               </GridWrapper>
             </Section>
 
-            <Button text={`sign up`} classProp={`my-2`} />
+            <Button
+              isSubmitting={merchantLoading}
+              text={`sign up`}
+              classProp={`my-2`}
+            />
 
             <p
               onClick={() => navigate('/')}
