@@ -7,6 +7,11 @@ import AuthSlider from '../AuthSlider';
 import Section from './Section';
 import PiDropdown from './dropDown';
 import GridWrapper from './Grid';
+import { useGetBank } from '../../../api/bank';
+import { toast } from 'react-toastify';
+import { useFormik, FormikProvider } from 'formik';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 // #1a56db
 const Register = () => {
@@ -14,9 +19,51 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const onError = (error) => {
+    toast(error?.response?.data.result.message.split('_').join(' '));
+  };
+
+  const onSuccess = (response) => {
+    try {
+      if (response.success.status !== 1) {
+        throw new Error();
+      }
+      console.log(response, 'response here');
+      // const data = response?.data;
+      // const content = data.content;
+      // const profile = content.profile;
+    } catch (error) {}
+  };
+
+  const options = {
+    onError,
+    onSuccess,
+  };
+
+  const { data: bankData } = useGetBank(options);
+
+  console.log(bankData?.content?.data);
+
+  console.log(bankData);
   const gender = [{ name: 'Male' }, { name: 'Female' }, { name: 'Others' }];
   const state = [{ name: 'Lagos' }, { name: 'Kwarra' }, { name: 'Ibadan' }];
   const bank = [{ name: 'Access' }, { name: 'Gt Bank' }, { name: 'Wema' }];
+
+  const formik = useFormik({
+    initialValues: {
+      username,
+      password,
+    },
+    // validationSchema: yup.object().shape({
+    //   username: yup.string().required('Above field cannot be blank.'),
+    //   password: yup.string().required('Above field is required.'),
+    // }),
+    onSubmit: (values) => {
+      console.log({ values });
+    },
+  });
+
+  const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
 
   return (
     <main className="w-screen h-screen grid grid-cols-12">
