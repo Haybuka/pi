@@ -19,7 +19,7 @@ export default function PiDropdown({ name, title, data = [], form }) {
   };
   return (
     <div className="w-full h-full relative ">
-      <h3 className="uppercase bg-white text-sm transparent translate-x-2 px-2 text-gray-400">
+      <h3 className="uppercase bg-white text-sm transparent translate-x-2 text-gray-400">
         {title}
       </h3>
       <Listbox value={selected} onChange={handleSelected}>

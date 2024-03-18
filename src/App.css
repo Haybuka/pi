@@ -4,7 +4,7 @@
 }
 
 .floated-label p {
-  @apply absolute top-1/2 pl-4 -translate-y-1/2 transition-all text-gray-400;
+  @apply absolute top-1/2 -translate-y-1/2 transition-all text-gray-400;
 }
 
 .floated-label input::placeholder {

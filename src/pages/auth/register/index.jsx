@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/button';
@@ -7,12 +7,14 @@ import Section from './Section';
 import GridWrapper from './Grid';
 import { useGetBank } from '../../../api/bank';
 import { toast } from 'react-toastify';
-import { useFormik, FormikProvider, Field } from 'formik';
+import { useFormik, FormikProvider } from 'formik';
+import * as yup from 'yup';
 
 import 'react-toastify/dist/ReactToastify.css';
 import PiField from '../../../components/piField';
 import PiSelect from '../../../components/piField/piSelect';
 import { useEffect } from 'react';
+import { RegisterValidationSchema } from '../../../util/validationSchema';
 
 // #1a56db
 const Register = () => {
@@ -77,16 +79,13 @@ const Register = () => {
         fullname: '',
       },
     },
-    // validationSchema: yup.object().shape({
-    //   username: yup.string().required('Above field cannot be blank.'),
-    //   password: yup.string().required('Above field is required.'),
-    // }),
+    validationSchema: yup.object().shape(RegisterValidationSchema),
     onSubmit: (values) => {
       console.log({ values });
     },
   });
 
-  const { handleSubmit } = formik;
+  const { handleSubmit, errors } = formik;
 
   return (
     <main className="w-screen h-screen grid grid-cols-12">
@@ -100,17 +99,17 @@ const Register = () => {
             <Section title={'Personal Details'}>
               <p className="my-4"></p>
 
-              <PiField name={'name'} displayName={'Company name'} type="text" />
+              <PiField name={'name'} displayName={'Company Name'} type="text" />
               <GridWrapper>
                 <PiField
                   name={'accountdetails.fullname'}
-                  displayName={'fullname'}
+                  displayName={'Fullname'}
                   type="text"
                 />
 
                 <PiField
                   name={'accountdetails.username'}
-                  displayName={'username'}
+                  displayName={'Username'}
                   type="text"
                 />
               </GridWrapper>
@@ -122,39 +121,42 @@ const Register = () => {
                 />
                 <PiField
                   name={'phone'}
-                  displayName={'phone number'}
+                  displayName={'Phone Number'}
                   type="text"
                 />
               </GridWrapper>
-              <PiField name={'email'} displayName={'email'} type="email" />
-              <p className="my-4"></p>
-              <PiField name={'address'} displayName={'address'} type="text" />
+              <PiField name={'email'} displayName={'Email'} type="email" />
+              <p className="my-8"></p>
+              <PiField name={'address'} displayName={'Address'} type="text" />
               <GridWrapper>
-                <PiSelect name={'stateObj'} data={state} title="state" />
-                <PiSelect name={'gender'} data={gender} title="gender" />
+                <PiSelect name={'stateObj'} data={state} title="State" />
+                <PiSelect name={'gender'} data={gender} title="Gender" />
               </GridWrapper>
             </Section>
             <Section title={'Bank Details'}>
-              <GridWrapper>
+              <div className="my-4 mb-12">
                 {bankFetched ? (
-                  <PiSelect name={'bank'} data={banks} title="bank" />
+                  <PiSelect name={'bank'} data={banks} title="Bank" />
                 ) : (
                   <label className="block relative floated-label col-span-6">
                     <p>Fetching Banks</p>
                   </label>
                 )}
+              </div>
+
+              <GridWrapper>
+                <PiField
+                  name={'accountName'}
+                  displayName={'Account Name'}
+                  type="text"
+                />
 
                 <PiField
                   name={'accountNumber'}
-                  displayName={'account number'}
+                  displayName={'Account Number'}
                   type="text"
                 />
               </GridWrapper>
-              <PiField
-                name={'accountName'}
-                displayName={'account name'}
-                type="text"
-              />
             </Section>
 
             <Button text={`sign up`} classProp={`my-2`} />

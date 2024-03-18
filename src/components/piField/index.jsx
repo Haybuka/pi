@@ -10,20 +10,20 @@ const PiField = ({ name, placeholder = '', type = 'text', displayName }) => {
         meta,
       }) => {
         return (
-          <label className="block relative floated-label col-span-12 my-3 sm:my-0 sm:col-span-6">
+          <label className="block relative floated-label col-span-12 my-4  sm:my-0 sm:col-span-6">
             <input
               defaultValue={''}
               type={type}
-              className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
+              className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-md rounded-2xl"
               // placeholder={placeholder}
               {...field}
             />
-            <p className="uppercase bg-white text-sm transparent text-center translate-x-2 px-2">
-              {displayName}
-            </p>
+            <p className="uppercase bg-white text-sm ">{displayName}</p>
 
             {meta.touched && meta.error && (
-              <div className="error">{meta.error}</div>
+              <div className="error my-2 text-sm text-red-500">
+                {`${displayName} ${meta.error}`}
+              </div>
             )}
           </label>
         );
