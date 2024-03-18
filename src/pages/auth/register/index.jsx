@@ -81,7 +81,16 @@ const Register = () => {
     },
     validationSchema: yup.object().shape(RegisterValidationSchema),
     onSubmit: (values) => {
-      console.log({ values });
+      delete values.gender;
+      const data = {
+        ...values,
+        bank: values.bank.bankName,
+        longitude: 3.3947,
+        latitude: 6.454,
+        settlementCharge: 0,
+        allowWithdrawal: 1,
+      };
+      console.log({ data });
     },
   });
 

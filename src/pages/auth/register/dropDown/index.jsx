@@ -10,7 +10,7 @@ export default function PiDropdown({ name, title, data = [], form }) {
     setSelected(value);
     switch (title) {
       case 'bank':
-        form(name, value?.bankName);
+        form(name, `${value?.bankName}`);
         return;
       default:
         form(name, value);

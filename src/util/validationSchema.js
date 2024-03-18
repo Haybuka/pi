@@ -10,7 +10,12 @@ export const RegisterValidationSchema = {
     .positive()
     .integer()
     .typeError('A number is required'),
-  bank: yup.string().required(' is required.'),
+  bank: yup.object().shape({
+    id: yup.string().required(' be blank.'),
+    bankName: yup.string(),
+    enabled: yup.string(),
+    health: yup.number()
+  }),
   accountName: yup.string().required(' cannot be blank.'),
   accountNumber: yup
     .number()
