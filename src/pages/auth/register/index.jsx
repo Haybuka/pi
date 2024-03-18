@@ -16,6 +16,7 @@ import PiSelect from '../../../components/piField/piSelect';
 import { useEffect } from 'react';
 import { RegisterValidationSchema } from '../../../util/validationSchema';
 import { useMerchantRegisterRequest } from '../../../api/merchants/register';
+import useGeolocation from '../../../hooks/useGeoLocation';
 
 // #1a56db
 const Register = () => {
@@ -43,9 +44,10 @@ const Register = () => {
   const { data: bankData, isFetched: bankFetched } = useGetBank();
   const { mutate: createMerchantRequest, isLoading: merchantLoading } =
     useMerchantRegisterRequest(options);
+  const { position, error } = useGeolocation();
 
   const [banks, setBanks] = useState([]);
-
+  console.log(position, error);
   useEffect(() => {
     setBanks(
       bankData?.content?.data?.map((bank) => ({
