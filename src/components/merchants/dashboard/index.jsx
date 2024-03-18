@@ -59,7 +59,7 @@ const MerchantDashboard = () => {
     },
     {
       name: 'Total sales',
-      amount: 10,
+      amount: successFullOrders?.length,
       icon: <SalesIcon />,
     },
     {
@@ -220,6 +220,17 @@ const MerchantDashboard = () => {
                         <th>Status</th>
                         <th>Transaction ID</th>
                         <th>Transaction Date</th>
+                      </tfoot>
+                    )}
+                    {getOrders?.content?.length === 0 && (
+                      <tfoot>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>No Orders found</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                       </tfoot>
                     )}
                   </table>

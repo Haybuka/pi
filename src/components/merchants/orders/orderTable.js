@@ -104,6 +104,17 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
                 );
               })}
             </tbody>
+            {data?.length === 0 && (
+              <tbody>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>No Orders found</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tbody>
+            )}
           </table>
         </aside>
         <section className="text-center text-black text-sm capitalize">

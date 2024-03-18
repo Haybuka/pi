@@ -14,6 +14,7 @@ const Index = () => {
     navigate('/settings');
   };
 
+  console.log({ profile });
   return (
     <main className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
       <div className="flex justify-center">
@@ -34,13 +35,13 @@ const Index = () => {
       <ProfileFields value={profile?.email} label="email" classProp="my-6" />
       <div className="grid grid-cols-12 gap-4 my-6">
         <ProfileFields
-          value={profile?.phone ? profile.phone : '080 000 0001'}
+          value={profile?.phone ? profile?.organization?.phone : '080 000 0001'}
           label="phone"
           classProp="col-span-6"
         />
 
         <ProfileFields
-          value={profile?.gender ? profile.gender : 'male'}
+          value={profile?.gender ? profile.gender : 'not specified'}
           label="gender"
           classProp="col-span-6"
         />
