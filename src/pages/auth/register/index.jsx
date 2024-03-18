@@ -31,19 +31,8 @@ const Register = () => {
   };
 
   const onSuccess = (response) => {
-    try {
-      if (response.statusCode !== 200) {
-        throw new Error(response?.error);
-      }
-
-      toast.success(response?.result?.message);
-      navigate('/');
-    } catch (error) {
-      console.log({ error }, 'try catch');
-      // toast.error(
-      //  console.
-      // );
-    }
+    toast.success(response?.result?.message);
+    navigate('/');
   };
 
   const options = {

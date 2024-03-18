@@ -147,17 +147,24 @@ const MerchantDashboard = () => {
             </h3>
             <ul>
               {merchantFetched ? (
-                merchantProduct?.map((product, id) => (
-                  <li
-                    key={id}
-                    className="my-2 border-b py-3 flex justify-between items-center"
-                  >
-                    <span className="">{product?.name}</span>
-                    <span className="text-green-400 font-semibold">
-                      {formatNumber(product?.baseAmount)}
-                    </span>
+                merchantProduct?.length > 0 ? (
+                  merchantProduct?.map((product, id) => (
+                    <li
+                      key={id}
+                      className="my-2 border-b py-3 flex justify-between items-center"
+                    >
+                      <span className="">{product?.name}</span>
+                      <span className="text-green-400 font-semibold">
+                        {formatNumber(product?.baseAmount)}
+                      </span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="my-2 border-b py-3 flex justify-between items-center">
+                    <span className="">No product</span>
+                    <span className="text-green-400 font-semibold">00</span>
                   </li>
-                ))
+                )
               ) : (
                 <div className=" animate-pulse">loading ...</div>
               )}
@@ -204,15 +211,17 @@ const MerchantDashboard = () => {
                         </tr>
                       ))}
                     </tbody>
-                    <tfoot>
-                      <th>S/N</th>
-                      <th>Product Name</th>
-                      <th>Total Amount</th>
-                      <th>Product Id</th>
-                      <th>Status</th>
-                      <th>Transaction ID</th>
-                      <th>Transaction Date</th>
-                    </tfoot>
+                    {getOrders?.content.length > 6 && (
+                      <tfoot>
+                        <th>S/N</th>
+                        <th>Product Name</th>
+                        <th>Total Amount</th>
+                        <th>Product Id</th>
+                        <th>Status</th>
+                        <th>Transaction ID</th>
+                        <th>Transaction Date</th>
+                      </tfoot>
+                    )}
                   </table>
                 </div>
               </aside>
