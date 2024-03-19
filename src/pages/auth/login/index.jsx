@@ -11,10 +11,11 @@ import {
 } from '../../../api/login';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Button from '../../../components/button/button';
 import { AuthContext } from '../../../context/authContext';
 import AuthSlider from '../AuthSlider';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [username] = useState('');
@@ -37,7 +38,6 @@ const Login = () => {
     localStorage.setItem('__token__', content.token);
     localStorage.setItem('__profile__', JSON.stringify(profile));
     handleProfileSet(profile);
-    // navigate('/');
     navigate(from, { replace: true });
     window.location.reload();
   };
@@ -83,7 +83,7 @@ const Login = () => {
           <AuthSlider />
         </aside>
       </section>
-      <section className=" bg-white col-span-12  flex justify-center items-center flex-col">
+      <section className="  col-span-12  flex justify-center items-center flex-col">
         {accountType !== 'merchant' ? (
           <aside
             className="uppercase text-sm my-4 absolute top-10 right-6 text-[#002D62] cursor-pointer"
@@ -99,6 +99,7 @@ const Login = () => {
             login as admin
           </aside>
         )}
+
         <>
           <LoginLogo />
           <FormikProvider value={formik}>

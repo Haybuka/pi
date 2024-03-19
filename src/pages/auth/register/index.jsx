@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { RegisterValidationSchema } from '../../../util/validationSchema';
 import { useMerchantRegisterRequest } from '../../../api/merchants/register';
 import useGeolocation from '../../../hooks/useGeoLocation';
+import { useGetStates } from '../../../api/utils';
 
 // #1a56db
 const Register = () => {
@@ -46,6 +47,9 @@ const Register = () => {
   const { data: bankData, isFetched: bankFetched } = useGetBank();
   const { mutate: createMerchantRequest, isLoading: merchantLoading } =
     useMerchantRegisterRequest(options);
+
+  const { data: states, isFetched: statesFetched } = useGetStates();
+
   const { position, error } = useGeolocation();
 
   const [banks, setBanks] = useState([]);
@@ -60,12 +64,6 @@ const Register = () => {
   }, [bankFetched, bankData?.content?.data]);
 
   const gender = [{ name: 'Male' }, { name: 'Female' }, { name: 'Others' }];
-
-  const state = [
-    { name: 'Lagos', id: 1 },
-    { name: 'Kwarra', id: 2 },
-    { name: 'Ibadan', id: 3 },
-  ];
 
   const formik = useFormik({
     initialValues: {
@@ -97,12 +95,13 @@ const Register = () => {
         settlementCharge: 0,
         allowWithdrawal: 1,
       };
+
       createMerchantRequest(data);
     },
   });
 
   const { handleSubmit, errors } = formik;
-
+  console.log({ errors });
   return (
     <main className="w-screen h-screen grid grid-cols-12">
       <section className=" bg-white col-span-12 md:col-span-12 flex justify-center items-center flex-col my-3">
@@ -145,7 +144,17 @@ const Register = () => {
               <p className="my-8"></p>
               <PiField name={'address'} displayName={'Address'} type="text" />
               <GridWrapper>
-                <PiSelect name={'stateObj'} data={state} title="State" />
+                {statesFetched ? (
+                  <PiSelect
+                    name={'stateObj'}
+                    data={states?.content}
+                    title="State"
+                  />
+                ) : (
+                  <label className="block relative floated-label col-span-6">
+                    <p>Fetching States</p>
+                  </label>
+                )}
                 <PiSelect name={'gender'} data={gender} title="Gender" />
               </GridWrapper>
             </Section>

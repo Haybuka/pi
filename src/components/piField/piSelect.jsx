@@ -20,7 +20,7 @@ const PiSelect = ({ name, data, title }) => {
             />
             {meta.touched && meta.error && (
               <div className="absolute my-2 text-sm text-red-500">
-                {title} {meta.error.name || meta.error}
+                {title} {meta?.error?.name || meta?.error}
               </div>
             )}
           </label>

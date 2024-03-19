@@ -11,15 +11,14 @@ export const RegisterValidationSchema = {
     .integer()
     .typeError('A number is required'),
   bank: yup.object().shape({
-    id: yup.string().required(' be blank.'),
+    id: yup.string(' be blank.'),
     bankName: yup.string(),
     enabled: yup.string(),
     health: yup.number()
   }),
-  accountName: yup.string().required(' cannot be blank.'),
+  accountName: yup.string(' cannot be blank.'),
   accountNumber: yup
     .number()
-    .required("is a required field.")
     .positive()
     .integer()
     .typeError('A number is required'),
@@ -31,5 +30,6 @@ export const RegisterValidationSchema = {
   }),
   stateObj: yup.object().shape({
     name: yup.string().required(' is required.'),
+    id: yup.string().required(' is required.'),
   }),
 }
