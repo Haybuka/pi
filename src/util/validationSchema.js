@@ -4,11 +4,11 @@ export const RegisterValidationSchema = {
   name: yup.string().required(' cannot be blank.'),
   address: yup.string().required(' cannot be blank.'),
   email: yup.string().email('is invalid').required('is required'),
-  phone: yup
-    .number()
+  phone: yup.string()
     .required("is a required field.")
-    .positive()
-    .integer()
+    // .matches(/^[0-9]+$/, "Must be only digits")
+    .min(14, ' format is invalid')
+    .max(14, ' format is invalid')
     .typeError('A number is required'),
   bank: yup.object().shape({
     id: yup.string(' be blank.'),
