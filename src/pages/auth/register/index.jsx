@@ -51,7 +51,10 @@ const Register = () => {
 
   const { data: states, isFetched: statesFetched } = useGetStates();
 
-  const { position, error } = useGeolocation();
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    lng: null,
+  });
 
   const [banks, setBanks] = useState([]);
 
@@ -91,18 +94,24 @@ const Register = () => {
       const data = {
         ...values,
         bank: values.bank.bankName,
-        longitude: 3.3947,
-        latitude: 6.454,
+        longitude: coordinates.lng,
+        latitude: coordinates.lat,
         settlementCharge: 0,
         allowWithdrawal: 1,
       };
 
-      createMerchantRequest(data);
+      // createMerchantRequest(data);
+      console.log({ data });
     },
   });
 
-  const { handleSubmit, errors } = formik;
-  console.log({ errors });
+  const { handleSubmit, setFieldValue } = formik;
+
+  const handleAddress = (value) => {
+    setFieldValue('address', value?.value);
+    setCoordinates(value?.latlng);
+  };
+
   return (
     <main className="w-screen h-screen grid grid-cols-12">
       <section className=" bg-white col-span-12 md:col-span-12 flex justify-center items-center flex-col my-3">
@@ -143,8 +152,12 @@ const Register = () => {
               </GridWrapper>
               <PiField name={'email'} displayName={'Email'} type="email" />
               <p className="my-8"></p>
-              <PiField name={'address'} displayName={'Address'} type="text" />
-              <PlacesUi />
+              <PlacesUi
+                name={'address'}
+                displayName={'Address'}
+                type="text"
+                handleAddress={handleAddress}
+              />
               <GridWrapper>
                 {statesFetched ? (
                   <PiSelect

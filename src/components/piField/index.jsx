@@ -12,7 +12,6 @@ const PiField = ({ name, placeholder = '', type = 'text', displayName }) => {
         return (
           <label className="block relative floated-label col-span-12 my-4  sm:my-0 sm:col-span-6">
             <input
-              defaultValue={''}
               type={type}
               className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-md rounded-2xl"
               // placeholder={placeholder}

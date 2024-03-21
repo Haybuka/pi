@@ -1,50 +1,94 @@
+import { Field } from 'formik';
 import { useState } from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
-  geocodeByPlaceId,
   getLatLng,
 } from 'react-places-autocomplete';
 
-const PlacesUi = () => {
+const PlacesUi = ({
+  name,
+  placeholder = '',
+  type = 'text',
+  displayName,
+  handleAddress,
+}) => {
   const [address, setAddress] = useState('');
-  const handleSelect = async (value) => {};
+
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const latlng = await getLatLng(results[0]);
+
+      setAddress(value);
+      handleAddress({ value, latlng });
+    } catch (error) {
+      console.log('google error', { error });
+    }
+  };
+
   return (
-    <div>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-          return (
-            <div>
-              <input {...getInputProps({ placeholder: 'Input address' })} />
-              <div>
-                {loading && <div>Loading...</div>}
-                {suggestions?.map((suggestion) => {
-                  const className = suggestion.active ? 'text-green-500' : '';
-                  // inline style for demonstration purpose
-                  const style = suggestion.active
-                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                  console.log({ suggestion });
-                  return (
-                    <div
-                      {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style,
-                      })}
-                    >
-                      <span>{suggestion.description}</span>
+    <Field name={name}>
+      {({ field, form: { touched, errors, setFieldValue }, meta }) => {
+        return (
+          <PlacesAutocomplete
+            value={address}
+            onChange={setAddress}
+            onSelect={handleSelect}
+          >
+            {({
+              getInputProps,
+              suggestions,
+              getSuggestionItemProps,
+              loading,
+            }) => {
+              return (
+                <label className="block relative floated-label col-span-12 my-4  sm:my-0 sm:col-span-6">
+                  <input
+                    {...field}
+                    type={type}
+                    className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-md rounded-2xl"
+                    {...getInputProps({ placeholder: placeholder })}
+                  />
+                  <p className="uppercase bg-white text-sm px-2">
+                    {displayName}
+                  </p>
+
+                  <div>
+                    {loading && <div>Loading...</div>}
+                    {suggestions?.map((suggestion) => {
+                      const className = suggestion?.active
+                        ? 'text-green-500'
+                        : '';
+                      const style = suggestion?.active
+                        ? { backgroundColor: '#fafafa py-2', cursor: 'pointer' }
+                        : {
+                            backgroundColor: '#ffffff py-2 ',
+                            cursor: 'pointer',
+                          };
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style,
+                          })}
+                        >
+                          <span>{suggestion?.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {meta?.touched && meta?.error && (
+                    <div className="error my-2 text-sm text-red-500">
+                      {`${displayName} ${meta?.error}`}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        }}
-      </PlacesAutocomplete>
-    </div>
+                  )}
+                </label>
+              );
+            }}
+          </PlacesAutocomplete>
+        );
+      }}
+    </Field>
   );
 };
 
