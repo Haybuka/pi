@@ -18,6 +18,7 @@ import { RegisterValidationSchema } from '../../../util/validationSchema';
 import { useMerchantRegisterRequest } from '../../../api/merchants/register';
 import useGeolocation from '../../../hooks/useGeoLocation';
 import { useGetStates } from '../../../api/utils';
+import PlacesUi from './placesUi';
 
 // #1a56db
 const Register = () => {
@@ -143,6 +144,7 @@ const Register = () => {
               <PiField name={'email'} displayName={'Email'} type="email" />
               <p className="my-8"></p>
               <PiField name={'address'} displayName={'Address'} type="text" />
+              <PlacesUi />
               <GridWrapper>
                 {statesFetched ? (
                   <PiSelect
