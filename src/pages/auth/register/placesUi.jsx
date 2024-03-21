@@ -22,13 +22,13 @@ const PlacesUi = ({
       setAddress(value);
       handleAddress({ value, latlng });
     } catch (error) {
-      console.log('google error', { error });
+      console.log('location error', { error });
     }
   };
 
   return (
     <Field name={name}>
-      {({ field, form: { touched, errors, setFieldValue }, meta }) => {
+      {({ field, meta }) => {
         return (
           <PlacesAutocomplete
             value={address}
@@ -53,7 +53,7 @@ const PlacesUi = ({
                     {displayName}
                   </p>
 
-                  <div>
+                  <div className="px-2">
                     {loading && <div>Loading...</div>}
                     {suggestions?.map((suggestion) => {
                       const className = suggestion?.active
