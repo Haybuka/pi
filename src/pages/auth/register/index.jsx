@@ -100,8 +100,7 @@ const Register = () => {
         allowWithdrawal: 1,
       };
 
-      // createMerchantRequest(data);
-      console.log({ data });
+      createMerchantRequest(data);
     },
   });
 
