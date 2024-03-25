@@ -26,6 +26,11 @@ const PlacesUi = ({
     }
   };
 
+  const onError = (status, clearSuggestions) => {
+    console.log('Google Maps API returned error with status: ', status);
+    clearSuggestions();
+  };
+
   return (
     <Field name={name}>
       {({ field, meta }) => {
@@ -34,6 +39,8 @@ const PlacesUi = ({
             value={address}
             onChange={setAddress}
             onSelect={handleSelect}
+            onError={onError}
+            shouldFetchSuggestions={address.length > 3}
           >
             {({
               getInputProps,

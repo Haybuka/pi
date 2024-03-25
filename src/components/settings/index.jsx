@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
 import SettingsTab from './tab';
 import UpdateProfileForm from './updateProfileForm';
-import ResetPasswordForm from './resetPasswordForm';
+import UpdatePasswordForm from './updatePasswordForm';
 
 const Index = () => {
   return (
@@ -10,11 +10,11 @@ const Index = () => {
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
             <SettingsTab title="Update Profile" />
-            <SettingsTab title="reset password" />
+            <SettingsTab title="Update password" />
           </Tab.List>
           <Tab.Panels className="mt-2">
             <UpdateProfileForm />
-            <ResetPasswordForm />
+            <UpdatePasswordForm />
           </Tab.Panels>
         </Tab.Group>
       </div>
