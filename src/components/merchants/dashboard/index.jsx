@@ -44,7 +44,7 @@ const MerchantDashboard = () => {
   const merchantDetails = [
     {
       name: 'total revenue',
-      amount: totalRevenue,
+      amount: totalRevenue ? totalRevenue : 0,
       icon: <MoneyIcon />,
     },
     {

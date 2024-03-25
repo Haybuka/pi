@@ -24,18 +24,22 @@ const Index = () => {
         <ProfileFields
           value={profile?.fullname}
           label="fullname"
-          classProp="col-span-6"
+          classProp="col-span-6 capitalize"
         />
         <ProfileFields
           value={profile?.username}
           label="username"
-          classProp="col-span-6"
+          classProp="col-span-6 capitalize"
         />
       </div>
       <ProfileFields value={profile?.email} label="email" classProp="my-6" />
       <div className="grid grid-cols-12 gap-4 my-6">
         <ProfileFields
-          value={profile?.phone ? profile?.organization?.phone : '080 000 0001'}
+          value={
+            profile?.organization
+              ? profile?.organization?.phone
+              : '080 000 0001'
+          }
           label="phone"
           classProp="col-span-6"
         />

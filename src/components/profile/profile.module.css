@@ -3,7 +3,7 @@
 }
 
 .field_title {
-  @apply py-3 capitalize shadow-lg rounded-full px-4;
+  @apply py-3 shadow-lg rounded-full px-4;
 }
 
 .field_label {
