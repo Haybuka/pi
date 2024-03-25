@@ -16,8 +16,7 @@ import PiSelect from '../../../components/piField/piSelect';
 import { useEffect } from 'react';
 import { RegisterValidationSchema } from '../../../util/validationSchema';
 import { useMerchantRegisterRequest } from '../../../api/merchants/register';
-import useGeolocation from '../../../hooks/useGeoLocation';
-import { useGetStates } from '../../../api/utils';
+import { useGetLgs, useGetStates } from '../../../api/utils';
 import PlacesUi from './placesUi';
 
 // #1a56db
@@ -25,11 +24,12 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onError = (error) => {
-    toast.error(
-      `${error?.response?.data.result.message.split('_').join(' ')} ${
-        error?.response?.data.result.details
-      }`
-    );
+    const errorMsg = error?.message
+      ? error?.message
+      : `${error?.response?.data.result.message.split('_').join(' ')} ${
+          error?.response?.data.result.details
+        }`;
+    toast.error(`${errorMsg}`);
     console.log({ error }, 'on error');
   };
 
@@ -45,11 +45,14 @@ const Register = () => {
     onSuccess,
   };
 
+  const [stateId, setStateId] = useState(39);
+
   const { data: bankData, isFetched: bankFetched } = useGetBank();
   const { mutate: createMerchantRequest, isLoading: merchantLoading } =
     useMerchantRegisterRequest(options);
 
   const { data: states, isFetched: statesFetched } = useGetStates();
+  const { data: lgs, isFetched: lgFetched } = useGetLgs({ stateId });
 
   const [coordinates, setCoordinates] = useState({
     lat: null,
@@ -79,6 +82,10 @@ const Register = () => {
         id: '',
         name: '',
       },
+      lg: {
+        id: '',
+        name: '',
+      },
       bank: '',
       accountNumber: '',
       accountName: '',
@@ -98,6 +105,7 @@ const Register = () => {
         latitude: coordinates.lat,
         settlementCharge: 0,
         allowWithdrawal: 1,
+        phone: `+234${values.phone.replace(/^0+/, '')}`,
       };
 
       createMerchantRequest(data);
@@ -109,6 +117,10 @@ const Register = () => {
   const handleAddress = (value) => {
     setFieldValue('address', value?.value);
     setCoordinates(value?.latlng);
+  };
+
+  const handleStateSelect = (data) => {
+    setStateId(data?.id);
   };
 
   return (
@@ -151,6 +163,9 @@ const Register = () => {
               </GridWrapper>
               <PiField name={'email'} displayName={'Email'} type="email" />
               <p className="my-8"></p>
+            </Section>
+            <Section title={'Location Details'}>
+              <p className="my-6"></p>
               <PlacesUi
                 name={'address'}
                 displayName={'Address'}
@@ -163,17 +178,23 @@ const Register = () => {
                     name={'stateObj'}
                     data={states?.content}
                     title="State"
+                    handleState={handleStateSelect}
                   />
                 ) : (
                   <label className="block relative floated-label col-span-6">
                     <p>Fetching States</p>
                   </label>
                 )}
-                <PiSelect name={'gender'} data={gender} title="Gender" />
+                {lgFetched ? (
+                  <PiSelect name={'lg'} data={lgs?.content} title="Lg" />
+                ) : (
+                  <label className="block relative floated-label col-span-6">
+                    <p>Fetching LG's</p>
+                  </label>
+                )}
+                {/* <PiSelect name={'gender'} data={gender} title="Gender" /> */}
               </GridWrapper>
-            </Section>
-            <Section title={'Bank Details'}>
-              <div className="my-4 mb-12">
+              {/* <div className="my-4 mb-12">
                 {bankFetched ? (
                   <PiSelect name={'bank'} data={banks} title="Bank" />
                 ) : (
@@ -195,7 +216,7 @@ const Register = () => {
                   displayName={'Account Number'}
                   type="text"
                 />
-              </GridWrapper>
+              </GridWrapper> */}
             </Section>
 
             <Button

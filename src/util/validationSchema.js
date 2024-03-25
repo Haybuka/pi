@@ -7,8 +7,8 @@ export const RegisterValidationSchema = {
   phone: yup.string()
     .required("is a required field.")
     // .matches(/^[0-9]+$/, "Must be only digits")
-    .min(14, ' format is invalid')
-    .max(14, ' format is invalid')
+    .min(11, ' format is invalid')
+    .max(11, ' format is invalid')
     .typeError('A number is required'),
   bank: yup.object().shape({
     id: yup.string(' be blank.'),

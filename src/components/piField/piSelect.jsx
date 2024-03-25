@@ -1,7 +1,7 @@
 import { Field } from 'formik';
 import PiDropdown from '../../pages/auth/register/dropDown';
 
-const PiSelect = ({ name, data, title }) => {
+const PiSelect = ({ name, data, title, handleState }) => {
   return (
     <Field name={name}>
       {({
@@ -17,6 +17,7 @@ const PiSelect = ({ name, data, title }) => {
               field={field}
               form={setFieldValue}
               name={name}
+              handleState={handleState}
             />
             {meta.touched && meta.error && (
               <div className="absolute my-2 text-sm text-red-500">

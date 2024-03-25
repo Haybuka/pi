@@ -31,6 +31,10 @@ const PlacesUi = ({
     clearSuggestions();
   };
 
+  const searchOptions = {
+    componentRestrictions: { country: ['NG'] },
+  };
+
   return (
     <Field name={name}>
       {({ field, meta }) => {
@@ -41,6 +45,7 @@ const PlacesUi = ({
             onSelect={handleSelect}
             onError={onError}
             shouldFetchSuggestions={address.length > 3}
+            searchOptions={searchOptions}
           >
             {({
               getInputProps,
@@ -62,7 +67,7 @@ const PlacesUi = ({
 
                   <div className="px-2">
                     {loading && <div>Loading...</div>}
-                    {suggestions?.map((suggestion) => {
+                    {suggestions.slice(0, 3)?.map((suggestion) => {
                       const className = suggestion?.active
                         ? 'text-green-500'
                         : '';
@@ -74,10 +79,12 @@ const PlacesUi = ({
                           };
                       return (
                         <div
+                          key={suggestion}
                           {...getSuggestionItemProps(suggestion, {
                             className,
                             style,
                           })}
+                          className="border p-1 my-3"
                         >
                           <span>{suggestion?.description}</span>
                         </div>
