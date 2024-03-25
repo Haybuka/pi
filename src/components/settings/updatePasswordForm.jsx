@@ -20,72 +20,70 @@ const UpdatePasswordForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
       password: '',
+      confirmPassword: '',
+      newPassword: '',
     },
-    // validationSchema: yup.object().shape({
-    //   username: yup.string().required('Above field cannot be blank.'),
-    //   password: yup.string().required('Above field is required.'),
-    // }),
+    validationSchema: yup.object({
+      password: yup.string().required('Password is required'),
+      newPassword: yup.string().required('Password is required'),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null], 'Passwords must match'),
+    }),
     onSubmit: (values) => {
       console.log({ values }, 'update password');
     },
   });
 
-  const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
+  const {
+    handleBlur,
+    errors,
+    values,
+    handleSubmit,
+    setFieldValue,
+    isSubmitting,
+  } = formik;
 
   return (
     <>
       <Tab.Panel className={classNames('rounded-xl p-3')}>
-        <form>
-          <label className="block relative floated-label my-6 col-span-6">
-            <input
-              type="text"
-              className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-lg rounded-2xl"
-              placeholder="John Doe"
-            />
-            <p className="uppercase text-sm bg-white text-center translate-x-2 px-2">
-              email
-            </p>
-          </label>
-          {/* <button
-            type="submit"
-            onClick={}
-            className="w-full bg-blue-700 text-white py-3 rounded-2xl capitalize"
-          >
-            reset
-          </button> */}
-          <Button
-            type="submit"
-            text={'reset'}
-            handleClick={() => setModalIsOpen(true)}
-          />
-        </form>
         <FormikProvider value={formik}>
           <form className="w-full  my-4" onSubmit={handleSubmit}>
             <div className="my-6">
               <Inputs
-                type="text"
-                name="username"
-                displayName="username"
-                value={values.username}
-                handleInputChange={setFieldValue}
-                handleBlur={handleBlur}
-                error={errors?.username}
-              />
-            </div>
-            <div className="my-6">
-              <Inputs
                 type="password"
                 name="password"
-                displayName="password"
+                displayName="current password"
                 value={values.password}
                 handleInputChange={setFieldValue}
                 handleBlur={handleBlur}
                 error={errors?.password}
               />
             </div>
-            <Button text={'Change Password'} />
+            <div className="my-6">
+              <Inputs
+                type="password"
+                name="newPassword"
+                displayName="new password"
+                value={values.newPassword}
+                handleInputChange={setFieldValue}
+                handleBlur={handleBlur}
+                error={errors?.newPassword}
+              />
+            </div>
+            <div className="my-6">
+              <Inputs
+                type="password"
+                name="confirmPassword"
+                displayName="confirm password"
+                value={values.confirmPassword}
+                handleInputChange={setFieldValue}
+                handleBlur={handleBlur}
+                error={errors?.confirmPassword}
+              />
+            </div>
+            <Button isSubmitting={isSubmitting} text={'Change Password'} />
           </form>
         </FormikProvider>
       </Tab.Panel>
