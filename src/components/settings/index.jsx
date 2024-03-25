@@ -2,11 +2,9 @@ import { Tab } from '@headlessui/react';
 import SettingsTab from './tab';
 import UpdateProfileForm from './updateProfileForm';
 import UpdatePasswordForm from './updatePasswordForm';
+import UpdateAccountForm from './updateAccountForm';
 
 const Index = () => {
-  const userProfile = JSON.parse(localStorage.getItem('__profile__'));
-
-  console.log({ userProfile });
   return (
     <section>
       <div className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
@@ -19,6 +17,7 @@ const Index = () => {
           <Tab.Panels className="mt-2">
             <UpdateProfileForm />
             <UpdatePasswordForm />
+            <UpdateAccountForm />
           </Tab.Panels>
         </Tab.Group>
       </div>

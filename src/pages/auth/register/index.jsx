@@ -82,7 +82,7 @@ const Register = () => {
         id: '',
         name: '',
       },
-      lg: {
+      lgObj: {
         id: '',
         name: '',
       },
@@ -105,6 +105,8 @@ const Register = () => {
         latitude: coordinates.lat,
         settlementCharge: 0,
         allowWithdrawal: 1,
+        state: values.stateObj.id,
+        lg: values.lgObj?.id,
         phone: `+234${values.phone.replace(/^0+/, '')}`,
       };
 
@@ -186,7 +188,7 @@ const Register = () => {
                   </label>
                 )}
                 {lgFetched ? (
-                  <PiSelect name={'lg'} data={lgs?.content} title="Lg" />
+                  <PiSelect name={'lgObj'} data={lgs?.content} title="Lg" />
                 ) : (
                   <label className="block relative floated-label col-span-6">
                     <p>Fetching LG's</p>
@@ -194,29 +196,6 @@ const Register = () => {
                 )}
                 {/* <PiSelect name={'gender'} data={gender} title="Gender" /> */}
               </GridWrapper>
-              {/* <div className="my-4 mb-12">
-                {bankFetched ? (
-                  <PiSelect name={'bank'} data={banks} title="Bank" />
-                ) : (
-                  <label className="block relative floated-label col-span-6">
-                    <p>Fetching Banks</p>
-                  </label>
-                )}
-              </div>
-
-              <GridWrapper>
-                <PiField
-                  name={'accountName'}
-                  displayName={'Account Name'}
-                  type="text"
-                />
-
-                <PiField
-                  name={'accountNumber'}
-                  displayName={'Account Number'}
-                  type="text"
-                />
-              </GridWrapper> */}
             </Section>
 
             <Button
