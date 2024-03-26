@@ -26,7 +26,7 @@ const UpdatePasswordForm = () => {
     },
     validationSchema: yup.object({
       password: yup.string().required('Password is required'),
-      newPassword: yup.string().required('Password is required'),
+      newPassword: yup.string().required('New password is required'),
       confirmPassword: yup
         .string()
         .oneOf([yup.ref('newPassword'), null], 'Passwords must match'),

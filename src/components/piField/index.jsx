@@ -14,7 +14,6 @@ const PiField = ({ name, placeholder = '', type = 'text', displayName }) => {
             <input
               type={type}
               className="w-full py-3 px-4 outline-none border-none focus:outline-none shadow-md rounded-2xl"
-              // placeholder={placeholder}
               {...field}
             />
             <p className="uppercase bg-white text-sm ">{displayName}</p>

@@ -13,7 +13,6 @@ const UpdateProfileForm = () => {
   const user = JSON.parse(localStorage.getItem('__profile__'));
   const [profile] = useState(userProfile.email ? userProfile : user);
 
-  console.log({ profile });
   return (
     <Tab.Panel className={classNames('rounded-xl  px-6 py-4')}>
       <form>

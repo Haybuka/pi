@@ -1,15 +1,12 @@
 import { Tab } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
-import PasswordResetModal from './modal/modal';
 import Button from '../button/button';
-import Inputs from '../input';
 import { useFormik, FormikProvider } from 'formik';
 import * as yup from 'yup';
 import PiSelect from '../piField/piSelect';
 import GridWrapper from '../../pages/auth/register/Grid';
 import PiField from '../piField';
 import { useGetBank } from '../../api/bank';
-import { RegisterValidationSchema } from '../../util/validationSchema';
 import { useMerchantUpdateRequest } from '../../api/merchants/register';
 
 import { toast } from 'react-toastify';
@@ -20,13 +17,7 @@ function classNames(...classes) {
 }
 
 const UpdateAccountForm = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const userProfile = JSON.parse(localStorage.getItem('__profile__'));
-
-  const handleModalClose = () => {
-    setModalIsOpen((prev) => false);
-  };
 
   const onError = (error) => {
     const errorMsg = error?.message
@@ -35,11 +26,18 @@ const UpdateAccountForm = () => {
           error?.response?.data.result.details
         }`;
     toast.error(`${errorMsg}`);
-    console.log({ error }, 'on error');
   };
 
   const onSuccess = (response) => {
-    toast.success('Account created ');
+    try {
+      if (response.data.statusCode === 200) {
+        toast.success(
+          ` ${response?.data?.result?.message} : ${response?.data?.result?.details}`
+        );
+      }
+    } catch (error) {
+      throw Error(error);
+    }
   };
 
   const options = {
@@ -47,60 +45,73 @@ const UpdateAccountForm = () => {
     onSuccess,
   };
 
-  const { mutate: updateUser, isLoading: updateLoading } =
+  const { mutate: updateMerchantRequest, isLoading: updateLoading } =
     useMerchantUpdateRequest(options);
 
-  // {
-  //   name: '',
-  //   address: '',
-  //   phone: '',
-  //   email: '',
-  //   stateObj: {
-  //     id: '',
-  //     name: '',
-  //   },
-  //   lgObj: {
-  //     id: '',
-  //     name: '',
-  //   },
-  //   bank: '',
-  //   accountNumber: '',
-  //   accountName: '',
-  //   accountdetails: {
-  //     username: '',
-  //     password: '',
-  //     fullname: '',
-  //   },
-  // }
   const formik = useFormik({
     initialValues: {
+      name: '',
       bank: '',
       accountNumber: '',
       accountName: '',
-      accountdetails: {
-        username: '',
-        fullname: '',
-      },
+      email: '',
+      phone: '',
     },
-    // validationSchema: yup.object().shape(RegisterValidationSchema),
-    onSubmit: (values) => {
-      delete values.gender;
-      // const data = {
-      //   ...values,
-      //   bank: values.bank.bankName,
-      //   longitude: coordinates.lng,
-      //   latitude: coordinates.lat,
-      //   settlementCharge: 0,
-      //   allowWithdrawal: 1,
-      //   phone: `+234${values.phone.replace(/^0+/, '')}`,
-      // };
-      console.log({ values });
+    validationSchema: yup.object().shape({
+      name: yup.string().required(' cannot be blank.'),
+      email: yup.string().email('is invalid').required('is required'),
 
-      // createMerchantRequest(data);
+      bank: yup
+        .object()
+        .shape({
+          id: yup.string(' be blank.'),
+          bankName: yup.string(),
+          enabled: yup.string(),
+          health: yup.number(),
+        })
+        .required(),
+      accountName: yup.string().required(' cannot be blank.'),
+      phone: yup
+        .string()
+        .required('is a required field.')
+        // .matches(/^[0-9]+$/, "Must be only digits")
+        .min(11, ' format is invalid')
+        .max(11, ' format is invalid')
+        .typeError('A number is required'),
+      accountNumber: yup
+        .number()
+        .positive()
+        .integer()
+        .typeError('A number is required')
+        .required(' cannot be blank.'),
+    }),
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      delete values.gender;
+
+      if (!values.bank) {
+        toast.error('Bank field is blank');
+        setSubmitting(false);
+        return;
+      }
+
+      const data = {
+        ...values,
+        address: userProfile?.organization?.address,
+        stateObj: userProfile?.organization.state,
+        longitude: userProfile?.organization.location.coordinates.longitude,
+        latitude: userProfile?.organization.location.coordinates.latitude,
+        bank: values.bank.bankName,
+        accountNumber: values.accountNumber,
+        accountName: values.accountName,
+        settlementCharge: 0,
+        allowWithdrawal: 1,
+      };
+      updateMerchantRequest(data);
+      resetForm();
     },
   });
 
-  const { handleSubmit, setFieldValue, isSubmitting } = formik;
+  const { handleSubmit } = formik;
 
   const { data: bankData, isFetched: bankFetched } = useGetBank();
   const [banks, setBanks] = useState([]);
@@ -119,19 +130,19 @@ const UpdateAccountForm = () => {
       <Tab.Panel className={classNames('rounded-xl p-3')}>
         <FormikProvider value={formik}>
           <form className="w-full  my-4" onSubmit={handleSubmit}>
-            {/* <GridWrapper>
-              <PiField
-                name={'accountdetails.fullname'}
-                displayName={'Fullname'}
-                type="text"
-              />
+            <div className="flex justify-center">
+              <p className="w-24 h-24 my-6 bg-gray-200 rounded-full"></p>
+            </div>
+            <PiField name={'name'} displayName={'Name'} type="text" />
 
+            <GridWrapper>
+              <PiField name={'email'} displayName={'Email'} type="email" />
               <PiField
-                name={'accountdetails.username'}
-                displayName={'Username'}
+                name={'phone'}
+                displayName={'Phone Number'}
                 type="text"
               />
-            </GridWrapper> */}
+            </GridWrapper>
             <div className="my-4 mb-12">
               {bankFetched ? (
                 <PiSelect name={'bank'} data={banks} title="Bank" />
@@ -155,7 +166,7 @@ const UpdateAccountForm = () => {
                 type="text"
               />
             </GridWrapper>
-            <Button isSubmitting={isSubmitting} text={'Change Password'} />
+            <Button isSubmitting={updateLoading} text={'Change Password'} />
           </form>
         </FormikProvider>
       </Tab.Panel>

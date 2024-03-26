@@ -159,7 +159,7 @@ const Register = () => {
                 />
                 <PiField
                   name={'phone'}
-                  displayName={'Phone Number  +234'}
+                  displayName={'Phone Number'}
                   type="text"
                 />
               </GridWrapper>

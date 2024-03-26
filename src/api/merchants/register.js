@@ -7,7 +7,7 @@ const registerMerchantRequest = (data) => {
 
 
 const updateMerchantRequest = (data) => {
-  return axios.post('v1/update-merchant', { data })
+  return axios.put('v1/update-merchant', { data })
 }
 
 

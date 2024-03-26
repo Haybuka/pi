@@ -10,14 +10,12 @@ const Index = () => {
       <div className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
-            <SettingsTab title="Update Profile" />
-            <SettingsTab title="Update password" />
             <SettingsTab title="Update Account" />
+            <SettingsTab title="Update password" />
           </Tab.List>
           <Tab.Panels className="mt-2">
-            <UpdateProfileForm />
-            <UpdatePasswordForm />
             <UpdateAccountForm />
+            <UpdatePasswordForm />
           </Tab.Panels>
         </Tab.Group>
       </div>
