@@ -4,12 +4,38 @@ import { ReactComponent as SettingsIcon } from '../../images/icons/settings.svg'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
+import { useGetSelf } from '../../api/login';
 
 function MyPopover() {
   const navigate = useNavigate();
   const { profile: userProfile, handleSetLogOut } = useContext(AuthContext);
   const user = JSON.parse(localStorage.getItem('__profile__'));
   const [profile] = useState(userProfile.email ? userProfile : user);
+
+  const onSuccess = (response) => {
+    console.log({ response }, 'response');
+    try {
+      if (response.statusCode === 200) {
+        console.log(response.content.profile);
+        return;
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const onError = (error) => {
+    console.log({ error }, 'profile');
+  };
+
+  const options = {
+    onError,
+    onSuccess,
+  };
+
+  const { data: getSelf, isFetched } = useGetSelf(options);
 
   return (
     <Popover className="relative">
