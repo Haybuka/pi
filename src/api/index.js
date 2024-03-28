@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// export const baseURL = 'https://proxystoreapi.azurewebsites.net/';
 export const baseURL = 'https://proxystoreapi.azurewebsites.net/';
 
 const axiosInstance = axios.create({

@@ -26,7 +26,7 @@ export const useMerchantLoginRequest = (options) => {
 export const useGetSelf = (options = {}) => {
   return useQuery("user", getSelf,
     {
-      select: (data) => data?.data,
+      select: (data) => data?.data.content.profile,
       ...options
     })
 }

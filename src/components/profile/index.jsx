@@ -1,24 +1,39 @@
 import React, { useContext, useState } from 'react';
 import ProfileFields from './fields';
-import { AuthContext } from '../../context/authContext';
 import Button from '../button/button';
 import { useNavigate } from 'react-router-dom';
+import { useGetImageFile } from '../../api/getImageFile';
+import { useGetSelf } from '../../api/login';
 
 const Index = () => {
-  const { profile: userProfile } = useContext(AuthContext);
-  const user = JSON.parse(localStorage.getItem('__profile__'));
-  const [profile] = useState(userProfile.email ? userProfile : user);
+  const { data: profile, isFetched: isProfileFetched } = useGetSelf();
+
+  const logoRef = isProfileFetched && profile?.organization?.logo;
+
+  const options = {
+    fileAlias: logoRef,
+    enabled: logoRef ? true : false,
+  };
+  const { data: imageFile = [], isFetched: imageFetched } =
+    useGetImageFile(options);
 
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/settings');
   };
 
-  console.log({ profile });
   return (
     <main className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
       <div className="flex justify-center">
-        <p className="w-32 h-32 my-6 bg-gray-200 rounded-full"></p>
+        <p className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden">
+          {imageFetched && (
+            <img
+              alt=""
+              className="w-full h-full"
+              src={imageFile[imageFile?.length - 1]?.fullPath}
+            />
+          )}
+        </p>
       </div>
       <div className="grid grid-cols-12 gap-4 my-6">
         <ProfileFields
@@ -45,7 +60,7 @@ const Index = () => {
         />
 
         <ProfileFields
-          value={profile?.gender ? profile.gender : 'not specified'}
+          value={profile?.gender ? profile?.gender : 'not specified'}
           label="gender"
           classProp="col-span-6"
         />

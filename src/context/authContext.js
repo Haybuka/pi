@@ -23,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
     setIsLogout(prev => !prev)
   }
 
+
   const values = { profile, isLogOut, handleProfileSet, handleLogOut, handleSetLogOut }
 
   return (
