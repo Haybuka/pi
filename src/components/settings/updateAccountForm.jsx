@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../button/button';
 import { useFormik, FormikProvider } from 'formik';
 import * as yup from 'yup';
@@ -10,15 +10,27 @@ import { useGetBank } from '../../api/bank';
 import { useMerchantUpdateRequest } from '../../api/merchants/register';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ReactComponent as EditPenLogo } from '../../images/icons/pen.svg';
 import { useGetSelf } from '../../api/login';
 import { useGetImageFile } from '../../api/getImageFile';
+import { UpdateAccountValidationSchema } from '../../util/validationSchema';
+import Upload from '../imageUpload/upload';
+import Modal from '../modal/modal';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const UpdateAccountForm = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setModalIsOpen((prev) => false);
+    // setShowMerchantProduct(false);
+    // remove();
+  };
   const { data: profile, isFetched: isProfileFetched } = useGetSelf();
 
   const logoRef = isProfileFetched && profile?.organization?.logo;
@@ -69,34 +81,7 @@ const UpdateAccountForm = () => {
       email: profile ? profile?.email : '',
       phone: profile?.organization ? profile?.organization?.phone : '',
     },
-    validationSchema: yup.object().shape({
-      name: yup.string().required(' cannot be blank.'),
-      email: yup.string().email('is invalid').required('is required'),
-
-      bank: yup
-        .object()
-        .shape({
-          id: yup.string(' be blank.'),
-          bankName: yup.string(),
-          enabled: yup.string(),
-          health: yup.number(),
-        })
-        .required(),
-      accountName: yup.string().required(' cannot be blank.'),
-      phone: yup
-        .string()
-        .required('is a required field.')
-        // .matches(/^[0-9]+$/, "Must be only digits")
-        .min(11, ' format is invalid')
-        .max(11, ' format is invalid')
-        .typeError('A number is required'),
-      accountNumber: yup
-        .number()
-        .positive()
-        .integer()
-        .typeError('A number is required')
-        .required(' cannot be blank.'),
-    }),
+    validationSchema: yup.object().shape(UpdateAccountValidationSchema),
     onSubmit: (values, { setSubmitting, resetForm }) => {
       delete values.gender;
 
@@ -142,8 +127,11 @@ const UpdateAccountForm = () => {
       <Tab.Panel className={classNames('rounded-xl p-3')}>
         <FormikProvider value={formik}>
           <form className="w-full  my-4" onSubmit={handleSubmit}>
-            <div className="flex justify-center">
-              <p className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden">
+            <div className="flex justify-center relative cursor-pointer ">
+              <p
+                onClick={() => setModalIsOpen(true)}
+                className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden hover:animate-pulse"
+              >
                 {imageFetched && (
                   <img
                     alt=""
@@ -151,6 +139,10 @@ const UpdateAccountForm = () => {
                     src={imageFile[imageFile?.length - 1]?.fullPath}
                   />
                 )}
+              </p>
+              <p className="absolute -bottom-0 -translate-x-1/2 left-1/2 z-10 h-10 w-10 ">
+                {' '}
+                <EditPenLogo />
               </p>
             </div>
             <PiField name={'name'} displayName={'Name'} type="text" />
@@ -186,9 +178,19 @@ const UpdateAccountForm = () => {
                 type="text"
               />
             </GridWrapper>
-            <Button isSubmitting={updateLoading} text={'Change Password'} />
+            <Button isSubmitting={updateLoading} text={'Update'} />
           </form>
         </FormikProvider>
+        {modalIsOpen && (
+          <Modal
+            handleModal={handleModalClose}
+            classAdd={
+              'w-full md:w-[800px] h-2/4 overflow-y-scroll relative bg-red-400'
+            }
+          >
+            <Upload id={0} />
+          </Modal>
+        )}
       </Tab.Panel>
     </>
   );

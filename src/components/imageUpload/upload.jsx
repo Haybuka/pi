@@ -8,7 +8,7 @@ import Button from '../button/button';
 function Upload({ id }) {
   // const { imageUploadMutation } = useImageUpload();
   const { mutate } = useCreateMerchantProductImageRequest();
-  console.log({ id });
+
   const formik = useFormik({
     initialValues: {
       files: [],

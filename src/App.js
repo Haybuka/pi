@@ -2,7 +2,6 @@ import { Route, Routes, } from 'react-router-dom';
 import { Suspense, lazy, } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-import './App.css'
 import RequireAuth from './AuthGuard/requireAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +11,7 @@ import NotFound from './pages/notFound';
 
 import { ReactComponent as LoginLogo } from './pages/auth/register/loginLogo.svg';
 import useAuth from './hooks/useAuth';
+import './App.css'
 
 const LoadingScreen = () => (<section className='w-screen h-screen flex justify-center items-center'><LoginLogo /></section>)
 const Loadable = (Component) => (props) => {
