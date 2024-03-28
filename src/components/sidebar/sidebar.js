@@ -4,10 +4,11 @@ import { ThemeContext } from '../../context/themecontext';
 import cls from 'classnames'
 import styles from './sidebar.module.css'
 import Sidenav from './sidenav';
-import { Outlet, useHref, useNavigate } from 'react-router-dom';
+import { useHref, useNavigate } from 'react-router-dom';
 import RightIcon from './barIcon/rightIcon';
 import useAuth from '../../hooks/useAuth';
 import MyPopover from './profilePopOver';
+import ViewOutlet from './viewOutlet';
 
 const Sidebar = () => {
   const { isDark, handleModeSet } = useContext(ThemeContext)
@@ -21,16 +22,7 @@ const Sidebar = () => {
 
   }, [])
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", alertUser);
-    return () => {
-      window.removeEventListener("beforeunload", alertUser);
-    };
-  }, []);
-  const alertUser = (e) => {
-    e.preventDefault();
-    e.returnValue = "";
-  };
+
 
   const route = useHref()
 
@@ -67,9 +59,7 @@ const Sidebar = () => {
             <MyPopover />
           </aside>
         </article>
-        <section className="p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll">
-          <Outlet />
-        </section>
+        <ViewOutlet />
       </nav>
     </header>
 

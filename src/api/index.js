@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
     let token = localStorage.getItem('__token__')
     config.headers = {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
     };
     return config;
   },

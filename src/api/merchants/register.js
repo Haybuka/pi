@@ -5,6 +5,15 @@ const registerMerchantRequest = (data) => {
   return axios.post('v1/merchant-onboard', { data })
 }
 
+const uploadMerchantLogoRequest = (formData) => {
+
+  return axios.post('v1/upload-merchant-logo', formData, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  })
+}
+
 
 const updateMerchantRequest = (data) => {
   return axios.put('v1/update-merchant', { data })
@@ -24,5 +33,17 @@ export const useMerchantUpdateRequest = (options) => {
     onSuccess: () => {
       queryClient.invalidateQueries("user")
     }, ...options
+  })
+}
+
+export const useUploadMerchantLogoRequest = (options) => {
+  const queryClient = useQueryClient()
+  return useMutation(uploadMerchantLogoRequest, {
+    select: (data) => data.data,
+    onSuccess: () => {
+      queryClient.invalidateQueries("user")
+    },
+
+    ...options
   })
 }

@@ -1,23 +1,42 @@
 import { FormikProvider, useFormik } from 'formik';
 import { useDropzone } from 'react-dropzone';
 import { Icon } from '@iconify/react';
-import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
 import Button from '../button/button';
+import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
+import { useUploadMerchantLogoRequest } from '../../api/merchants/register';
 // import { _uploadImage, useImageUpload } from './api/image';
+import { toast } from 'react-toastify';
 
-function Upload({ id }) {
+import 'react-toastify/dist/ReactToastify.css';
+
+function Upload({ id, handleModalClose }) {
   // const { imageUploadMutation } = useImageUpload();
+  const options = {
+    onSuccess: (response) => {
+      if (response.data.statusCode === 200) {
+        console.log(response?.data?.result?.message);
+        toast.success(response?.data?.result?.message);
+        handleModalClose();
+      }
+    },
+    onError: (error) => {
+      console.log({ error }, 'upload error');
+      toast.error(error?.response?.data?.result?.details);
+    },
+  };
   const { mutate } = useCreateMerchantProductImageRequest();
+  const { mutate: uploadLogo, isLoading } =
+    useUploadMerchantLogoRequest(options);
 
   const formik = useFormik({
     initialValues: {
       files: [],
     },
-    onSubmit: (data) => {
+    onSubmit: (values) => {
       const formData = new FormData();
-      data?.files.forEach((file) => formData.append('files', file));
-      console.log({ formData });
-      // mutate(formData);
+      values?.files.forEach((file) => formData.append('file', file));
+
+      uploadLogo(formData);
     },
   });
 
@@ -114,7 +133,11 @@ function Upload({ id }) {
               </>
             ) : null}
 
-            <Button text={'Upload'} classProp={'my-3'} />
+            <Button
+              text={'Upload'}
+              classProp={'my-3'}
+              isSubmitting={isLoading}
+            />
           </form>
         </FormikProvider>
       </div>

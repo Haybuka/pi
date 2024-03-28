@@ -9,13 +9,16 @@ import PiField from '../piField';
 import { useGetBank } from '../../api/bank';
 import { useMerchantUpdateRequest } from '../../api/merchants/register';
 
-import { toast } from 'react-toastify';
-import { ReactComponent as EditPenLogo } from '../../images/icons/pen.svg';
 import { useGetSelf } from '../../api/login';
 import { useGetImageFile } from '../../api/getImageFile';
+
 import { UpdateAccountValidationSchema } from '../../util/validationSchema';
+
 import Upload from '../imageUpload/upload';
 import Modal from '../modal/modal';
+
+import { ReactComponent as EditPenLogo } from '../../images/icons/pen.svg';
+import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -28,8 +31,6 @@ const UpdateAccountForm = () => {
 
   const handleModalClose = () => {
     setModalIsOpen((prev) => false);
-    // setShowMerchantProduct(false);
-    // remove();
   };
   const { data: profile, isFetched: isProfileFetched } = useGetSelf();
 
@@ -39,10 +40,10 @@ const UpdateAccountForm = () => {
     fileAlias: logoRef,
     enabled: logoRef ? true : false,
   };
+
   const { data: imageFile = [], isFetched: imageFetched } =
     useGetImageFile(imageOptions);
 
-  console.log(profile);
   const onError = (error) => {
     const errorMsg = error?.message
       ? error?.message
@@ -188,7 +189,7 @@ const UpdateAccountForm = () => {
               'w-full md:w-[800px] h-2/4 overflow-y-scroll relative bg-red-400'
             }
           >
-            <Upload id={0} />
+            <Upload id={0} handleModalClose={handleModalClose} />
           </Modal>
         )}
       </Tab.Panel>
