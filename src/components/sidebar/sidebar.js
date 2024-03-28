@@ -5,8 +5,6 @@ import cls from 'classnames'
 import styles from './sidebar.module.css'
 import Sidenav from './sidenav';
 import { Outlet, useHref, useNavigate } from 'react-router-dom';
-import ProfileIcon from './barIcon/profileIcon';
-import ExitIcon from './barIcon/exitIcon';
 import RightIcon from './barIcon/rightIcon';
 import useAuth from '../../hooks/useAuth';
 import MyPopover from './profilePopOver';
@@ -22,6 +20,17 @@ const Sidebar = () => {
     userProfile === null && navigate("/login")
 
   }, [])
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+    };
+  }, []);
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
 
   const route = useHref()
 

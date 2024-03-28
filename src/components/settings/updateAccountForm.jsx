@@ -11,14 +11,26 @@ import { useMerchantUpdateRequest } from '../../api/merchants/register';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useGetSelf } from '../../api/login';
+import { useGetImageFile } from '../../api/getImageFile';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const UpdateAccountForm = () => {
-  const userProfile = JSON.parse(localStorage.getItem('__profile__'));
+  const { data: profile, isFetched: isProfileFetched } = useGetSelf();
 
+  const logoRef = isProfileFetched && profile?.organization?.logo;
+
+  const imageOptions = {
+    fileAlias: logoRef,
+    enabled: logoRef ? true : false,
+  };
+  const { data: imageFile = [], isFetched: imageFetched } =
+    useGetImageFile(imageOptions);
+
+  console.log(profile);
   const onError = (error) => {
     const errorMsg = error?.message
       ? error?.message
@@ -50,12 +62,12 @@ const UpdateAccountForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: profile?.organization ? profile?.organization?.name : '',
       bank: '',
       accountNumber: '',
       accountName: '',
-      email: '',
-      phone: '',
+      email: profile ? profile?.email : '',
+      phone: profile?.organization ? profile?.organization?.phone : '',
     },
     validationSchema: yup.object().shape({
       name: yup.string().required(' cannot be blank.'),
@@ -96,10 +108,10 @@ const UpdateAccountForm = () => {
 
       const data = {
         ...values,
-        address: userProfile?.organization?.address,
-        stateObj: userProfile?.organization.state,
-        longitude: userProfile?.organization.location.coordinates.longitude,
-        latitude: userProfile?.organization.location.coordinates.latitude,
+        address: profile?.organization?.address,
+        stateObj: profile?.organization.state,
+        longitude: profile?.organization.location.coordinates.longitude,
+        latitude: profile?.organization.location.coordinates.latitude,
         bank: values.bank.bankName,
         accountNumber: values.accountNumber,
         accountName: values.accountName,
@@ -131,7 +143,15 @@ const UpdateAccountForm = () => {
         <FormikProvider value={formik}>
           <form className="w-full  my-4" onSubmit={handleSubmit}>
             <div className="flex justify-center">
-              <p className="w-24 h-24 my-6 bg-gray-200 rounded-full"></p>
+              <p className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden">
+                {imageFetched && (
+                  <img
+                    alt=""
+                    className="w-full h-full"
+                    src={imageFile[imageFile?.length - 1]?.fullPath}
+                  />
+                )}
+              </p>
             </div>
             <PiField name={'name'} displayName={'Name'} type="text" />
 

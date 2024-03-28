@@ -6,7 +6,7 @@ const PiField = ({ name, placeholder = '', type = 'text', displayName }) => {
     <Field name={name}>
       {({
         field, // { name, value, onChange, onBlur }
-        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+        form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
         meta,
       }) => {
         return (
