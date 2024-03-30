@@ -4,18 +4,32 @@ import { ReactComponent as SvgIcon } from './clip.svg';
 const ProductCard = ({ product, options }) => {
   const { handleProductEdit, handleImageUpload, handleProductDelete } = options;
 
+  //Code to grap images
+  // const logoRef = isProfileFetched && profile?.organization?.logo;
+
+  // const imageOptions = {
+  //   fileAlias: logoRef,
+  //   enabled: logoRef ? true : false,
+  // };
+
+  // const { data: imageFile = [], isFetched: imageFetched } =
+  //   useGetImageFile(imageOptions);
   return (
     <aside className="w-full sm:w-auto lg:w-[300px] 2xl:w-[330px] shadow rounded-md overflow-hidden">
       <div
-        className="h-[180px] bg-gray-300 relative cursor-pointer"
-        onClick={() => handleImageUpload(product?.id)}
+        className="h-[180px] bg-gray-300 relative cursor-pointer hover:animate-pulse "
+        onClick={() =>
+          handleImageUpload({ name: product?.name, id: product?.id })
+        }
       >
-        <SvgIcon />
-        {/* <img
+        <p className="absolute top-1/2 left-1/2 -translate-x-1/2">
+          <SvgIcon />
+        </p>
+        <img
           src={HeadPhone}
           alt="product"
           className="w-full h-full object-cover"
-        /> */}
+        />
       </div>
       <div className="p-2">
         <h3 className="uppercase text-sm flex justify-between items-center my-3">

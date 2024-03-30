@@ -22,7 +22,7 @@ const updateMerchantRequest = (data) => {
 
 export const useMerchantRegisterRequest = (options) => {
 
-  return useMutation(registerMerchantRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  return useMutation(registerMerchantRequest, { ...options })
 }
 
 

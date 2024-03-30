@@ -109,8 +109,8 @@ const Index = () => {
     setShowCategorySelect(false);
   };
 
-  const handleImageUpload = (id) => {
-    setImageId(id);
+  const handleImageUpload = (data) => {
+    setImageId(data);
     setModalIsOpen(true);
     setIsImageUpload(true);
     setIsEditing(false);
@@ -262,7 +262,7 @@ const Index = () => {
                 isEdit={true}
               />
             )}
-            {isImageUpload && <Upload id={imageId} />}
+            {isImageUpload && <Upload product={imageId} />}
             {isDeleteAlert && (
               <DeleteProduct
                 product={deleteProduct}

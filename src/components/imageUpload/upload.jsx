@@ -9,8 +9,9 @@ import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-function Upload({ id, handleModalClose }) {
+function Upload({ product, uploadType, handleModalClose }) {
   // const { imageUploadMutation } = useImageUpload();
+
   const options = {
     onSuccess: (response) => {
       if (response.data.statusCode === 200) {
@@ -24,7 +25,8 @@ function Upload({ id, handleModalClose }) {
       toast.error(error?.response?.data?.result?.details);
     },
   };
-  const { mutate } = useCreateMerchantProductImageRequest();
+  const { mutate: uploadProductImage, isLoading: productLoading } =
+    useCreateMerchantProductImageRequest();
   const { mutate: uploadLogo, isLoading } =
     useUploadMerchantLogoRequest(options);
 
@@ -34,9 +36,16 @@ function Upload({ id, handleModalClose }) {
     },
     onSubmit: (values) => {
       const formData = new FormData();
-      values?.files.forEach((file) => formData.append('file', file));
 
-      uploadLogo(formData);
+      if (uploadType === 'product') {
+        values?.files.forEach((file) => formData.append('images', file));
+        formData.append('id', product.id);
+        uploadProductImage(formData);
+      } else {
+        values?.files.forEach((file) => formData.append('file', file));
+
+        uploadLogo(formData);
+      }
     },
   });
 
@@ -100,7 +109,7 @@ function Upload({ id, handleModalClose }) {
   return (
     <div className="py-20 w-full">
       <h1 className="text-center text-lg font-bold uppercase mb-4">
-        Image Upload
+        {product?.name ? product?.name : 'Profile'} Image Upload
       </h1>
       <div className="flex w-full container mx-auto px-12 justify-center items-center ">
         <FormikProvider value={formik}>
@@ -136,7 +145,7 @@ function Upload({ id, handleModalClose }) {
             <Button
               text={'Upload'}
               classProp={'my-3'}
-              isSubmitting={isLoading}
+              isSubmitting={isLoading || productLoading}
             />
           </form>
         </FormikProvider>

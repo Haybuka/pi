@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import axios from '../index'
 //merchant
 
@@ -7,16 +7,9 @@ const createMerchantProductRequest = (data) => {
 }
 
 
-const createMerchantProductImage = (data) => {
+const createMerchantProductImage = (formData) => {
 
-
-  // const formData = new FormData();
-  // formData.append("id", data?.id)
-  // for (let index = 0; index < data?.files.length; index++) {
-  //   formData.append("images", data?.files[index])
-  // }
-  console.log({ data })
-  return axios.post('v1/product/image', data, {
+  return axios.post('v1/product/image', formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
@@ -31,8 +24,18 @@ export const fetchMerchantProductCategories = ({ queryKey }) => {
 export const useCreateMerchantProductRequest = (options) => {
   return useMutation(createMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
 }
+
+
 export const useCreateMerchantProductImageRequest = (options) => {
-  return useMutation(createMerchantProductImage, { select: () => { console.log("data trasnformed") }, ...options })
+  const queryClient = useQueryClient()
+  return useMutation(createMerchantProductImage, {
+    select: (data) => data.data,
+    onSuccess: () => {
+      queryClient.invalidateQueries("merchantProducts")
+    },
+
+    ...options
+  })
 }
 
 export const useGetMerchantProductCategories = (options = {}) => {
