@@ -26,7 +26,7 @@ function Upload({ product, uploadType, handleModalClose }) {
     },
   };
   const { mutate: uploadProductImage, isLoading: productLoading } =
-    useCreateMerchantProductImageRequest();
+    useCreateMerchantProductImageRequest(options);
   const { mutate: uploadLogo, isLoading } =
     useUploadMerchantLogoRequest(options);
 

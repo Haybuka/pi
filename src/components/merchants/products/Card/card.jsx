@@ -1,16 +1,17 @@
 import React from 'react';
 import HeadPhone from './headphone.jpg';
-import { ReactComponent as SvgIcon } from './clip.svg';
+import { ReactComponent as SvgIcon } from './fileImage.svg';
 const ProductCard = ({ product, options }) => {
   const { handleProductEdit, handleImageUpload, handleProductDelete } = options;
 
+  console.log(product.images);
   //Code to grap images
-  // const logoRef = isProfileFetched && profile?.organization?.logo;
+  const imageRef = product && product?.images;
 
-  // const imageOptions = {
-  //   fileAlias: logoRef,
-  //   enabled: logoRef ? true : false,
-  // };
+  const imageOptions = {
+    fileAlias: imageRef,
+    enabled: imageRef ? true : false,
+  };
 
   // const { data: imageFile = [], isFetched: imageFetched } =
   //   useGetImageFile(imageOptions);
@@ -22,7 +23,7 @@ const ProductCard = ({ product, options }) => {
           handleImageUpload({ name: product?.name, id: product?.id })
         }
       >
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2">
+        <p className="absolute top-4 left-4">
           <SvgIcon />
         </p>
         <img
@@ -38,7 +39,7 @@ const ProductCard = ({ product, options }) => {
         </h3>
         <div className="uppercase text-sm flex justify-between items-center my-3">
           <p
-            className="py-1 px-4 bg-[#002e625e] text-[#002D62] rounded-md cursor-pointer"
+            className="py-1 px-4 bg-[#E1F5FE] text-[#002D62] rounded-md cursor-pointer"
             onClick={() => handleProductEdit(product)}
           >
             edit

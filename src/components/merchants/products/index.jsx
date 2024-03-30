@@ -262,7 +262,9 @@ const Index = () => {
                 isEdit={true}
               />
             )}
-            {isImageUpload && <Upload product={imageId} />}
+            {isImageUpload && (
+              <Upload product={imageId} uploadType={'product'} />
+            )}
             {isDeleteAlert && (
               <DeleteProduct
                 product={deleteProduct}
