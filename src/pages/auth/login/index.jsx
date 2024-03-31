@@ -15,6 +15,8 @@ import Button from '../../../components/button/button';
 import { AuthContext } from '../../../context/authContext';
 import AuthSlider from '../AuthSlider';
 
+import AccountType from './accountType';
+import { IconOne, IconTwo } from './dropIcons';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
@@ -76,6 +78,22 @@ const Login = () => {
   });
 
   const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
+
+  const accountOptions = [
+    {
+      name: 'Admin',
+      description: 'Measure actions your users take.',
+      icon: IconOne,
+      action: () => setAccountType('admin'),
+    },
+    {
+      name: 'Merchant',
+      description: 'Begin your journey.',
+      icon: IconTwo,
+      action: () => setAccountType('merchant'),
+    },
+  ];
+
   return (
     <main className="w-screen h-screen grid grid-cols-12 place-item-center">
       <section className="hidden h-full col-span-5 p-3">
@@ -84,22 +102,22 @@ const Login = () => {
         </aside>
       </section>
       <section className="  col-span-12  flex justify-center items-center flex-col">
-        {accountType !== 'merchant' ? (
+        {/* {accountType === 'merchant' ? (
           <aside
-            className="uppercase text-sm my-4 absolute top-10 right-6 text-[#002D62] cursor-pointer"
+            className="uppercase text-sm my-4 absolute top-10 left-6 text-[#002D62] cursor-pointer"
             onClick={() => setAccountType('merchant')}
           >
-            login as merchant
+            merchant
           </aside>
         ) : (
           <aside
-            className="uppercase text-sm my-4 absolute top-10 right-6 text-[#002D62] cursor-pointer"
+            className="uppercase text-sm my-4 absolute top-10 left-6 text-[#002D62] cursor-pointer"
             onClick={() => setAccountType('admin')}
           >
-            login as admin
+            admin
           </aside>
-        )}
-
+        )} */}
+        <AccountType accountOptions={accountOptions} user={accountType} />
         <>
           <LoginLogo />
           <FormikProvider value={formik}>

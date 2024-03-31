@@ -1,0 +1,23 @@
+.button {
+  @apply flex justify-end text-base font-medium w-full text-pi-100 overflow-hidden rounded-full cursor-pointer relative;
+}
+
+.popoverHead {
+  @apply rounded-full flex items-center gap-x-2 px-3 py-2 cursor-pointer bg-pi-400;
+}
+
+.popoverSpan {
+  @apply animate-none hover:animate-spin;
+}
+
+/* .popoverSpan:hover + span {
+  @apply hover:block text-red-500;
+} */
+
+.popoverSpan2 {
+  @apply hidden transition-all;
+}
+
+.popoverHead:hover > .popoverSpan2 {
+  @apply hover:block block transition-all;
+}
