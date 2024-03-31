@@ -23,7 +23,7 @@ const Index = () => {
   };
 
   return (
-    <main className=" md:w-[900px] md:mx-auto text-black px-2 py-16 sm:px-0 ">
+    <main className=" md:w-[800px]  md:mx-auto text-black px-2 py-16 sm:px-0 ">
       <div className="flex justify-center">
         <p className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden">
           {imageFetched && (
@@ -39,12 +39,12 @@ const Index = () => {
         <ProfileFields
           value={profile?.fullname}
           label="fullname"
-          classProp="col-span-6 capitalize"
+          classProp="col-span-12 md:col-span-6 capitalize"
         />
         <ProfileFields
           value={profile?.username}
           label="username"
-          classProp="col-span-6 capitalize"
+          classProp="col-span-12 md:col-span-6 capitalize"
         />
       </div>
       <ProfileFields value={profile?.email} label="email" classProp="my-6" />
@@ -56,13 +56,13 @@ const Index = () => {
               : '080 000 0001'
           }
           label="phone"
-          classProp="col-span-6"
+          classProp="col-span-12 md:col-span-6"
         />
 
         <ProfileFields
           value={profile?.gender ? profile?.gender : 'not specified'}
           label="gender"
-          classProp="col-span-6"
+          classProp="col-span-12 md:col-span-6"
         />
       </div>
 
