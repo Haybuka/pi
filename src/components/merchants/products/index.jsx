@@ -263,7 +263,11 @@ const Index = () => {
               />
             )}
             {isImageUpload && (
-              <Upload product={imageId} uploadType={'product'} />
+              <Upload
+                product={imageId}
+                uploadType={'product'}
+                handleModalClose={handleModalClose}
+              />
             )}
             {isDeleteAlert && (
               <DeleteProduct
