@@ -18,7 +18,7 @@ const ProductCard = ({ product, options }) => {
 
   console.log({ imageFile });
   return (
-    <aside className="w-full flex-wrap sm:w-[30%] md:w-[200px] lg:w-[250px] 2xl:w-[300px] shadow rounded-md overflow-hidden">
+    <aside className="w-full flex-wrap sm:w-[30%] md:w-[200px] lg:w-[250px] 2xl:w-[300px] shadow rounded-md overflow-hidden hover:border hover:border-[#90CAF9]">
       <div
         className="h-[180px] w-full bg-gray-300 relative cursor-pointer hover:animate-pulse "
         onClick={() =>
@@ -28,6 +28,7 @@ const ProductCard = ({ product, options }) => {
         <p className="absolute top-4 left-4">
           <SvgIcon />
         </p>
+        <p className="w-full h-full bg-black absolute opacity-30"></p>
         {imageFetched && (
           <img
             alt=""
@@ -46,11 +47,13 @@ const ProductCard = ({ product, options }) => {
         /> */}
       </div>
       <div className="p-2">
-        <h3 className="uppercase text-sm flex justify-between items-center my-3">
-          <span>{product?.name}</span>
-          <span className="font-semibold">&#8358;{product?.baseAmount}</span>
+        <h3 className="text-sm  my-3">
+          <p className="text-lg capitalize">{product?.name}</p>
+          <p className="font-semibold text-sm text-[#545F66]">
+            &#8358;{product?.baseAmount}
+          </p>
         </h3>
-        <div className="uppercase text-sm flex justify-between items-center my-3">
+        <div className="uppercase text-sm flex gap-x-2 items-center my-3">
           <p
             className="py-1 px-4 bg-[#E1F5FE] text-[#002D62] rounded-md cursor-pointer"
             onClick={() => handleProductEdit(product)}
