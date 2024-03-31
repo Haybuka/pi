@@ -10,6 +10,7 @@ import { ReactComponent as ShipIcon } from './shipIcon.svg';
 import { ReactComponent as MoneyIcon } from './moneyIcon.svg';
 import { ReactComponent as CategoryIcon } from './categoryIcon.svg';
 import { ReactComponent as SalesIcon } from './salesIcon.svg';
+import { ReactComponent as SuccessfulOrder } from './successfulOrders.svg';
 import cls from 'classnames';
 import formatNumber from '../../../util/formatNumber';
 import { format, fromUnixTime } from 'date-fns';
@@ -46,31 +47,38 @@ const MerchantDashboard = () => {
       name: 'total revenue',
       amount: totalRevenue ? totalRevenue : 0,
       icon: <MoneyIcon />,
-    },
-    {
-      name: 'Number of products',
-      amount: merchantProduct?.length,
-      icon: <ProductIcon />,
+      bgColor: 'bg-piboard-200',
     },
     {
       name: 'Number of products Category',
       amount: Object.keys(merchantCategories)?.length,
       icon: <CategoryIcon />,
+      bgColor: 'bg-piboard-100',
     },
+    {
+      name: 'Number of products',
+      amount: merchantProduct?.length,
+      icon: <ProductIcon />,
+      bgColor: 'bg-piboard-300',
+    },
+
     {
       name: 'Total sales',
       amount: successFullOrders?.length,
       icon: <SalesIcon />,
+      bgColor: 'bg-piboard-600',
     },
     {
       name: 'Total orders',
       amount: getOrders?.content?.length,
       icon: <ShipIcon />,
+      bgColor: 'bg-piboard-400',
     },
     {
       name: 'Total Successful Orders',
       amount: successFullOrders?.length,
-      icon: <ProductIcon />,
+      icon: <SuccessfulOrder />,
+      bgColor: 'bg-piboard-700',
     },
   ];
 
@@ -78,7 +86,7 @@ const MerchantDashboard = () => {
     switch (status) {
       case -1:
         return (
-          <p className="text-red-700 bg-red-200 rounded-xl px-3">Cancelled</p>
+          <p className="text-red-700  bg-red-200 rounded-xl px-3">Cancelled</p>
         );
       case 0:
         return (
@@ -111,20 +119,24 @@ const MerchantDashboard = () => {
     <section className="text-black">
       <article className="grid grid-cols-12 gap-2 my-3">
         <aside className="col-span-12 grid grid-cols-12 gap-2">
-          <div className="col-span-12 md:col-span-9 grid grid-cols-12 gap-2">
+          <div className="col-span-12 md:col-span-8 lg:col-span-9 grid grid-cols-12 gap-2">
             {merchantDetails?.map((details, id) => (
               <aside
                 className={cls(
-                  `shadow-md w-full p-3 rounded-md py-10 flex items-center text-sm uppercase col-span-12 sm:col-span-6 md:col-span-4 bg-white`
+                  `shadow-md w-full p-3 rounded-md py-10 flex md:flex-col md:items-start lg:flex-row lg:items-center items-center text-sm uppercase col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 bg-white`
                 )}
                 key={id}
               >
-                <div className="flex justify-between items-center mr-4">
-                  <p className="bg-[#002e62f2] text-white p-2 rounded-full">
+                <div className="flex justify-between items-center mr-4 relative rounded-full overflow-hidden">
+                  <p className=" text-white p-2  relative z-10">
                     {details.icon}
                   </p>
+                  <p
+                    className={` ${details.bgColor} opacity-50
+                    absolute w-full h-full `}
+                  ></p>
                 </div>
-                <div>
+                <div className="md:my-3 lg:my-0">
                   <h3 className=" text-gray-400 font-semibold">
                     {details.name}
                   </h3>
@@ -140,7 +152,7 @@ const MerchantDashboard = () => {
               </aside>
             ))}
           </div>
-          <aside className="relative col-span-3 2xl:max-h-full hidden md:block overflow-y-scroll md:h-[350px] shadow-md p-3  rounded-md text-sm uppercase bg-white">
+          <aside className="relative col-span-12 h-[400px] md:h-full md:col-span-4 lg:col-span-3 2xl:max-h-full md:block overflow-y-scroll  lg:h-[340px] shadow-md p-3  rounded-md text-sm uppercase bg-white">
             <h3 className="flex justify-between items-center w-full">
               <p className="font-semibold ">Product</p>
               <p>Base Amount</p>
