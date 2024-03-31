@@ -2,6 +2,8 @@ import React from 'react';
 import HeadPhone from './headphone.jpg';
 import { ReactComponent as SvgIcon } from './fileImage.svg';
 import { useGetImageFile } from '../../../../api/getImageFile';
+import styles from './card.module.css';
+
 const ProductCard = ({ product, options }) => {
   const { handleProductEdit, handleImageUpload, handleProductDelete } = options;
 
@@ -16,9 +18,8 @@ const ProductCard = ({ product, options }) => {
   const { data: imageFile = [], isFetched: imageFetched } =
     useGetImageFile(imageOptions);
 
-  console.log({ imageFile });
   return (
-    <aside className="w-full flex-wrap sm:w-[30%] md:w-[200px] lg:w-[250px] 2xl:w-[300px] shadow rounded-md overflow-hidden hover:border hover:border-[#90CAF9]">
+    <aside className={styles.card}>
       <div
         className="h-[180px] w-full bg-gray-300 relative cursor-pointer hover:animate-pulse "
         onClick={() =>
@@ -40,11 +41,6 @@ const ProductCard = ({ product, options }) => {
             }
           />
         )}
-        {/* <img
-          src={HeadPhone}
-          alt="product"
-          className="w-full h-full object-cover"
-        /> */}
       </div>
       <div className="p-2">
         <h3 className="text-sm  my-3">

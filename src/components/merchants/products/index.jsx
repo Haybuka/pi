@@ -97,7 +97,7 @@ const Index = () => {
       productOptions: product?.productOptions && [...product?.productOptions],
       name: product?.name,
       baseAmount: product?.baseAmount,
-      images: product?.images && [...product?.images],
+      images: product?.images && product.images,
       details: product?.details,
       id: product?.id,
     };

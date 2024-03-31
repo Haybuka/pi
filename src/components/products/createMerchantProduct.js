@@ -8,26 +8,10 @@ import Button from '../button/button';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
+import { useGetImageFile } from '../../api/getImageFile';
 
 const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
-
-  const onImageError = (error) => {
-    toast(error?.response?.data.result.message.split('_').join(' '));
-  };
-
-
-  const onImageSuccess = (response) => {
-    console.log(response)
-    // toast(data.result.message);
-
-  };
-  const imageOptions = {
-    onSuccess: onImageSuccess,
-    onError: onImageError,
-  };
-
-  const { mutate: uploadImageRequest, isLoading: merchantLoading } = useCreateMerchantProductImageRequest(imageOptions)
 
   const [file, setFile] = useState()
   const [fileUpload, setFileUpload] = useState()
@@ -49,6 +33,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
         return 'text';
     }
   };
+
   const handleFileChange = (e) => {
     if (e?.target?.files[0]?.type.includes("image")) {
       setFile(URL.createObjectURL(e?.target?.files[0]))
@@ -65,7 +50,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("images", file);
-    uploadImageRequest(formData)
+    // uploadImageRequest(formData)
   }
 
   let initialValues = {
@@ -94,6 +79,21 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
   const { mutate: createProduct } = useCreateMerchantProductRequest(options);
   const { mutate: updateProduct } = useUpdateMerchantProductRequest(options);
+
+  //Code to grap images
+  const imageRef = category ? category?.images : category.catImage;
+
+
+  const imageOptions = {
+    fileAlias: imageRef,
+    enabled: imageRef ? true : false,
+  };
+
+  console.log({ imageOptions })
+
+  const { data: imageFile = [], isFetched: imageFetched } =
+    useGetImageFile(imageOptions);
+
 
   let validationShape = {
     baseAmount: yup.number("Value must be a number").min(1).required("base amount rewuired"),
@@ -185,7 +185,16 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
         <article className="flex w-full justify-between items-center">
           <section className='flex items-center'>
             <div className="w-[120px] h-[120px] mx-auto bg-gray-100 rounded-full overflow-hidden">
-              {file && <img src={file} alt='product ' className='w-full h-full' />}
+              {imageFetched && (
+                <img
+                  alt=""
+                  className="w-full h-full aspect-square "
+                  src={
+                    imageFile[imageFile?.length - 1]?.fullPath
+                  }
+                />
+              )}
+              {/* {file && <img src={file} alt='product ' className='w-full h-full' />} */}
             </div>
             <div className='ml-3'>
               <h3 className="uppercase text-sm"> Name : {category?.name}</h3>
