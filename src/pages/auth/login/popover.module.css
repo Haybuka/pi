@@ -3,21 +3,20 @@
 }
 
 .popoverHead {
-  @apply rounded-full flex items-center gap-x-2 px-3 py-2 cursor-pointer bg-pi-400;
+  @apply rounded-full flex items-center gap-x-2 px-3 py-2 cursor-pointer bg-pi-400 overflow-hidden;
 }
 
-.popoverSpan {
-  @apply animate-none hover:animate-spin;
+.popoverHead:hover .popoverSpan {
+  @apply animate-spin;
 }
-
 /* .popoverSpan:hover + span {
   @apply hover:block text-red-500;
 } */
 
 .popoverSpan2 {
-  @apply hidden transition-all;
+  @apply transition-all absolute translate-x-48 opacity-0;
 }
 
-.popoverHead:hover > .popoverSpan2 {
-  @apply hover:block block transition-all;
+.popoverHead:hover .popoverSpan2 {
+  @apply transition-all -translate-x-0 relative opacity-100;
 }

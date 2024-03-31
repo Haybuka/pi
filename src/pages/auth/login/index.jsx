@@ -125,6 +125,10 @@ const Login = () => {
               className="w-full px-6 md:w-[600px] my-4"
               onSubmit={handleSubmit}
             >
+              <p className="capitalize text-center text-lg text-gray-700">
+                Welcome, {accountType}.
+              </p>
+
               <div className="my-6">
                 <Inputs
                   type="text"
