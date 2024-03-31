@@ -13,6 +13,7 @@ import { useGetImageFile } from '../../api/getImageFile';
 const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 
+  console.log({ category })
   const [file, setFile] = useState()
   const [fileUpload, setFileUpload] = useState()
   const navigate = useNavigate()
@@ -89,7 +90,6 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
     enabled: imageRef ? true : false,
   };
 
-  console.log({ imageOptions })
 
   const { data: imageFile = [], isFetched: imageFetched } =
     useGetImageFile(imageOptions);
@@ -151,19 +151,16 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
         // console.log(values)
         let newValues = values.productOptions.map((options, id) => {
           if (options.fieldAction === null) {
-            options.fieldAction = 2
-            console.log("action is null")
+            options.fieldAction = 2;
           }
           return options
         })
 
-        // console.log(newValues, "new values")
         const data = { ...values, productOptions: newValues };
-        console.log(data)
+
         createProduct(data);
       } else {
         const data = { id: id, ...values };
-        console.log({ data })
         updateProduct(data);
       }
     },
@@ -206,7 +203,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
       <FormikProvider value={formik}>
         <form onSubmit={handleSubmit} className='grid-cols-12 gap-2'>
 
-          <article className="relative border py-4 px-3 my-10 col-span-6 min-h-[200px] rounded-lg ">
+          <article className="relative border py-4 px-3 my-10 col-span-6 min-h-[100px] rounded-lg ">
             <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
               Product Details
             </h4>
@@ -261,7 +258,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 
           </article>
-          <article className="relative border py-4 px-8 my-10 col-span-6 min-h-[300px] rounded-lg ">
+          <article className="relative border py-4 px-8 my-10 col-span-6 min-h-[100px] rounded-lg ">
             <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
               Product options
             </h4>
@@ -447,6 +444,23 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                     /> */}
                   </section>
                 ))
+              }
+            </aside>
+
+          </article>
+
+          <article className="relative border py-4 px-8 my-10 col-span-6 min-h-[100px] rounded-lg ">
+            <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
+              Delivery options
+            </h4>
+            <aside>
+              {
+                category?.deliveryOptions?.map((details, id) => {
+                  console.log({ details })
+                  return (
+                    <section key={id}>delivery</section>
+                  )
+                })
               }
             </aside>
 

@@ -95,6 +95,9 @@ const Index = () => {
     const categories = {
       productDetails: product?.productDetails && [...product?.productDetails],
       productOptions: product?.productOptions && [...product?.productOptions],
+      deliveryOptions: product?.deliveryOptions && [
+        ...product?.deliveryOptions,
+      ],
       name: product?.name,
       baseAmount: product?.baseAmount,
       images: product?.images && product.images,
