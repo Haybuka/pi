@@ -7,7 +7,7 @@ const SettingsTab = ({ title }) => {
     <Tab
       className={({ selected }) =>
         classNames(
-          'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-gray-700 uppercase',
+          'w-full rounded-full py-2.5 text-sm font-medium leading-5 text-gray-700 uppercase',
 
           selected
             ? 'bg-white shadow'

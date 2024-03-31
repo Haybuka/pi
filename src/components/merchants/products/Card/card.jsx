@@ -49,15 +49,15 @@ const ProductCard = ({ product, options }) => {
             &#8358;{product?.baseAmount}
           </p>
         </h3>
-        <div className="uppercase text-sm flex gap-x-2 items-center my-3">
+        <div className="capitalize text-sm flex gap-x-2 items-center my-3">
           <p
-            className="py-1 px-4 bg-[#E1F5FE] text-[#002D62] rounded-md cursor-pointer"
+            className="py-1 px-4 bg-[#E1F5FE] text-[#002D62] rounded-full cursor-pointer"
             onClick={() => handleProductEdit(product)}
           >
             edit
           </p>
           <p
-            className="py-1 px-4 bg-red-200 text-red-600 rounded-md cursor-pointer"
+            className="py-1 px-4 bg-red-200 text-red-600 rounded-full cursor-pointer"
             onClick={() => handleProductDelete(product)}
           >
             delete
