@@ -18,6 +18,10 @@ const ProductCard = ({ product, options }) => {
   const { data: imageFile = [], isFetched: imageFetched } =
     useGetImageFile(imageOptions);
 
+  const stringTruncate = function (str, length) {
+    var dots = str.length > length ? '...' : '';
+    return str.substring(0, length) + dots;
+  };
   return (
     <aside className={styles.card}>
       <div
@@ -44,7 +48,9 @@ const ProductCard = ({ product, options }) => {
       </div>
       <div className="p-2">
         <h3 className="text-sm  my-3">
-          <p className="text-lg capitalize">{product?.name}</p>
+          <p className="text-lg capitalize">
+            {stringTruncate(product?.name, 20)}
+          </p>
           <p className="font-semibold text-sm text-[#545F66]">
             &#8358;{product?.baseAmount}
           </p>

@@ -1,5 +1,5 @@
 .field_container {
-  @apply relative block;
+  @apply relative block bg-white;
 }
 
 .field_title {
@@ -8,4 +8,8 @@
 
 .field_label {
   @apply absolute -top-1/3 translate-y-1/3 transition-all text-gray-400 uppercase px-4 text-sm;
+}
+
+.profile {
+  @apply md:w-[800px]  md:mx-auto text-black px-2 py-16 sm:px-0;
 }

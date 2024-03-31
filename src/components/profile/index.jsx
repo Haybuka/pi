@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
 import ProfileFields from './fields';
 import Button from '../button/button';
 import { useNavigate } from 'react-router-dom';
 import { useGetImageFile } from '../../api/getImageFile';
 import { useGetSelf } from '../../api/login';
+import styles from './profile.module.css';
 
 const Index = () => {
   const { data: profile, isFetched: isProfileFetched } = useGetSelf();
@@ -23,7 +23,7 @@ const Index = () => {
   };
 
   return (
-    <main className=" md:w-[800px]  md:mx-auto text-black px-2 py-16 sm:px-0 ">
+    <main className={styles.profile}>
       <div className="flex justify-center">
         <p className="w-32 h-32 my-6 bg-gray-200 rounded-full overflow-hidden">
           {imageFetched && (

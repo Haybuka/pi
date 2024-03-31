@@ -33,3 +33,11 @@
 .link_light {
   @apply text-gray-900 bg-gray-50;
 }
+
+.outlet {
+  @apply p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll;
+  background-image: url('./Background\ pattern.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}

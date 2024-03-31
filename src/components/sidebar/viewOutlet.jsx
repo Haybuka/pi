@@ -1,8 +1,9 @@
 import { Outlet } from 'react-router-dom';
+import styles from './sidebar.module.css';
 
 const ViewOutlet = () => {
   return (
-    <section className="p-4 border-2 rounded-lg bg-white h-full overflow-y-scroll">
+    <section className={styles.outlet}>
       <Outlet />
     </section>
   );
