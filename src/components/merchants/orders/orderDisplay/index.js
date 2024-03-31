@@ -11,7 +11,7 @@ import DeliveryPanel from './deliveryPanel';
 function OrderDisplay({ data }) {
 
 
-  const headers = ["Product", "Customer", "Delivery details", "Others"];
+  const headers = ["Product", "Customer", "Delivery details"];
 
 
   const customer = {
@@ -62,7 +62,7 @@ function OrderDisplay({ data }) {
         <ProductPanel product={product} />
         <CustomerPanel customer={customer} />
         <DeliveryPanel delivery={deliveryAddress} />
-        <Tab.Panel><p> Nothing to display.</p></Tab.Panel>
+        {/* <Tab.Panel><p> Nothing to display.</p></Tab.Panel> */}
       </Tab.Panels>
     </Tab.Group>
   )

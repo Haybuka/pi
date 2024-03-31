@@ -81,7 +81,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
   const { mutate: updateProduct } = useUpdateMerchantProductRequest(options);
 
   //Code to grap images
-  const imageRef = category ? category?.images : category.catImage;
+  const imageRef = category ? category?.images : category?.catImage;
 
 
   const imageOptions = {
