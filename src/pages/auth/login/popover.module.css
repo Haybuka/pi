@@ -3,7 +3,7 @@
 }
 
 .popoverHead {
-  @apply rounded-full flex items-center gap-x-2 px-3 py-2 cursor-pointer bg-pi-400 overflow-hidden;
+  @apply rounded-full flex items-center gap-x-2 px-3 py-2 cursor-pointer bg-[#E0D6FF] overflow-hidden;
 }
 
 .popoverHead:hover .popoverSpan {

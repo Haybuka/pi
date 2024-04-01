@@ -1,6 +1,6 @@
-import React, { Children, useState } from 'react';
+
 import styles from './modal.module.css';
-import { toast } from 'react-toastify';
+
 import cls from "classnames"
 const Modal = ({ handleModal, id = '', children, classAdd, title }) => {
   const handleSubmit = (e) => {
@@ -13,7 +13,7 @@ const Modal = ({ handleModal, id = '', children, classAdd, title }) => {
       <section className={styles.modal} onClick={handleModal}></section>
       <article className={cls(classAdd, styles.modal_sub)}>
         <div
-          className=" text-[#002D62] inline-block hover:bg-[#002D62] hover:text-white cursor-pointer"
+          className=" text-[#002D62] inline-block hover:bg-pi-500 hover:text-white cursor-pointer"
           onClick={handleModal}
         >
           <svg

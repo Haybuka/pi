@@ -128,7 +128,7 @@ const MerchantDashboard = () => {
                 key={id}
               >
                 <div className="flex justify-between items-center mr-4 rounded-full overflow-hidden">
-                  <p className=" text-white p-2  relative z-10">
+                  <p className=" text-white mx-3 relative z-10">
                     {details.icon}
                   </p>
                   <p
