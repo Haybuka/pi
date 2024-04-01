@@ -449,22 +449,27 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
           </article>
 
-          <article className="relative border py-4 px-8 my-10 col-span-6 min-h-[100px] rounded-lg ">
-            <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
-              Delivery options
-            </h4>
-            <aside>
-              {
-                category?.deliveryOptions?.map((details, id) => {
-                  console.log({ details })
-                  return (
-                    <section key={id}>delivery</section>
-                  )
-                })
-              }
-            </aside>
+          {
+            category?.deliveryOptions && (
+              <article className="relative border py-4 px-8 my-10 col-span-6 min-h-[100px] rounded-lg ">
+                <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
+                  Delivery options
+                </h4>
+                <aside>
+                  {
+                    category?.deliveryOptions?.map((details, id) => {
+                      console.log({ details })
+                      return (
+                        <section key={id}>{details?.name}</section>
+                      )
+                    })
+                  }
+                </aside>
 
-          </article>
+              </article>
+            )
+          }
+
           <Button text="Submit" />
 
         </form>

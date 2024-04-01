@@ -43,7 +43,7 @@ function MyPopover() {
       {isProfileFetched && (
         <Popover.Panel className="absolute z-10 w-[250px] right-0 rounded-md overflow-hidden mt-2 shadow-md">
           <section className="bg-white">
-            <aside className=" bg-[#002D62] text-white  py-3 px-2 flex items-center gap-x-2">
+            <aside className=" bg-pi-500 text-white  py-3 px-2 flex items-center gap-x-2">
               <p className="h-10 w-10 rounded-full bg-white overflow-hidden">
                 {imageFetched && (
                   <img

@@ -123,17 +123,17 @@ const MerchantDashboard = () => {
             {merchantDetails?.map((details, id) => (
               <aside
                 className={cls(
-                  `shadow-md w-full p-3 rounded-md py-10 flex md:flex-col md:items-start lg:flex-row lg:items-center items-center text-sm uppercase col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 bg-white`
+                  `shadow-md w-full min-h-[150px]  rounded-md overflow-hidden  flex md:flex-col md:items-start md:justify-center lg:justify-start md:p-2 lg:p-0 lg:flex-row lg:items-center items-center text-sm uppercase col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 bg-white relative`
                 )}
                 key={id}
               >
-                <div className="flex justify-between items-center mr-4 relative rounded-full overflow-hidden">
+                <div className="flex justify-between items-center mr-4 rounded-full overflow-hidden">
                   <p className=" text-white p-2  relative z-10">
                     {details.icon}
                   </p>
                   <p
                     className={` ${details.bgColor} opacity-50
-                    absolute w-full h-full `}
+                    absolute w-full h-full top-0 left-0`}
                   ></p>
                 </div>
                 <div className="md:my-3 lg:my-0">

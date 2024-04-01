@@ -91,7 +91,7 @@ const Sidenav = ({ isSidebarOpen }) => {
   return (
     <div className={isSidebarOpen ? cls('') : cls('-translate-x-full')}>
       <aside id="default-sidebar" className={cls(styles.sidebar)} aria-label="Sidebar">
-        <div className={cls(styles.sidebar_side, 'bg-[#002D62]')}>
+        <div className={cls(styles.sidebar_side, ' bg-sidebar-100')}>
           <nav className='flex flex-col justify-between h-full'>
 
             <ul className="space-y-2 font-medium">
@@ -101,7 +101,7 @@ const Sidenav = ({ isSidebarOpen }) => {
                   <li key={id} className='my-6'>
                     <NavLink to={navItems.url}
                       className={({ isActive, }) =>
-                        isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
+                        isActive ? cls("bg-sidebar-200 text-white font-bold", styles.link) : cls(styles.link, 'text-white')
                       }
                     >
                       {navItems.icon}
@@ -114,7 +114,7 @@ const Sidenav = ({ isSidebarOpen }) => {
                   <li key={id} className='my-6'>
                     <NavLink to={navItems.url}
                       className={({ isActive, }) =>
-                        isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
+                        isActive ? cls("bg-sidebar-200 text-white font-bold", styles.link) : cls(styles.link, 'text-white')
                       }
                     >
                       {navItems.icon}
@@ -131,7 +131,7 @@ const Sidenav = ({ isSidebarOpen }) => {
                 <li key={id} className='my-6'>
                   <NavLink to={navItems.url}
                     className={({ isActive, }) =>
-                      isActive ? cls("bg-white text-black font-bold", styles.link) : cls(styles.link, 'text-white')
+                      isActive ? cls("bg-sidebar-200 text-white font-bold", styles.link) : cls(styles.link, 'text-white')
                     }
                   >
                     {navItems.icon}
