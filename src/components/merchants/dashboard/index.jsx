@@ -14,12 +14,15 @@ import { ReactComponent as SuccessfulOrder } from './successfulOrders.svg';
 import cls from 'classnames';
 import formatNumber from '../../../util/formatNumber';
 import { format, fromUnixTime } from 'date-fns';
+import Button from '../../button/button';
+import { useNavigate } from 'react-router-dom';
 
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 const MerchantDashboard = () => {
   const { data: merchantProduct = [], isFetched: merchantFetched } =
     useGetMerchantProductCategories();
 
+  const navigate = useNavigate();
   const { data: getOrders } = useGetOrders();
 
   const merchantCategories =
@@ -115,6 +118,9 @@ const MerchantDashboard = () => {
     }
   };
 
+  const handleNavigateOrder = () => {
+    navigate('/orders');
+  };
   return (
     <section className="text-black">
       <article className="grid grid-cols-12 gap-2 my-3">
@@ -191,8 +197,16 @@ const MerchantDashboard = () => {
           <aside className="col-span-12">
             <section>
               <aside className="p-3">
-                <h3 className="font-semibold my-3">Order History</h3>
-                <div className="h-[400px] overflow-y-scroll">
+                <h3 className=" my-3 flex justify-between items-center">
+                  <span className="font-semibold">Order History</span>
+                  <span
+                    onClick={handleNavigateOrder}
+                    className="  bg-pi-500 text-white py-2 px-4 rounded-full uppercase text-sm cursor-pointer"
+                  >
+                    View More
+                  </span>
+                </h3>
+                <div>
                   <table className="text-center ">
                     <thead>
                       <th>S/N</th>
@@ -204,7 +218,7 @@ const MerchantDashboard = () => {
                       <th>Transaction Date</th>
                     </thead>
                     <tbody>
-                      {getOrders?.content.map((orders, id) => (
+                      {getOrders?.content.slice(0, 10).map((orders, id) => (
                         <tr>
                           <td>{id + 1}</td>
                           <td>{orders?.product?.name}</td>
@@ -223,17 +237,7 @@ const MerchantDashboard = () => {
                         </tr>
                       ))}
                     </tbody>
-                    {getOrders?.content.length > 6 && (
-                      <tfoot>
-                        <th>S/N</th>
-                        <th>Product Name</th>
-                        <th>Total Amount</th>
-                        <th>Product Id</th>
-                        <th>Status</th>
-                        <th>Transaction ID</th>
-                        <th>Transaction Date</th>
-                      </tfoot>
-                    )}
+
                     {getOrders?.content?.length === 0 && (
                       <tfoot>
                         <th></th>
