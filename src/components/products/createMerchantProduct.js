@@ -56,10 +56,22 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
   let initialValues = {
     baseAmount: category?.baseAmount ? category?.baseAmount : '',
+    deliveryOptions: category?.deliveryOptions
+      ? [...category?.deliveryOptions]
+      : [
+        {
+          deliveryType: 0,
+          cost: 0,
+        },
+        {
+          deliveryType: 1,
+          cost: 0,
+        },
+      ],
     ...category
   };
 
-
+  console.log({ initialValues })
 
   const onError = (error) => {
     const detail = error?.response.data?.result.details;
@@ -145,10 +157,8 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
       delete values.listOnHome
 
 
-
-
       if (!isEdit) {
-        // console.log(values)
+
         let newValues = values.productOptions.map((options, id) => {
           if (options.fieldAction === null) {
             options.fieldAction = 2;
@@ -157,6 +167,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
         })
 
         const data = { ...values, productOptions: newValues };
+
 
         createProduct(data);
       } else {
@@ -455,12 +466,44 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                 <h4 className="bg-white absolute -top-[18px] translate-y-[4px] px-3 text-sm uppercase">
                   Delivery options
                 </h4>
-                <aside>
+                <aside className='grid grid-cols-12 gap-2 place-items-center'>
                   {
                     category?.deliveryOptions?.map((details, id) => {
-                      console.log({ details })
+                      // console.log({ details })
                       return (
-                        <section key={id}>{details?.name}</section>
+
+
+                        <aside key={id} className="my-2 col-span-12  md:col-span-6 w-full">
+
+                          <div className='w-full' >
+                            <Inputs
+                              type="number"
+                              name={`deliveryOptions.${[id]}.cost`}
+                              {...getFieldProps(
+                                `deliveryOptions.${[id]}.cost`
+                              )}
+
+                              displayName={`cost of ${details?.deliveryType === 0 ? details?.name ? details?.name : 'Self Pickup' : details?.name ? details?.name : 'Door Delivery'}`}
+                              handleBlur={handleBlur}
+                              handleInputChange={setFieldValue}
+                            />
+                            <ErrorMessage
+                              name={`deliveryOptions.${[id]}.cost`}
+                              render={(msg) => {
+                                return (
+
+
+                                  <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+                                    {` cost of ${details?.deliveryType === 0 ? details?.name ? details?.name : 'Self Pickup' : details?.name ? details?.name : 'Door Delivery'} ${msg}`}
+                                  </div>
+
+                                )
+                              }}
+                            />
+                          </div>
+                        </aside>
+
+
                       )
                     })
                   }
@@ -481,3 +524,4 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 export default CreateMerchantProduct
 
+// {/* <p>{details?.deliveryType === 0 ? details?.name ? details?.name : 'Self Pickup' : details?.name ? details?.name : 'Door Delivery'}</p> */}

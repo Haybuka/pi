@@ -83,6 +83,12 @@ const MerchantDashboard = () => {
       icon: <SuccessfulOrder />,
       bgColor: 'bg-piboard-700',
     },
+    {
+      name: 'Customers',
+      amount: Object.keys(merchantCategories)?.length,
+      icon: <CategoryIcon />,
+      bgColor: 'bg-piboard-100',
+    },
   ];
 
   const statusPill = (status) => {
@@ -213,8 +219,7 @@ const MerchantDashboard = () => {
                       <th>Product Name</th>
                       <th>Total Amount</th>
                       <th>Product Id</th>
-                      <th>Status</th>
-                      <th>Transaction ID</th>
+                      {/* <th>Status</th> */}
                       <th>Transaction Date</th>
                     </thead>
                     <tbody>
@@ -224,10 +229,9 @@ const MerchantDashboard = () => {
                           <td>{orders?.product?.name}</td>
                           <td>{formatNumber(orders?.totalAmount)}</td>
                           <td>{orders?.productID}</td>
-                          <td className="text-center">
+                          {/* <td className="text-center">
                             {statusPill(orders?.status)}
-                          </td>
-                          <td>{orders?.transID}</td>
+                          </td> */}
                           <td>
                             {format(
                               fromUnixTime(orders?.transDate),
