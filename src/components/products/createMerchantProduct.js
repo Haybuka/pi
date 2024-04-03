@@ -150,7 +150,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     onSubmit: (value) => {
       const values = { category: category.id, ...value };
       delete values.catImage
-      delete values.id
+      // delete values.id
       delete values.listOnHome
 
 
@@ -169,7 +169,9 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
         createProduct(data);
       } else {
         const data = { id: id, ...values };
-        updateProduct(data);
+
+        console.log({ data, values, category })
+        // updateProduct(data);
       }
     },
   });

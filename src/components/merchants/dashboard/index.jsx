@@ -139,7 +139,7 @@ const MerchantDashboard = () => {
                 )}
                 key={id}
               >
-                <div className="flex justify-between items-center mr-4 rounded-full overflow-hidden">
+                <div className="flex justify-between items-center mr-4 rounded-full overflow-hidden ">
                   <p className=" text-white mx-3 relative z-10">
                     {details.icon}
                   </p>
@@ -148,7 +148,7 @@ const MerchantDashboard = () => {
                     absolute w-full h-full top-0 left-0`}
                   ></p>
                 </div>
-                <div className="md:my-3 lg:my-0">
+                <div className="md:my-3 lg:my-0 relative z-10">
                   <h3 className=" text-gray-400 font-semibold">
                     {details.name}
                   </h3>
@@ -195,7 +195,7 @@ const MerchantDashboard = () => {
             </ul>
           </aside>
         </aside>
-        <section className="col-span-12 grid grid-cols-12 my-4 rounded-md bg-white shadow-md p-4 ">
+        <section className="col-span-12 grid grid-cols-12 my-4 rounded-md bg-white shadow-md p-4 hidden">
           <LineChart orders={getOrders?.content} />
         </section>
 
