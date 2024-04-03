@@ -51,7 +51,7 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
           Cell: ({ row }) => {
             return (
               <div className="text-center cursor-pointer" onClick={() => handleModal(row?.original)}>
-                <p>View More</p>
+                <p className=' text-pi-500'>View More</p>
               </div>
             );
           },

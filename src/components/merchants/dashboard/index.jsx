@@ -144,7 +144,7 @@ const MerchantDashboard = () => {
                     {details.icon}
                   </p>
                   <p
-                    className={` ${details.bgColor} opacity-60
+                    className={` ${details.bgColor} bg-white opacity-60
                     absolute w-full h-full top-0 left-0`}
                   ></p>
                 </div>
