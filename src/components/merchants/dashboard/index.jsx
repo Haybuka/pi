@@ -83,12 +83,12 @@ const MerchantDashboard = () => {
       icon: <SuccessfulOrder />,
       bgColor: 'bg-piboard-700',
     },
-    {
-      name: 'Customers',
-      amount: Object.keys(merchantCategories)?.length,
-      icon: <CategoryIcon />,
-      bgColor: 'bg-piboard-100',
-    },
+    // {
+    //   name: 'Customers',
+    //   amount: Object.keys(merchantCategories)?.length,
+    //   icon: <CategoryIcon />,
+    //   bgColor: 'bg-piboard-100',
+    // },
   ];
 
   const statusPill = (status) => {
@@ -144,7 +144,7 @@ const MerchantDashboard = () => {
                     {details.icon}
                   </p>
                   <p
-                    className={` ${details.bgColor} opacity-50
+                    className={` ${details.bgColor} opacity-60
                     absolute w-full h-full top-0 left-0`}
                   ></p>
                 </div>

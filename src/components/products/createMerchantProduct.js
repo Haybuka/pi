@@ -148,7 +148,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     initialValues,
     validationSchema: yup.object().shape(validationShape),
     onSubmit: (value) => {
-      const values = { category: category.id, ...value };
+      const values = { ...value };
       delete values.catImage
       // delete values.id
       delete values.listOnHome
@@ -168,10 +168,9 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
         // console.log(data)
         createProduct(data);
       } else {
-        const data = { id: id, ...values };
+        const data = { ...values };
 
-        console.log({ data, values, category })
-        // updateProduct(data);
+        updateProduct(data);
       }
     },
   });

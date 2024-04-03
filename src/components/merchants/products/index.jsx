@@ -113,7 +113,10 @@ const Index = () => {
       images: product?.images && product.images,
       details: product?.details,
       id: product?.id,
+      category: product?.category?.id,
     };
+
+    console.log({ categories, product }, 'in edit');
     setEditValues(categories);
     setModalIsOpen(true);
     setIsEditing(true);
