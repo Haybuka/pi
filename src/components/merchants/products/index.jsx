@@ -65,6 +65,7 @@ const Index = () => {
   const [showCategorySelect, setShowCategorySelect] = useState(false);
   const [showMerchantProduct, setShowMerchantProduct] = useState(false);
 
+  console.log({ categoryRequest });
   const handleModalClose = () => {
     setModalIsOpen((prev) => false);
     setShowMerchantProduct(false);
@@ -265,7 +266,24 @@ const Index = () => {
               </p>
             )}
             {isFetched && (
-              <CreateMerchantProduct id={searchID} category={categoryRequest} />
+              <CreateMerchantProduct
+                id={searchID}
+                category={{
+                  ...categoryRequest,
+                  deliveryOptions: categoryRequest?.deliveryOptions
+                    ? categoryRequest?.deliveryOptions
+                    : [
+                        {
+                          deliveryType: 0,
+                          cost: 0,
+                        },
+                        {
+                          deliveryType: 1,
+                          cost: 0,
+                        },
+                      ],
+                }}
+              />
             )}
             {isEditing && (
               <CreateMerchantProduct

@@ -10,10 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
 import { useGetImageFile } from '../../api/getImageFile';
 
-const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
+const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
 
-
-  console.log({ category })
   const [file, setFile] = useState()
   const [fileUpload, setFileUpload] = useState()
   const navigate = useNavigate()
@@ -56,22 +54,20 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
   let initialValues = {
     baseAmount: category?.baseAmount ? category?.baseAmount : '',
-    deliveryOptions: category?.deliveryOptions
-      ? [...category?.deliveryOptions]
-      : [
-        {
-          deliveryType: 0,
-          cost: 0,
-        },
-        {
-          deliveryType: 1,
-          cost: 0,
-        },
-      ],
+    deliveryOptions: [
+      {
+        deliveryType: 0,
+        cost: 0,
+      },
+      {
+        deliveryType: 1,
+        cost: 0,
+      },
+    ],
     ...category
   };
 
-  console.log({ initialValues })
+
 
   const onError = (error) => {
     const detail = error?.response.data?.result.details;
@@ -98,9 +94,10 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 
   const imageOptions = {
-    fileAlias: imageRef,
+    fileAlias: category ? category?.images : category?.catImage,
     enabled: imageRef ? true : false,
   };
+
 
 
   const { data: imageFile = [], isFetched: imageFetched } =
@@ -168,7 +165,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
         const data = { ...values, productOptions: newValues };
 
-
+        // console.log(data)
         createProduct(data);
       } else {
         const data = { id: id, ...values };
@@ -183,6 +180,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
     setFieldValue,
     resetForm,
     getFieldProps,
+    isSubmitting,
     errors
   } = formik;
 
@@ -469,7 +467,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
                 <aside className='grid grid-cols-12 gap-2 place-items-center'>
                   {
                     category?.deliveryOptions?.map((details, id) => {
-                      // console.log({ details })
+
                       return (
 
 
@@ -513,7 +511,7 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
             )
           }
 
-          <Button text="Submit" />
+          <Button text="Submit" isSubmitting={isSubmitting} />
 
         </form>
       </FormikProvider>
@@ -524,4 +522,3 @@ const CreateMerchantProduct = ({ category, id, isEdit = false }) => {
 
 export default CreateMerchantProduct
 
-// {/* <p>{details?.deliveryType === 0 ? details?.name ? details?.name : 'Self Pickup' : details?.name ? details?.name : 'Door Delivery'}</p> */}
