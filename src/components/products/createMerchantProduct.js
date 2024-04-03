@@ -169,7 +169,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
         createProduct(data);
       } else {
         const data = { ...values };
-
+        console.log(data)
         updateProduct(data);
       }
     },
