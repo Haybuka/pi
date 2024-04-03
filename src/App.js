@@ -67,7 +67,7 @@ function App() {
 
             <Route path="category" element={<Category />} />
             <Route path="categories" element={<Categories />} />
-            <Route path="category/:edit" element={<EditCategory />} />
+            <Route path="category/edit" element={<EditCategory />} />
           </Route>
           <Route path="settings" element={<Settings />} />
           <Route path="reports" element={<p className='text-black'>Reports</p>} />

@@ -7,7 +7,6 @@ const Index = () => {
     refetchOnMount: true,
   });
 
-  console.log(isFetched);
   return (
     <div>
       {isFetched && <AllTableHooks data={categories} userType="admin" />}

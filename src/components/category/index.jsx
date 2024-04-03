@@ -10,13 +10,29 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Upload from '../imageUpload/upload';
+import Modal from '../modal/modal';
 
 const Index = ({ isEdit = false, id, category = {} }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [name] = useState('');
   const [details] = useState('');
+  const [isImageUpload, setIsImageUpload] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+  const [imageId, setImageId] = useState('');
+
+  const handleImageUpload = (data) => {
+    setImageId(data);
+    setModalIsOpen(true);
+    setIsImageUpload(true);
+  };
+
+  const handleModalClose = () => {
+    setModalIsOpen((prev) => false);
+  };
+
   let initialValues = {
     name,
     details,
@@ -114,7 +130,16 @@ const Index = ({ isEdit = false, id, category = {} }) => {
   return (
     <section className="text-black text-lg w-[800px] mx-auto">
       {isEdit ? (
-        <h3 className="text-sm uppercase">Edit category</h3>
+        <h3 className="text-sm uppercase flex items-center gap-x-2">
+          <span>Edit category</span>
+          <span> . </span>
+          <span
+            onClick={handleImageUpload}
+            className=" text-pi-500 cursor-pointer"
+          >
+            Upload Image
+          </span>
+        </h3>
       ) : (
         <h3 className="text-sm uppercase">create new category</h3>
       )}
@@ -217,11 +242,6 @@ const Index = ({ isEdit = false, id, category = {} }) => {
                 return (
                   <div>
                     {productOptions.map((name, index) => {
-                      // console.log(
-                      //   values.productOptions[index].fieldType,
-                      //   values.productOptions[index].optionName
-                      // );
-                      // console.log(index, name);
                       return (
                         <section key={index} className="relative">
                           <div>
@@ -328,6 +348,24 @@ const Index = ({ isEdit = false, id, category = {} }) => {
           </p>
         </form>
       </FormikProvider>
+
+      {modalIsOpen && (
+        <section className="w-full">
+          <Modal
+            handleModal={handleModalClose}
+            classAdd={
+              'w-full md:w-[800px] h-3/4 overflow-y-scroll relative bg-red-400'
+            }
+          >
+            <Upload
+              product={id}
+              uploadType={'category'}
+              handleModalClose={handleModalClose}
+            />
+          </Modal>
+        </section>
+      )}
+
       <ToastContainer
         position="top-center"
         autoClose={3000}

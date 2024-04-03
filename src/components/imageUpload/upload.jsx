@@ -8,6 +8,7 @@ import { useUploadMerchantLogoRequest } from '../../api/merchants/register';
 import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { useCreateCategoryImageRequest } from '../../api/admin/category';
 
 function Upload({ product, uploadType, handleModalClose }) {
   // const { imageUploadMutation } = useImageUpload();
@@ -30,6 +31,9 @@ function Upload({ product, uploadType, handleModalClose }) {
   const { mutate: uploadLogo, isLoading } =
     useUploadMerchantLogoRequest(options);
 
+  const { mutate: uploadCategoryImage, isLoading: categoryLoading } =
+    useCreateCategoryImageRequest(options);
+
   const formik = useFormik({
     initialValues: {
       files: [],
@@ -41,9 +45,13 @@ function Upload({ product, uploadType, handleModalClose }) {
         values?.files.forEach((file) => formData.append('images', file));
         formData.append('id', product.id);
         uploadProductImage(formData);
+      } else if (uploadType === 'category') {
+        values?.files.forEach((file) => formData.append('image', file));
+        formData.append('id', product);
+        console.log('category');
+        uploadCategoryImage(formData);
       } else {
         values?.files.forEach((file) => formData.append('file', file));
-
         uploadLogo(formData);
       }
     },
@@ -145,7 +153,7 @@ function Upload({ product, uploadType, handleModalClose }) {
             <Button
               text={'Upload'}
               classProp={'my-3'}
-              isSubmitting={isLoading || productLoading}
+              isSubmitting={isLoading || productLoading || categoryLoading}
             />
           </form>
         </FormikProvider>
