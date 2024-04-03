@@ -115,8 +115,6 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
       ),
   }
 
-
-
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape(validationShape),
