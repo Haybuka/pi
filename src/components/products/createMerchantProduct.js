@@ -1,22 +1,15 @@
-import React, { useState } from 'react'
-import styles from './products.module.css'
 import { useCreateMerchantProductRequest, useUpdateMerchantProductRequest } from '../../api/products';
 import Inputs from '../input';
 import { useFormik, FormikProvider, FieldArray, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Button from '../button/button';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useCreateMerchantProductImageRequest } from '../../api/merchants/products';
 import { useGetImageFile } from '../../api/getImageFile';
 
-const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
+const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }) => {
 
-  const [file, setFile] = useState()
-  const [fileUpload, setFileUpload] = useState()
-  const navigate = useNavigate()
+
   const handleInputType = (value) => {
-    // console.log(value)
     switch (value) {
       case 0:
         return 'date';
@@ -33,24 +26,6 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     }
   };
 
-  const handleFileChange = (e) => {
-    if (e?.target?.files[0]?.type.includes("image")) {
-      setFile(URL.createObjectURL(e?.target?.files[0]))
-      setFileUpload(e?.target?.files[0])
-
-    } else {
-      toast.error("invalid file type")
-    }
-
-  }
-
-  const handleImageUpload = () => {
-
-    const formData = new FormData();
-    formData.append("id", id);
-    formData.append("images", file);
-    // uploadImageRequest(formData)
-  }
 
   let initialValues = {
     baseAmount: category?.baseAmount ? category?.baseAmount : '',
@@ -77,9 +52,8 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     const message = response?.data?.result?.message;
 
     toast.success(message);
-
     resetForm();
-    navigate('/');
+    closeModal()
   };
   const options = {
     onError,
@@ -89,15 +63,14 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
   const { mutate: createProduct } = useCreateMerchantProductRequest(options);
   const { mutate: updateProduct } = useUpdateMerchantProductRequest(options);
 
-  //Code to grap images
-  const imageRef = category ? category?.images : category?.catImage;
+  //Code to grab images
+  const imageRef = category ? category?.catImage : category?.images;
 
 
   const imageOptions = {
-    fileAlias: category ? category?.images : category?.catImage,
+    fileAlias: imageRef,
     enabled: imageRef ? true : false,
   };
-
 
 
   const { data: imageFile = [], isFetched: imageFetched } =
@@ -150,7 +123,6 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     onSubmit: (value) => {
       const values = { ...value };
       delete values.catImage
-      // delete values.id
       delete values.listOnHome
 
 
@@ -165,11 +137,11 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
 
         const data = { ...values, productOptions: newValues };
 
-        // console.log(data)
+
         createProduct(data);
       } else {
         const data = { ...values };
-        console.log(data)
+
         updateProduct(data);
       }
     },
@@ -181,8 +153,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
     setFieldValue,
     resetForm,
     getFieldProps,
-    isSubmitting,
-    errors
+    isSubmitting
   } = formik;
 
 
@@ -201,7 +172,6 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
                   }
                 />
               )}
-              {/* {file && <img src={file} alt='product ' className='w-full h-full' />} */}
             </div>
             <div className='ml-3'>
               <h3 className="uppercase text-sm"> Name : {category?.name}</h3>
@@ -430,7 +400,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false }) => {
                             name={`productOptions.${[id]}.options`}
 
                             render={(msg) => {
-                              console.log({ msg })
+
                               return (
                                 (
                                   <div className="text-[12px] uppercase text-red-400 block mt-2 ">

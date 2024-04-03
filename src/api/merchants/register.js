@@ -29,7 +29,6 @@ export const useMerchantRegisterRequest = (options) => {
 export const useMerchantUpdateRequest = (options) => {
   const queryClient = useQueryClient()
   return useMutation(updateMerchantRequest, {
-    select: () => { console.log("data trasnformed") },
     onSuccess: () => {
       queryClient.invalidateQueries("user")
     }, ...options

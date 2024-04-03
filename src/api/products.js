@@ -1,6 +1,9 @@
-import { useMutation, useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import axios from './index'
+
+
 //merchant
+
 
 const createMerchantProductRequest = (data) => {
   return axios.post('v1/product', { data })
@@ -11,12 +14,28 @@ const updateMerchantProductRequest = (data) => {
 }
 
 export const useCreateMerchantProductRequest = (options) => {
-  return useMutation(createMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  const queryClient = useQueryClient()
+  return useMutation(createMerchantProductRequest, {
+    onSuccess: () => {
+      options.onSuccess();
+      queryClient.invalidateQueries("merchantProducts")
+    },
+    ...options
+  })
 }
 
 export const useUpdateMerchantProductRequest = (options) => {
-  return useMutation(updateMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  const queryClient = useQueryClient()
+  return useMutation(updateMerchantProductRequest, {
+    onSuccess: () => {
+      options.onSuccess();
+      queryClient.invalidateQueries("merchantProducts")
+    },
+    ...options
+  })
 }
+
+
 //admin
 const fetchProductCategories = (data) => {
   return axios.get('v1/product/category/-')

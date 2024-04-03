@@ -65,7 +65,6 @@ const Index = () => {
   const [showCategorySelect, setShowCategorySelect] = useState(false);
   const [showMerchantProduct, setShowMerchantProduct] = useState(false);
 
-  console.log({ categoryRequest });
   const handleModalClose = () => {
     setModalIsOpen((prev) => false);
     setShowMerchantProduct(false);
@@ -285,6 +284,7 @@ const Index = () => {
                         },
                       ],
                 }}
+                closeModal={() => handleModalClose()}
               />
             )}
             {isEditing && (
@@ -292,6 +292,7 @@ const Index = () => {
                 id={searchID}
                 category={editValues}
                 isEdit={true}
+                closeModal={() => handleModalClose()}
               />
             )}
             {isImageUpload && (
