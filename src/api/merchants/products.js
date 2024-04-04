@@ -19,7 +19,6 @@ const createMerchantProductImage = (formData) => {
 
 export const fetchMerchantProductCategories = ({ queryKey }) => {
   const page = queryKey[1] || 0
-  console.log({ page })
   return axios.get(`v1/product/get?searchObj={"limit" : 10,"page" : ${page}}`)
 }
 export const useCreateMerchantProductRequest = (options) => {

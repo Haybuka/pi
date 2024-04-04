@@ -164,10 +164,9 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
     setFieldValue,
     resetForm,
     getFieldProps,
-    errors
   } = formik;
 
-  console.log(errors)
+
   return (
     <section className="text-black my-6 w-full">
       <aside className="border justify-between items-center mb-2 bg-white p-4 rounded-lg">

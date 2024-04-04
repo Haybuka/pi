@@ -72,8 +72,6 @@ const Index = () => {
     }
   };
 
-  useEffect(() => {}, []);
-
   const handleProductEdit = (product) => {
     const categories = {
       productDetails: product?.productDetails && [...product?.productDetails],
