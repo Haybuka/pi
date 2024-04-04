@@ -72,6 +72,8 @@ const Index = () => {
     }
   };
 
+  useEffect(() => {}, []);
+
   const handleProductEdit = (product) => {
     const categories = {
       productDetails: product?.productDetails && [...product?.productDetails],
@@ -129,7 +131,7 @@ const Index = () => {
     setIsImageUpload(false);
     setIsDeleteAlert(true);
   };
-  const { merchantCategories = [] } = useMerchantProduct();
+  const { merchantCategories = [] } = useMerchantProduct(pageNumber);
 
   const [productSearchName, setProductSearchName] = useState('');
 

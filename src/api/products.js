@@ -83,7 +83,7 @@ export const useGetProductCategory = (options = {}) => {
 
 
 export const useCreateCategoryRequest = (options) => {
-  return useMutation(createAdminProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  return useMutation(createAdminProductRequest, { ...options })
 }
 
 export const useUpdateCategoryRequest = (options) => {
@@ -93,6 +93,6 @@ export const useUpdateCategoryRequest = (options) => {
 }
 
 export const useDeleteProductCategoryRequest = (options) => {
-  return useMutation(deleteProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
+  return useMutation(deleteProductRequest, { ...options })
 }
 
