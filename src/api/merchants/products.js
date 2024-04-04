@@ -19,7 +19,7 @@ const createMerchantProductImage = (formData) => {
 
 export const fetchMerchantProductCategories = ({ queryKey }) => {
   const page = queryKey[1] || 0
-  return axios.get(`v1/product/get?searchObj={"limit" : 15,"page" : ${page}}`)
+  return axios.get(`v1/product/get?searchObj={"limit" : 20,"page" : ${page}}`)
 }
 export const useCreateMerchantProductRequest = (options) => {
   return useMutation(createMerchantProductRequest, { select: () => { console.log("data trasnformed") }, ...options })
