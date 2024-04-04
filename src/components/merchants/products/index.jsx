@@ -11,18 +11,14 @@ import { useEffect } from 'react';
 import Modal from '../../modal/modal';
 import CreateMerchantProduct from '../../products/createMerchantProduct';
 import ProductCard from './Card/card';
-import ImageUpload from './ImageUpload/imageUpload';
 import DeleteProduct from './deleteProduct/delete';
 import Upload from '../../imageUpload/upload';
 
 const Index = () => {
-  const [page, setPage] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
   const { data: categories = [], isLoading } = useGetProductCategories();
-  const {
-    data: merchantProduct,
-    isFetched: merchantFetching,
-    isPreviousData,
-  } = useGetMerchantProductCategories({ page });
+  const { data: merchantProduct, isFetched: merchantFetching } =
+    useGetMerchantProductCategories({ pageNumber });
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -33,21 +29,6 @@ const Index = () => {
   const [searchID, setSearchID] = useState(categories[0]?.id);
   const [deleteProduct, setDeleteProduct] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-  const onError = (error) => {
-    // const detail = error?.response.data?.result.details;
-    console.log({ error });
-  };
-  const onSuccess = (response) => {
-    // const message = response?.data?.result?.message;
-
-    console.log(response);
-  };
-
-  const options = {
-    onError,
-    onSuccess,
-  };
 
   const {
     data: categoryRequest,
@@ -152,16 +133,6 @@ const Index = () => {
 
   const [productSearchName, setProductSearchName] = useState('');
 
-  const handleProductSearchChange = (event) => {
-    setProductSearchName(event.target.value);
-    setCategory({ name: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // refetch();
-  };
-
   return (
     <div className="text-black p-6">
       <section className="flex justify-between items-center">
@@ -173,25 +144,22 @@ const Index = () => {
         <aside className="flex items-center">
           <div className="flex uppercase text-sm items-center mx-4">
             <p
-              onClick={() => page >= 1 && setPage((page) => page - 1)}
-              disabled={page === 0}
+              onClick={() =>
+                pageNumber >= 1 && setPageNumber((page) => page - 1)
+              }
+              disabled={pageNumber <= 0}
               className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer"
             >
               prev
             </p>
-            <span className="inline-block mx-4"> {page + 1}</span>
-            {!merchantProduct?.length === 0 ? (
-              <p
-                onClick={() => setPage((page) => page + 1)}
-                className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer border-gray-700"
-              >
-                Next
-              </p>
-            ) : (
-              <p className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-not-allowed border-gray-700">
-                Next
-              </p>
-            )}
+            <span className="inline-block mx-4"> {pageNumber + 1}</span>
+
+            <p
+              onClick={() => setPageNumber((page) => page + 1)}
+              className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer border-gray-700"
+            >
+              Next
+            </p>
           </div>
           <div className="w-[150px]">
             <Button text={'Add product'} handleClick={handleProductCreate} />
