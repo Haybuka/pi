@@ -5,10 +5,11 @@ import * as yup from 'yup';
 import Button from '../button/button';
 import { toast } from 'react-toastify';
 import { useGetImageFile } from '../../api/getImageFile';
+import { useState } from 'react';
 
 const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }) => {
 
-
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const handleInputType = (value) => {
     switch (value) {
       case 0:
@@ -47,6 +48,8 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
   const onError = (error) => {
     const detail = error?.response.data?.result.details;
     toast.error(detail);
+    setIsSubmitting(false)
+
   };
   const onSuccess = (response) => {
     const message = response?.data?.result?.message;
@@ -54,6 +57,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
     toast.success(message);
     resetForm();
     closeModal()
+    setIsSubmitting(false)
   };
   const options = {
     onError,
@@ -92,23 +96,32 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
       .of(
         yup.object().shape({
           optionName: yup.string().required('field is required.'),
-          options: yup.lazy((value) => {
 
-            switch (typeof value) {
-              case 'string':
-                return yup.string().required('Required field').typeError('Required field')
-              case 'number':
-                return yup.string().required('Required field').typeError('Required field')
+          options: yup.lazy(value => {
 
-              default:
-                return yup.array()
-                  .of(
-                    yup.object().shape({
-                      option: yup.string().required('field is required.'),
-                      price: yup.string().required('field is required.')
-                    })
-                  )
+            if (value) {
+
+              return yup.array()
+                .of(
+                  yup.object().shape({
+                    option: yup.string().required('field is required.'),
+                    price: yup.string().required('field is required.')
+                  })
+                )
+            } else {
+
+
+              return yup.string().notRequired()
             }
+            // switch (typeof value === 'object') {
+            //   // case 'string':
+            //   //   return yup.string().required('Required field').typeError('Required field')
+            //   // case 'number':
+            //   //   return yup.string().required('Required field').typeError('Required field')
+
+            //   default:
+
+            // }
           }),
 
         })
@@ -122,10 +135,10 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
       const values = { ...value };
       delete values.catImage
       delete values.listOnHome
-
+      setIsSubmitting(true)
 
       if (!isEdit) {
-
+        delete values.id
         let newValues = values.productOptions.map((options, id) => {
           if (options.fieldAction === null) {
             options.fieldAction = 2;
@@ -133,12 +146,12 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
           return options
         })
 
-        const data = { ...values, productOptions: newValues };
-
+        const data = { ...values, category: id, productOptions: newValues };
 
         createProduct(data);
       } else {
         const data = { ...values };
+
 
         updateProduct(data);
       }
@@ -151,10 +164,10 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
     setFieldValue,
     resetForm,
     getFieldProps,
-    isSubmitting
+    errors
   } = formik;
 
-
+  console.log(errors)
   return (
     <section className="text-black my-6 w-full">
       <aside className="border justify-between items-center mb-2 bg-white p-4 rounded-lg">
@@ -382,13 +395,14 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
                       :
                       (
                         <div className="my-6">
-                          <Inputs
+                          {/* <Inputs
 
                             type={handleInputType(details?.fieldType)}
                             name={`productOptions.${[id]}.options`}
                             {...getFieldProps(
                               `productOptions.${[id]}.options`
                             )}
+                            disabled={details.fieldType !== 4}
                             displayName={`${details.optionTitle}`}
                             handleBlur={handleBlur}
                             handleInputChange={setFieldValue}
@@ -407,19 +421,12 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
                                 )
                               )
                             }}
-                          />
+                          /> */}
+                          <p>{`${details.optionTitle}`}</p>
                         </div>)
 
                     }
-                    {/* <ErrorMessage
-                      name={`productOptions.${[id]}.options`}
 
-                      render={(msg) => (
-                        <div className="text-[12px] uppercase text-red-400 block mt-2 ">
-                          {details.optionTitle} {msg}
-                        </div>
-                      )}
-                    /> */}
                   </section>
                 ))
               }
@@ -491,3 +498,14 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
 export default CreateMerchantProduct
 
+
+
+// {/* <ErrorMessage
+//                       name={`productOptions.${[id]}.options`}
+
+//                       render={(msg) => (
+//                         <div className="text-[12px] uppercase text-red-400 block mt-2 ">
+//                           {details.optionTitle} {msg}
+//                         </div>
+//                       )}
+//                     /> */}
