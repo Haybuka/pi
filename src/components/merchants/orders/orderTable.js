@@ -7,9 +7,11 @@ import {
   useRowSelect,
 } from 'react-table';
 
+import { ReactComponent as MoreIcon } from './more.svg';
 import { useNavigate } from 'react-router-dom';
 import GlobalFilter from '../../table/GlobalFilter';
 import './table.css';
+import MorePopover from './more';
 
 const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
   const navigate = useNavigate();
@@ -50,8 +52,8 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
           Header: ({ getToggleAllRowsSelectedProps }) => <div>Action</div>,
           Cell: ({ row }) => {
             return (
-              <div className="text-center cursor-pointer" onClick={() => handleModal(row?.original)}>
-                <p className=' text-pi-500'>View More</p>
+              <div>
+                <MorePopover handleMore={() => handleModal(row?.original)} />
               </div>
             );
           },
