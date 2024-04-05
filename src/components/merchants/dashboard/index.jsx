@@ -14,7 +14,6 @@ import { ReactComponent as SuccessfulOrder } from './successfulOrders.svg';
 import cls from 'classnames';
 import formatNumber from '../../../util/formatNumber';
 import { format, fromUnixTime } from 'date-fns';
-import Button from '../../button/button';
 import { useNavigate } from 'react-router-dom';
 
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
@@ -207,7 +206,7 @@ const MerchantDashboard = () => {
                   <span className="font-semibold">Order History</span>
                   <span
                     onClick={handleNavigateOrder}
-                    className="  bg-pi-500 text-white py-2 px-4 rounded-full uppercase text-sm cursor-pointer"
+                    className="  bg-pi-500 text-white py-2 px-4 rounded-full uppercase text-sm cursor-pointer hidden"
                   >
                     View More
                   </span>
@@ -223,23 +222,25 @@ const MerchantDashboard = () => {
                       <th>Transaction Date</th>
                     </thead>
                     <tbody>
-                      {getOrders?.content.slice(0, 10).map((orders, id) => (
-                        <tr>
-                          <td>{id + 1}</td>
-                          <td>{orders?.product?.name}</td>
-                          <td>{formatNumber(orders?.totalAmount)}</td>
-                          <td>{orders?.productID}</td>
-                          {/* <td className="text-center">
+                      {getOrders?.content
+                        ?.slice(getOrders?.content.length - 10)
+                        ?.map((orders, id) => (
+                          <tr>
+                            <td>{id + 1}</td>
+                            <td>{orders?.product?.name}</td>
+                            <td>{formatNumber(orders?.totalAmount)}</td>
+                            <td>{orders?.productID}</td>
+                            {/* <td className="text-center">
                             {statusPill(orders?.status)}
                           </td> */}
-                          <td>
-                            {format(
-                              fromUnixTime(orders?.transDate),
-                              'MM/dd/yyyy'
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                            <td>
+                              {format(
+                                fromUnixTime(orders?.transDate),
+                                'MM/dd/yyyy'
+                              )}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
 
                     {getOrders?.content?.length === 0 && (
