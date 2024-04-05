@@ -131,8 +131,7 @@ const Index = () => {
   };
   const { merchantCategories = [] } = useMerchantProduct(pageNumber);
 
-  const [productSearchName, setProductSearchName] = useState('');
-
+  console.log({ filteredProducts });
   return (
     <div className="text-black p-6">
       <section className="flex justify-between items-center">
@@ -143,23 +142,41 @@ const Index = () => {
 
         <aside className="flex items-center">
           <div className="flex uppercase text-sm items-center mx-4">
-            <p
-              onClick={() =>
-                pageNumber >= 1 && setPageNumber((page) => page - 1)
-              }
-              disabled={pageNumber <= 0}
-              className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer"
-            >
-              prev
+            {pageNumber > 0 && (
+              <p
+                className="py-2 px-3 cursor-pointer"
+                onClick={() =>
+                  pageNumber >= 1 && setPageNumber((page) => page - 1)
+                }
+                disabled={pageNumber <= 0}
+              >
+                {'<'}
+              </p>
+            )}
+            <p className="flex mx-4 gap-x-2">
+              <span
+                className={`   text-black rounded-full h-6 flex justify-center items-center w-6 ${
+                  pageNumber + (1 % 2) !== 0 && 'bg-pi-500 text-white'
+                }`}
+              >
+                {pageNumber + 1}
+              </span>
+              <span
+                className={`   text-black rounded-full h-6 flex justify-center items-center w-6 ${
+                  pageNumber + (1 % 2) === 0 && 'bg-gray-300'
+                }`}
+              >
+                {pageNumber + 2}
+              </span>
             </p>
-            <span className="inline-block mx-4"> {pageNumber + 1}</span>
-
-            <p
-              onClick={() => setPageNumber((page) => page + 1)}
-              className="bg-gray-200 text-gray-500 px-4 py-1 rounded-full text-sm cursor-pointer border-gray-700"
-            >
-              Next
-            </p>
+            {filteredProducts?.length === 10 && (
+              <p
+                className="py-2 px-3 cursor-pointer"
+                onClick={() => setPageNumber((page) => page + 1)}
+              >
+                {'>'}
+              </p>
+            )}
           </div>
           <div className="w-[150px]">
             <Button text={'Add product'} handleClick={handleProductCreate} />

@@ -9,7 +9,7 @@ function MorePopover({ handleMore }) {
         <MoreIcon />
       </Popover.Button>
 
-      <Popover.Panel className="absolute z-10 w-[250px] -top-4 -left-64 rounded-md overflow-hidden">
+      <Popover.Panel className="absolute z-10 w-[200px] -top-4 -left-52 rounded-md overflow-hidden">
         <section className="bg-white">
           <p
             className="flex items-center py-3 my-2 capitalize mx-4 hover:text-gray-500 gap-x-2 cursor-pointer "
