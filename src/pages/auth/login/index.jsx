@@ -27,6 +27,7 @@ function classNames(...classes) {
 const Login = () => {
   const [username] = useState('');
   const [password] = useState('');
+  const [isAccountSwitch, setIsAccountSwitch] = useState(false);
   const { handleProfileSet } = useContext(AuthContext);
   const location = useLocation();
 
@@ -86,6 +87,10 @@ const Login = () => {
 
   const handleSetAccountType = (type) => {
     setAccountType(type);
+    setIsAccountSwitch((prev) => !prev);
+    setTimeout(() => {
+      setIsAccountSwitch((prev) => !prev);
+    }, 1000);
   };
 
   return (
@@ -139,32 +144,41 @@ const Login = () => {
                   </Tab>
                 </Tab.List>
               </Tab.Group>
-              <div className="my-6">
-                <Inputs
-                  type="text"
-                  name="username"
-                  displayName="username"
-                  value={values.username}
-                  handleInputChange={setFieldValue}
-                  handleBlur={handleBlur}
-                  error={errors?.username}
-                />
-              </div>
-              <div className="my-6">
-                <Inputs
-                  type="password"
-                  name="password"
-                  displayName="password"
-                  value={values.password}
-                  handleInputChange={setFieldValue}
-                  handleBlur={handleBlur}
-                  error={errors?.password}
-                />
-              </div>
-              <Button
-                isSubmitting={adminLoading || merchantLoading}
-                text={'login'}
-              />
+              {isAccountSwitch ? (
+                <div className="my-6">
+                  <Button isSubmitting={isAccountSwitch} text={''} />
+                </div>
+              ) : (
+                <>
+                  {' '}
+                  <div className="my-6">
+                    <Inputs
+                      type="text"
+                      name="username"
+                      displayName="username"
+                      value={values.username}
+                      handleInputChange={setFieldValue}
+                      handleBlur={handleBlur}
+                      error={errors?.username}
+                    />
+                  </div>
+                  <div className="my-6">
+                    <Inputs
+                      type="password"
+                      name="password"
+                      displayName="password"
+                      value={values.password}
+                      handleInputChange={setFieldValue}
+                      handleBlur={handleBlur}
+                      error={errors?.password}
+                    />
+                  </div>
+                  <Button
+                    isSubmitting={adminLoading || merchantLoading}
+                    text={'login'}
+                  />
+                </>
+              )}
 
               <p className="w-full  text-black py-3 rounded-2xl uppercase text-sm cursor-pointer">
                 Dont have an account ?
