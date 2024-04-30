@@ -22,7 +22,6 @@ import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import PlacesUi from '../../pages/auth/register/placesUi';
-import { useGetAddressByLatLng } from '../../api/reverseGeoCode';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -73,21 +72,13 @@ const UpdateAccountForm = () => {
   };
 
   const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null,
+    lat: '',
+    lng: '',
   });
 
   const { mutate: updateMerchantRequest, isLoading: updateLoading } =
     useMerchantUpdateRequest(options);
 
-  const addressConfig = {
-    longitude: profile?.organization?.location?.coordinates?.longitude
-      ? profile?.organization?.location?.coordinates?.longitude
-      : coordinates?.lng,
-    latitude: profile?.organization?.location?.coordinates?.latitude
-      ? profile?.organization?.location?.coordinates?.latitude
-      : coordinates?.lat,
-  };
   const formik = useFormik({
     initialValues: {
       name: profile?.organization ? profile?.organization?.name : '',
@@ -96,7 +87,7 @@ const UpdateAccountForm = () => {
       accountName: '',
       email: profile ? profile?.email : '',
       phone: profile?.organization ? profile?.organization?.phone : '',
-      addressConfig,
+      address: profile?.organization?.address,
     },
     validationSchema: yup.object().shape(UpdateAccountValidationSchema),
     onSubmit: (values, { setSubmitting, resetForm }) => {
@@ -110,20 +101,16 @@ const UpdateAccountForm = () => {
 
       const data = {
         ...values,
-        address: profile?.organization?.address,
         stateObj: profile?.organization.state,
-        longitude: profile?.organization.location.coordinates.longitude
-          ? profile?.organization.location.coordinates.longitude
-          : coordinates.lng,
-        latitude: profile?.organization.location.coordinates.latitude
-          ? profile?.organization.location.coordinates.latitude
-          : coordinates.lat,
         bank: values.bank.bankName,
         accountNumber: values.accountNumber,
         accountName: values.accountName,
         settlementCharge: 0,
         allowWithdrawal: 1,
+        longitude: coordinates?.lng,
+        latitude: coordinates?.lat,
       };
+
       updateMerchantRequest(data);
       resetForm();
     },
@@ -132,8 +119,6 @@ const UpdateAccountForm = () => {
   const { handleSubmit, setFieldValue, values } = formik;
 
   const { data: bankData, isFetched: bankFetched } = useGetBank();
-  const { data: addressData = '', isFetched: fetchingAddress } =
-    useGetAddressByLatLng(addressConfig);
 
   const [banks, setBanks] = useState([]);
 
@@ -149,7 +134,7 @@ const UpdateAccountForm = () => {
   const handleAddress = (value) => {
     setFieldValue('address', value?.value);
     setCoordinates(value?.latlng);
-    console.log(value, 'address');
+    console.log({ values });
   };
 
   return (
@@ -214,7 +199,7 @@ const UpdateAccountForm = () => {
                 displayName={'Address'}
                 type="text"
                 handleAddress={handleAddress}
-                addressValue={addressData}
+                addressValue={profile?.organization?.address}
               />
             </div>
             <Button isSubmitting={updateLoading} text={'Update'} />
