@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { ReactComponent as LoginLogo } from './loginLogo.svg';
-import { ReactComponent as EyeSlash } from './eyeSlash.svg';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik, FormikProvider } from 'formik';
 import * as yup from 'yup';
@@ -15,8 +14,6 @@ import Button from '../../../components/button/button';
 import { AuthContext } from '../../../context/authContext';
 import AuthSlider from '../AuthSlider';
 
-import AccountType from './accountType';
-import { IconOne, IconTwo } from './dropIcons';
 import 'react-toastify/dist/ReactToastify.css';
 import { Tab } from '@headlessui/react';
 
@@ -108,10 +105,6 @@ const Login = () => {
               className="w-full px-6 md:w-[600px] my-4"
               onSubmit={handleSubmit}
             >
-              {/* <p className="capitalize text-center text-lg text-gray-700">
-                Welcome, {accountType}.
-              </p> */}
-
               <Tab.Group>
                 <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
                   <Tab
