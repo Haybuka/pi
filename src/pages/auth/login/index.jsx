@@ -108,9 +108,9 @@ const Login = () => {
               className="w-full px-6 md:w-[600px] my-4"
               onSubmit={handleSubmit}
             >
-              <p className="capitalize text-center text-lg text-gray-700">
+              {/* <p className="capitalize text-center text-lg text-gray-700">
                 Welcome, {accountType}.
-              </p>
+              </p> */}
 
               <Tab.Group>
                 <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">

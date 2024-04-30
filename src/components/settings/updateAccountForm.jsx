@@ -21,6 +21,8 @@ import { ReactComponent as EditPenLogo } from '../../images/icons/pen.svg';
 import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import PlacesUi from '../../pages/auth/register/placesUi';
+import { useGetAddressByLatLng } from '../../api/reverseGeoCode';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -70,9 +72,22 @@ const UpdateAccountForm = () => {
     onSuccess,
   };
 
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    lng: null,
+  });
+
   const { mutate: updateMerchantRequest, isLoading: updateLoading } =
     useMerchantUpdateRequest(options);
 
+  const addressConfig = {
+    longitude: profile?.organization.location.coordinates.longitude
+      ? profile?.organization.location.coordinates.longitude
+      : coordinates.lng,
+    latitude: profile?.organization.location.coordinates.latitude
+      ? profile?.organization.location.coordinates.latitude
+      : coordinates.lat,
+  };
   const formik = useFormik({
     initialValues: {
       name: profile?.organization ? profile?.organization?.name : '',
@@ -81,6 +96,12 @@ const UpdateAccountForm = () => {
       accountName: '',
       email: profile ? profile?.email : '',
       phone: profile?.organization ? profile?.organization?.phone : '',
+      longitude: profile?.organization.location.coordinates.longitude
+        ? profile?.organization.location.coordinates.longitude
+        : '',
+      latitude: profile?.organization.location.coordinates.latitude
+        ? profile?.organization.location.coordinates.latitude
+        : '',
     },
     validationSchema: yup.object().shape(UpdateAccountValidationSchema),
     onSubmit: (values, { setSubmitting, resetForm }) => {
@@ -96,8 +117,12 @@ const UpdateAccountForm = () => {
         ...values,
         address: profile?.organization?.address,
         stateObj: profile?.organization.state,
-        longitude: profile?.organization.location.coordinates.longitude,
-        latitude: profile?.organization.location.coordinates.latitude,
+        longitude: profile?.organization.location.coordinates.longitude
+          ? profile?.organization.location.coordinates.longitude
+          : coordinates.lng,
+        latitude: profile?.organization.location.coordinates.latitude
+          ? profile?.organization.location.coordinates.latitude
+          : coordinates.lat,
         bank: values.bank.bankName,
         accountNumber: values.accountNumber,
         accountName: values.accountName,
@@ -109,9 +134,13 @@ const UpdateAccountForm = () => {
     },
   });
 
-  const { handleSubmit } = formik;
+  const { handleSubmit, setFieldValue, values } = formik;
 
   const { data: bankData, isFetched: bankFetched } = useGetBank();
+  const { data: addressData = '', isFetched: fetchingAddress } =
+    useGetAddressByLatLng(addressConfig);
+
+  console.log({ addressData });
   const [banks, setBanks] = useState([]);
 
   useEffect(() => {
@@ -122,6 +151,12 @@ const UpdateAccountForm = () => {
       }))
     );
   }, [bankFetched, bankData?.content?.data]);
+
+  const handleAddress = (value) => {
+    setFieldValue('address', value?.value);
+    setCoordinates(value?.latlng);
+    console.log(value, 'address');
+  };
 
   return (
     <>
@@ -179,6 +214,15 @@ const UpdateAccountForm = () => {
                 type="text"
               />
             </GridWrapper>
+            <div className="my-6">
+              <PlacesUi
+                name={'address'}
+                displayName={'Address'}
+                type="text"
+                handleAddress={handleAddress}
+                addressValue={addressData}
+              />
+            </div>
             <Button isSubmitting={updateLoading} text={'Update'} />
           </form>
         </FormikProvider>

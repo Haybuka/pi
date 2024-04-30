@@ -11,8 +11,9 @@ const PlacesUi = ({
   type = 'text',
   displayName,
   handleAddress,
+  addressValue = '',
 }) => {
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(addressValue);
 
   const handleSelect = async (value) => {
     try {
@@ -33,6 +34,7 @@ const PlacesUi = ({
 
   const searchOptions = {
     componentRestrictions: { country: ['NG'] },
+    // location: addressValue,
   };
 
   return (
