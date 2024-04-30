@@ -81,12 +81,12 @@ const UpdateAccountForm = () => {
     useMerchantUpdateRequest(options);
 
   const addressConfig = {
-    longitude: profile?.organization.location.coordinates.longitude
-      ? profile?.organization.location.coordinates.longitude
-      : coordinates.lng,
-    latitude: profile?.organization.location.coordinates.latitude
-      ? profile?.organization.location.coordinates.latitude
-      : coordinates.lat,
+    longitude: profile?.organization?.location?.coordinates?.longitude
+      ? profile?.organization?.location?.coordinates?.longitude
+      : coordinates?.lng,
+    latitude: profile?.organization?.location?.coordinates?.latitude
+      ? profile?.organization?.location?.coordinates?.latitude
+      : coordinates?.lat,
   };
   const formik = useFormik({
     initialValues: {
@@ -96,12 +96,7 @@ const UpdateAccountForm = () => {
       accountName: '',
       email: profile ? profile?.email : '',
       phone: profile?.organization ? profile?.organization?.phone : '',
-      longitude: profile?.organization.location.coordinates.longitude
-        ? profile?.organization.location.coordinates.longitude
-        : '',
-      latitude: profile?.organization.location.coordinates.latitude
-        ? profile?.organization.location.coordinates.latitude
-        : '',
+      addressConfig,
     },
     validationSchema: yup.object().shape(UpdateAccountValidationSchema),
     onSubmit: (values, { setSubmitting, resetForm }) => {
@@ -140,7 +135,6 @@ const UpdateAccountForm = () => {
   const { data: addressData = '', isFetched: fetchingAddress } =
     useGetAddressByLatLng(addressConfig);
 
-  console.log({ addressData });
   const [banks, setBanks] = useState([]);
 
   useEffect(() => {
