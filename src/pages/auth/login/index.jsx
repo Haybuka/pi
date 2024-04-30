@@ -18,6 +18,11 @@ import AuthSlider from '../AuthSlider';
 import AccountType from './accountType';
 import { IconOne, IconTwo } from './dropIcons';
 import 'react-toastify/dist/ReactToastify.css';
+import { Tab } from '@headlessui/react';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 const Login = () => {
   const [username] = useState('');
@@ -79,20 +84,9 @@ const Login = () => {
 
   const { handleBlur, errors, values, handleSubmit, setFieldValue } = formik;
 
-  const accountOptions = [
-    {
-      name: 'Admin',
-      description: 'Measure actions your users take.',
-      icon: IconOne,
-      action: () => setAccountType('admin'),
-    },
-    {
-      name: 'Merchant',
-      description: 'Begin your journey.',
-      icon: IconTwo,
-      action: () => setAccountType('merchant'),
-    },
-  ];
+  const handleSetAccountType = (type) => {
+    setAccountType(type);
+  };
 
   return (
     <main className="w-screen h-screen grid grid-cols-12 place-item-center">
@@ -102,22 +96,6 @@ const Login = () => {
         </aside>
       </section>
       <section className="  col-span-12  flex justify-center items-center flex-col">
-        {/* {accountType === 'merchant' ? (
-          <aside
-            className="uppercase text-sm my-4 absolute top-10 left-6 text-[#002D62] cursor-pointer"
-            onClick={() => setAccountType('merchant')}
-          >
-            merchant
-          </aside>
-        ) : (
-          <aside
-            className="uppercase text-sm my-4 absolute top-10 left-6 text-[#002D62] cursor-pointer"
-            onClick={() => setAccountType('admin')}
-          >
-            admin
-          </aside>
-        )} */}
-        <AccountType accountOptions={accountOptions} user={accountType} />
         <>
           <LoginLogo />
           <FormikProvider value={formik}>
@@ -129,6 +107,38 @@ const Login = () => {
                 Welcome, {accountType}.
               </p>
 
+              <Tab.Group>
+                <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+                  <Tab
+                    onClick={() => handleSetAccountType('admin')}
+                    className={({ selected }) =>
+                      classNames(
+                        'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                        'focus:outline-none',
+                        selected
+                          ? 'bg-white'
+                          : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                      )
+                    }
+                  >
+                    Login as Admin
+                  </Tab>
+                  <Tab
+                    onClick={() => handleSetAccountType('merchant')}
+                    className={({ selected }) =>
+                      classNames(
+                        'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+                        'focus:outline-none',
+                        selected
+                          ? 'bg-white'
+                          : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                      )
+                    }
+                  >
+                    Login as Merchant
+                  </Tab>
+                </Tab.List>
+              </Tab.Group>
               <div className="my-6">
                 <Inputs
                   type="text"
