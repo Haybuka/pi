@@ -13,7 +13,7 @@ const GlobalFilter = ({
   }, 1000);
 
   return (
-    <label className="block relative floated-label w-1/3">
+    <label className="block relative floated-label w-2/3 md:w-1/3">
       {/* for debounce */}
       <input
         type="search"

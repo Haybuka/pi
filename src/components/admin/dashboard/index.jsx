@@ -105,48 +105,45 @@ const AdminDashboard = () => {
     },
   ];
 
+  const adminCard = [
+    {
+      name: 'Number of categories',
+      amount: 30,
+      icon: '',
+      bgColor: 'bg-piboard-200',
+    },
+    {
+      name: 'Number of merchants',
+      amount: 30,
+      icon: '',
+      bgColor: 'bg-piboard-200',
+    },
+    {
+      name: 'Transactions made',
+      amount: 30,
+      icon: '',
+      bgColor: 'bg-piboard-200',
+    },
+  ];
   return (
     <section className="text-black">
       <article className="flex gap-6 my-6">
-        <aside
-          className={cls(
-            `shadow-md w-full p-3 rounded-md  capitalize col-span-3 bg-white col-start-10 row-span-1`
-          )}
-        >
-          <div className="flex justify-between items-center my-4">
-            <p className="bg-[#002e62f3] text-white p-2 rounded-full"></p>
-          </div>
-          <h3 className="my-2 text-gray-400">Number of categories</h3>
-          <p className="my-2 font-semibold text-xl 2xl:text-2xl">
-            <CountUp end={30} />
-          </p>
-        </aside>
-        <aside
-          className={cls(
-            `shadow-md w-full p-3 rounded-md  capitalize col-span-3 bg-white col-start-10 row-span-1`
-          )}
-        >
-          <div className="flex justify-between items-center my-4">
-            <p className="bg-[#002e62f3] text-white p-2 rounded-full"></p>
-          </div>
-          <h3 className="my-2 text-gray-400">Number of merchants</h3>
-          <p className="my-2 font-semibold text-xl 2xl:text-2xl">
-            <CountUp end={10} />
-          </p>
-        </aside>
-        <aside
-          className={cls(
-            `shadow-md w-full p-3 rounded-md  capitalize col-span-3 bg-white col-start-10 row-span-1`
-          )}
-        >
-          <div className="flex justify-between items-center my-4">
-            <p className="bg-[#002e62f3] text-white p-2 rounded-full"></p>
-          </div>
-          <h3 className="my-2 text-gray-400">Transactions Made</h3>
-          <p className="my-2 font-semibold text-xl 2xl:text-2xl">
-            {formatNumber(40000)}
-          </p>
-        </aside>
+        {adminCard.map((card, id) => (
+          <aside
+            key={id}
+            className={cls(
+              `shadow-md w-full p-3 rounded-md  capitalize col-span-3 bg-gray-200 col-start-10 h-40 row-span-1  `
+            )}
+          >
+            {/* <div className="flex justify-between items-center my-4">
+              <p className="bg-[#002e62f3] text-white p-2 rounded-full"></p>
+            </div>
+            <h3 className="my-2 text-gray-400">Transactions Made</h3>
+            <p className="my-2 font-semibold text-xl 2xl:text-2xl">
+              {formatNumber(40000)}
+            </p> */}
+          </aside>
+        ))}
       </article>
       {/* <article className=" grid-cols-12 my-10 hidden">
         <aside className="col-span-12 p-3 w-full rounded-md  capitalize">

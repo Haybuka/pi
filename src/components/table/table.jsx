@@ -132,22 +132,28 @@ const AllTableHooks = ({ data, userType }) => {
   };
   return (
     <>
-      <section>
-        <aside className="flex justify-between text-black my-6">
+      <section className="overflow-hidden">
+        <aside className="flex items-center justify-between text-black my-6">
           <h3 className="text-sm uppercase">All Categories</h3>
 
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         </aside>
         {userType === 'admin' && (
-          <aside className="flex justify-end w-[160px]">
-            <Button
-              text={'create category'}
-              handleClick={() => navigate('/category')}
-            />
+          <aside className="flex justify-end  ">
+            <p className="w-3/5 sm:w-2/5 lg:w-1/6">
+              <Button
+                text={'create category'}
+                handleClick={() => navigate('/category')}
+                classProp={'w-[160px]'}
+              />
+            </p>
           </aside>
         )}
-        <aside className="min-h-[500px]">
-          <table {...getTableProps()} className="uppercase text-sm text-center">
+        <aside className="min-h-[500px] overflow-x-scroll">
+          <table
+            {...getTableProps()}
+            className="uppercase text-sm text-center "
+          >
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup?.getHeaderGroupProps()}>

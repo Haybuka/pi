@@ -128,7 +128,7 @@ const Index = ({ isEdit = false, id, category = {} }) => {
   } = formik;
 
   return (
-    <section className="text-black text-lg w-[800px] mx-auto">
+    <section className="text-black text-lg md:w-[800px] mx-auto">
       {isEdit ? (
         <h3 className="text-sm uppercase flex items-center gap-x-2">
           <span>Edit category</span>
@@ -184,7 +184,7 @@ const Index = ({ isEdit = false, id, category = {} }) => {
                       // console.log(errors.productDetails[index].name);
                       return (
                         <section key={index} className="relative">
-                          <div className="my-6">
+                          <div className="my-6 w-auto">
                             <Inputs
                               type="text"
                               name={`productDetails.${[index]}.field`}
