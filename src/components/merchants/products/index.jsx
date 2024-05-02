@@ -134,13 +134,13 @@ const Index = () => {
   console.log({ filteredProducts });
   return (
     <div className="text-black p-6">
-      <section className="flex justify-between items-center">
+      <section className="md:flex justify-between items-center">
         <ComboBox
           items={[{ id: 0, name: 'all' }, ...merchantCategories]}
           handleProductCategory={selectProductCategory}
         />
 
-        <aside className="flex items-center">
+        <aside className="flex items-center justify-between my-6 flex-row-reverse md:flex-row">
           <div className="flex uppercase text-sm items-center mx-4">
             {pageNumber > 0 && (
               <p
