@@ -91,7 +91,7 @@ const Sidenav = ({ isSidebarOpen }) => {
   return (
     <div className={isSidebarOpen ? cls('') : cls('-translate-x-full')}>
       <aside id="default-sidebar" className={cls(styles.sidebar)} aria-label="Sidebar">
-        <div className={cls(styles.sidebar_side, ' bg-sidebar-100')}>
+        <div className={cls(styles.sidebar_side, ' bg-sidebar-100 absolute')}>
           <nav className='flex flex-col justify-between h-full'>
 
             <ul className="space-y-2 font-medium">

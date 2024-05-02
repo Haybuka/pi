@@ -15,6 +15,7 @@ import cls from 'classnames';
 import formatNumber from '../../../util/formatNumber';
 import { format, fromUnixTime } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import DashboardCard from './dashboardCard';
 
 // import { useGetMerchantProductCategories } from '../../../api/merchants/products';
 const MerchantDashboard = () => {
@@ -132,35 +133,7 @@ const MerchantDashboard = () => {
         <aside className="col-span-12 grid grid-cols-12 gap-2">
           <div className="col-span-12 md:col-span-8 lg:col-span-9 grid grid-cols-12 gap-2">
             {merchantDetails?.map((details, id) => (
-              <aside
-                className={cls(
-                  `shadow-md w-full min-h-[150px]  rounded-md overflow-hidden  flex md:flex-col md:items-start md:justify-center lg:justify-start md:p-2 lg:p-0 lg:flex-row lg:items-center items-center text-sm uppercase col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 bg-white relative`
-                )}
-                key={id}
-              >
-                <div className="flex justify-between items-center mr-4 rounded-full overflow-hidden ">
-                  <p className=" text-white mx-3 relative z-10">
-                    {details.icon}
-                  </p>
-                  <p
-                    className={` ${details.bgColor} bg-white opacity-60
-                    absolute w-full h-full top-0 left-0`}
-                  ></p>
-                </div>
-                <div className="md:my-3 lg:my-0 relative z-10">
-                  <h3 className=" text-gray-400 font-semibold">
-                    {details.name}
-                  </h3>
-                  <p className=" font-semibold text-xl md:text-2xl ">
-                    {details?.name === 'total revenue' ? (
-                      formatNumber(details?.amount)
-                    ) : (
-                      <CountUp end={details.amount} />
-                    )}
-                  </p>
-                  <p className="border-t py-2 hidden">View report</p>
-                </div>
-              </aside>
+              <DashboardCard details={details} />
             ))}
           </div>
           <aside className="relative col-span-12 h-[400px] md:h-full md:col-span-4 lg:col-span-3 2xl:max-h-full md:block overflow-y-scroll  lg:h-[340px] shadow-md p-3  rounded-md text-sm uppercase bg-white">
@@ -201,7 +174,7 @@ const MerchantDashboard = () => {
         <section className="col-span-12 grid grid-cols-12 rounded-md bg-white shadow-md p-4 ">
           <aside className="col-span-12">
             <section>
-              <aside className="p-3">
+              <aside className="p-3 overflow-hidden">
                 <h3 className=" my-3 flex justify-between items-center">
                   <span className="font-semibold">Order History</span>
                   <span
@@ -211,7 +184,7 @@ const MerchantDashboard = () => {
                     View More
                   </span>
                 </h3>
-                <div>
+                <div className="overflow-x-scroll">
                   <table className="text-center ">
                     <thead>
                       <th>S/N</th>
