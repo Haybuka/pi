@@ -65,7 +65,7 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
 
   return (
     <>
-      <section>
+      <section className='overflow-x-hidden'>
         <aside className="flex justify-end text-black my-6">
 
           <GlobalFilter
@@ -75,7 +75,7 @@ const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
             placeholder='Search orders'
           />
         </aside>
-        <aside className="min-h-[500px]">
+        <aside className="min-h-[500px] overflow-x-scroll">
           <table
             {...getTableProps()}
             className="capitalize text-sm text-center"
