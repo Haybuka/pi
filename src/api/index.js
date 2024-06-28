@@ -1,8 +1,7 @@
 import axios from 'axios';
+import { productionUrl, stagingUrl } from './baseUrl';
 
-export const baseURL = 'https://proxystoreapi.azurewebsites.net/';
-export const baseURL =
-  process.env.NODE_ENV === 'development' ? stagingUrl : productionUrl;
+export const baseURL = process.env.NODE_ENV === 'development' ? stagingUrl : productionUrl;
 
 const axiosInstance = axios.create({
   baseURL,
