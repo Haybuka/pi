@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import { toast } from 'react-toastify';
 
 const PlacesUi = ({
   name,
@@ -23,12 +24,14 @@ const PlacesUi = ({
       setAddress(value);
       handleAddress({ value, latlng });
     } catch (error) {
-      console.log('location error', { error });
+      toast.error('location error');
+      // console.log('location error', { error });
     }
   };
 
   const onError = (status, clearSuggestions) => {
-    console.log('Google Maps API returned error with status: ', status);
+    toast.error('Google Maps API returned error.');
+    // console.log('Google Maps API returned error with status: ', status);
     clearSuggestions();
   };
 

@@ -8,7 +8,6 @@ import {
   useUpdateCategoryRequest,
 } from '../../api/products';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Upload from '../imageUpload/upload';
 import Modal from '../modal/modal';

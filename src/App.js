@@ -4,9 +4,10 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 
 import RequireAuth from './AuthGuard/requireAuth';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import LogOut from './components/logout';
 import NotFound from './pages/notFound';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 import { ReactComponent as LoginLogo } from './pages/auth/register/loginLogo.svg';

@@ -7,14 +7,13 @@ import {
   useRowSelect,
 } from 'react-table';
 
-import { ReactComponent as MoreIcon } from './more.svg';
-import { useNavigate } from 'react-router-dom';
+
 import GlobalFilter from '../../table/GlobalFilter';
-import './table.css';
 import MorePopover from './more';
+import './table.css';
 
 const OrderTable = ({ data = [], COLUMNS, label, handleModal }) => {
-  const navigate = useNavigate();
+
   const columns = useMemo(() => COLUMNS, []);
 
   const {

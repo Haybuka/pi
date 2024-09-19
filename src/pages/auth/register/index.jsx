@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 import { useFormik, FormikProvider } from 'formik';
 import * as yup from 'yup';
 
-import 'react-toastify/dist/ReactToastify.css';
 import PiField from '../../../components/piField';
 import PiSelect from '../../../components/piField/piSelect';
 import { useEffect } from 'react';
@@ -30,7 +29,7 @@ const Register = () => {
           error?.response?.data.result.details
         }`;
     toast.error(`${errorMsg}`);
-    console.log({ error }, 'on error');
+    // console.log({ error }, 'on error');
   };
 
   const onSuccess = (response) => {
