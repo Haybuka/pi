@@ -27,7 +27,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
     }
   };
 
-  console.log(category, 'category name')
+
 
   let initialValues = {
     baseAmount: category?.baseAmount ? category?.baseAmount : '',
@@ -141,14 +141,13 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
         const data = { ...values, category: id, productOptions: newValues };
 
-        // createProduct(data);
-        console.log(data, 'create')
+        createProduct(data);
+
       } else {
         const data = { ...values };
 
 
-        // updateProduct(data);
-        console.log(data, 'eedit')
+        updateProduct(data);
       }
     },
   });
