@@ -19,7 +19,7 @@ const Index = ({ category, id }) => {
 
 
   const onImageSuccess = (response) => {
-    console.log(response)
+
     // toast(data.result.message);
 
   };
@@ -34,7 +34,7 @@ const Index = ({ category, id }) => {
   const [fileUpload, setFileUpload] = useState()
   const navigate = useNavigate()
   const handleInputType = (value) => {
-    // console.log(value)
+
     switch (value) {
       case 0:
         return 'date';
@@ -107,6 +107,7 @@ const Index = ({ category, id }) => {
     }),
     onSubmit: (value) => {
       const values = { category: category.id, ...value };
+
       const data = { ...values };
       createProduct({ "data": { ...data } });
     },
@@ -120,7 +121,7 @@ const Index = ({ category, id }) => {
   } = formik;
 
 
-  console.log(file)
+
   return (
     <section className="text-black my-10 ">
       <aside className="border  flex justify-between items-center mb-2 bg-white p-4 rounded-lg">
@@ -222,7 +223,7 @@ const Index = ({ category, id }) => {
                             const { productOptions } = values;
 
                             let options = productOptions[id]?.options === null ? [{ option: "", price: '' }] : productOptions[id]?.options
-                            // console.log(options)
+
 
                             return (
 
@@ -334,7 +335,7 @@ const Index = ({ category, id }) => {
 
                                     render={(msg) => (
                                       <div className="text-[12px] uppercase text-red-400 block mt-2 ">
-                                        {msg} hi
+                                        {msg}
                                       </div>
                                     )}
                                   />

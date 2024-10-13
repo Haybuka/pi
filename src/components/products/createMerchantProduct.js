@@ -27,6 +27,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
     }
   };
 
+  console.log(category, 'category name')
 
   let initialValues = {
     baseAmount: category?.baseAmount ? category?.baseAmount : '',
@@ -83,7 +84,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
   let validationShape = {
     baseAmount: yup.number("Value must be a number").min(1).required("base amount rewuired"),
-
+    name: yup.string().required('field is required.'),
     productDetails: yup
       .array()
       .of(
@@ -113,15 +114,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
               return yup.string().notRequired()
             }
-            // switch (typeof value === 'object') {
-            //   // case 'string':
-            //   //   return yup.string().required('Required field').typeError('Required field')
-            //   // case 'number':
-            //   //   return yup.string().required('Required field').typeError('Required field')
 
-            //   default:
-
-            // }
           }),
 
         })
@@ -139,7 +132,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
       if (!isEdit) {
         delete values.id
-        let newValues = values.productOptions.map((options, id) => {
+        let newValues = values?.productOptions?.map((options, id) => {
           if (options.fieldAction === null) {
             options.fieldAction = 2;
           }
@@ -148,12 +141,14 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
 
         const data = { ...values, category: id, productOptions: newValues };
 
-        createProduct(data);
+        // createProduct(data);
+        console.log(data, 'create')
       } else {
         const data = { ...values };
 
 
-        updateProduct(data);
+        // updateProduct(data);
+        console.log(data, 'eedit')
       }
     },
   });
@@ -184,7 +179,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
               )}
             </div>
             <div className='ml-3'>
-              <h3 className="uppercase text-sm"> Name : {category?.name}</h3>
+              <h3 className="uppercase text-sm"> Category Name : {category?.name}</h3>
               <p className="uppercase text-sm my-2"> {category?.details}</p>
             </div>
           </section>
@@ -198,6 +193,26 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
               Product Details
             </h4>
             <aside>
+              <div className="my-6">
+                <Inputs
+                  type="text"
+                  name={`name`}
+                  {...getFieldProps(
+                    `name`
+                  )}
+                  displayName={`Product Name`}
+                  handleBlur={handleBlur}
+                  handleInputChange={setFieldValue}
+                />
+                <ErrorMessage
+                  name={`name`}
+                  render={(msg) => (
+                    <div className="text-[12px] text-red-400 block mt-2 uppercase">
+                      {msg}
+                    </div>
+                  )}
+                />
+              </div>
               <div className="my-6">
                 <Inputs
                   type="text"
@@ -218,6 +233,7 @@ const CreateMerchantProduct = ({ category = {}, id, isEdit = false, closeModal }
                   )}
                 />
               </div>
+
               {
                 category?.productDetails?.map((details, index) => (
                   <div className="my-6" key={index}>

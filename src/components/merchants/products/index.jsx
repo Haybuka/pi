@@ -131,7 +131,6 @@ const Index = () => {
   };
   const { merchantCategories = [] } = useMerchantProduct(pageNumber);
 
-  console.log({ filteredProducts });
   return (
     <div className="text-black p-6">
       <section className="md:flex justify-between items-center">
